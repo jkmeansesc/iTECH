@@ -1,0 +1,777 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baidu-site-verification" content="TcPgCnDcOJ">
+    <link rel="apple-touch-icon" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="icon" sizes="192x192" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="shortcut icon" href="https://www.django.cn/static/images/favicon.ico">
+    
+   <title>django视频,django视频教程,django视频教学-django,django中文网!</title>
+    <meta name="keywords" content="django视频,django视频教程,django视频教学">
+    <meta name="description" content="django视频教程,django开发视频教程,django全套视频教程,从入门到进阶到高级,快速学会django开发。">
+
+    <meta name="theme-color" content="#ffffff">
+    <link href="static/css/fonts.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/toastr.min.css" rel="stylesheet">
+    <link href="static/css/app.css" rel="stylesheet">
+    <link href="static/css/font-awesome.min.css" rel="stylesheet">
+     
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/highlight.min.js"></script>
+    <script src="static/js/toastr.min.js"></script>
+
+   <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?9b0ccd50ff8935f331889174a8280dc2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div style='text-align: center;font-size: 20px'>确定删除?</div>
+            </div>
+            <div class="modal-footer">
+                <form action="/comment/" method="POST" id='delete_comment' style='float: left'>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="640dZCQhHobkcRGgYJIuNMjJO2PaWQUBypmTPntMg0H28Q0NqUfHcyy4HGS8v0Zi">
+                    <input type="hidden" name="tag">
+                    <input type="hidden" name="aid">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="method" value='delete'>
+                    <input type='button' class="btn btn-danger btn-ok" id='btn_delete_comment' value='删除'>
+                </form>
+                <!-- <a class="btn btn-danger btn-ok"><span>删除</span></a> -->
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span>取消</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="page__wrapper page--landing">
+   
+
+    <header class="header--main animate-search">
+
+
+    
+    <div class="container-fluid">
+        <nav class="nav--main">
+            <div class="nav__logo">
+                <a href="index.html">
+                    <span>Django中文网</span>
+                </a>
+            </div>
+
+            
+                <ul class="nav__items nav__items--right">
+                    <li class="nav__item">
+                        <a href="search.html" class="search-trigger icon-magnifier"></a>
+                    </li>
+                    <li id="login" class="nav__item">
+                        <a href="login.html">
+                            登录
+                        </a>
+                    </li>
+                    <li id="register" class="nav__item">
+                        <a href="register.html">
+                            <span class="btn btn-success">注册</span>
+                        </a>
+                    </li>
+                </ul>
+
+            
+
+            <ul class="nav__items nav__items--left">
+                <li class="nav__item nav__item--main">
+                    <a href="article.html" class="articles ">
+                        文章
+                    </a>
+                </li>
+                 <li class="nav__item nav__item--main">
+                    <a href="course.html" class="posts ">
+                        教程
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                    <a href="" class="posts ">
+                        视频
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                     <a href="forum.html" class="posts ">
+                        社区
+                    </a>
+                </li>
+            </ul>
+
+
+        </nav> <!-- .nav--main -->
+    </div>
+
+
+    <a href="#0" class="nav-trigger icon-menu"></a>
+
+    <div id="search" class="main-search">
+    <div class="container-fluid">
+        <form id="search-form-top" class="form__search" action="/search/" method="GET">
+        <input type="search" name="search" placeholder="Search..." value="" autocomplete="off" required="">
+
+</form>
+
+        <div class="search-suggestions">
+
+        </div>
+        <a href="#0" class="close text-replace">Close Form</a>
+    </div>
+</div> <!-- .main-search -->
+</header>
+
+<div class="cover-layer"></div> <!-- cover main content when search form is open -->
+
+
+    
+
+
+
+    <main class="main-content" style="margin-top: 20px;">
+
+        <div class="content-wrapper">
+
+            <div class="container-fluid articles">
+
+                <div class="row">
+
+                    <div class="section-header">
+
+                        <h2>视频教程</h2>
+
+                    </div>
+
+
+
+
+
+                    
+
+                        <div class="col-md-4 col-sm-6  clear-sm">
+
+                            <article class="article--small">
+
+                                <a href="video-1.html" title="">
+
+                                    <div class="article__image" style="background-image: url(
+                                                 static/image/qiyekaifa.jpg )">
+
+                                    </div>
+
+                                </a>
+
+                                <div class="article__content">
+
+                                    <div class="article__description">
+
+                                        <a href="video-1.html" title="django企业项目开发实战案例视频教程">
+
+                                            <h3>django企业项目开发实战案例视频教程</h3>
+
+                                        </a>
+
+                                        <p>
+
+                                            这是一个超详细、超完整的django企业项目开发实战案例。视频详细解说，从入门到进阶，从前端到后端，项目从无到有，再到上线部署。讲师手把手从零开始带你完整体验django企业项目开发流程。
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="article__footer">
+
+                                        <time class="article__date" datetime="2022年2月15日 17:28">
+
+                                           时间: 2022年02月15日    浏览次数:10917
+
+                                        </time>
+                                        
+   
+
+                                    </div>
+
+                                </div>
+
+
+                            </article>
+
+                        </div>
+
+
+
+                    
+
+                        <div class="col-md-4 col-sm-6  clear-sm">
+
+                            <article class="article--small">
+
+                                <a href="video-2.html" title="">
+
+                                    <div class="article__image" style="background-image: url(
+                                                 static/image/djangovue_H3w7CBm.jpg )">
+
+                                    </div>
+
+                                </a>
+
+                                <div class="article__content">
+
+                                    <div class="article__description">
+
+                                        <a href="video-2.html" title="django+vue前后端分离仿美团外卖电商项目">
+
+                                            <h3>django+vue前后端分离仿美团外卖电商项目</h3>
+
+                                        </a>
+
+                                        <p>
+
+                                            一个真正前后端分离的电商项目，用Django中最流行的Django REST Framework前后端分离框架和最热门的前端框架VUE结合起来，从零开始仿美团外卖打造一个完整的电商项目。项目包含移动端
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="article__footer">
+
+                                        <time class="article__date" datetime="2022年2月16日 16:29">
+
+                                           时间: 2022年02月16日    浏览次数:9346
+
+                                        </time>
+                                        
+   
+
+                                    </div>
+
+                                </div>
+
+
+                            </article>
+
+                        </div>
+
+
+
+                    
+
+                        <div class="col-md-4 col-sm-6  clear-sm">
+
+                            <article class="article--small">
+
+                                <a href="video-3.html" title="">
+
+                                    <div class="article__image" style="background-image: url(
+                                                 static/image/api.jpg )">
+
+                                    </div>
+
+                                </a>
+
+                                <div class="article__content">
+
+                                    <div class="article__description">
+
+                                        <a href="video-3.html" title="Django+DRF+Vue打造专业的API自动化测试平台">
+
+                                            <h3>Django+DRF+Vue打造专业的API自动化测试平台</h3>
+
+                                        </a>
+
+                                        <p>
+
+                                            用Django+DRF+Vue打造完整的API自动化测试平台，纯前后端分离。有创建API，设置API参数，运行API，创建测试用例，运行测试用例，测试用例中API的参数回传等功能!做自动化测试职业的朋
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="article__footer">
+
+                                        <time class="article__date" datetime="2022年2月17日 01:49">
+
+                                           时间: 2022年02月17日    浏览次数:8552
+
+                                        </time>
+                                        
+   
+
+                                    </div>
+
+                                </div>
+
+
+                            </article>
+
+                        </div>
+
+
+
+                    
+
+                        <div class="col-md-4 col-sm-6  clear-sm">
+
+                            <article class="article--small">
+
+                                <a href="video-4.html" title="">
+
+                                    <div class="article__image" style="background-image: url(
+                                                 static/image/django-blog.jpg )">
+
+                                    </div>
+
+                                </a>
+
+                                <div class="article__content">
+
+                                    <div class="article__description">
+
+                                        <a href="video-4.html" title="两天入门三天上线之django博客开发教程">
+
+                                            <h3>两天入门三天上线之django博客开发教程</h3>
+
+                                        </a>
+
+                                        <p>
+
+                                            两天入门三天上线之django博客入门开发教程，真正能快速入门的DJango博客开发教程。适合没有任何基础、想要入门的朋友。两天入门三天上线之django博客入门开发教程，真正能快速入门的
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="article__footer">
+
+                                        <time class="article__date" datetime="2022年2月19日 22:26">
+
+                                           时间: 2022年02月19日    浏览次数:5103
+
+                                        </time>
+                                        
+   
+
+                                    </div>
+
+                                </div>
+
+
+                            </article>
+
+                        </div>
+
+
+
+                    
+
+                        <div class="col-md-4 col-sm-6  clear-sm">
+
+                            <article class="article--small">
+
+                                <a href="video-5.html" title="">
+
+                                    <div class="article__image" style="background-image: url(
+                                                 static/image/flask.jpg )">
+
+                                    </div>
+
+                                </a>
+
+                                <div class="article__content">
+
+                                    <div class="article__description">
+
+                                        <a href="video-5.html" title="Flask框架全栈开发之从入门到起飞">
+
+                                            <h3>Flask框架全栈开发之从入门到起飞</h3>
+
+                                        </a>
+
+                                        <p>
+
+                                            Flask从零基础开始，从入门到进阶，使用Flask框架开发企业级的项目。课程中不仅包含了Flask框架本身的知识点，更是站在全栈的角度讲解了如何结合Flask使用ajax完成异步调度，使用redis
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="article__footer">
+
+                                        <time class="article__date" datetime="2022年2月19日 23:24">
+
+                                           时间: 2022年02月19日    浏览次数:3693
+
+                                        </time>
+                                        
+   
+
+                                    </div>
+
+                                </div>
+
+
+                            </article>
+
+                        </div>
+
+
+
+                    
+
+                        <div class="col-md-4 col-sm-6  clear-sm">
+
+                            <article class="article--small">
+
+                                <a href="video-6.html" title="">
+
+                                    <div class="article__image" style="background-image: url(
+                                                 static/image/flask2.jpg )">
+
+                                    </div>
+
+                                </a>
+
+                                <div class="article__content">
+
+                                    <div class="article__description">
+
+                                        <a href="video-6.html" title="Flask2.0+Vue3.0+WebSocket实战开发论坛系统与在线聊天系统">
+
+                                            <h3>Flask2.0+Vue3.0+WebSocket实战开发论坛系统与在线聊天系统</h3>
+
+                                        </a>
+
+                                        <p>
+
+                                            实战是实力的唯一标准，也是学习的目的。本课程用最新的Flask2.0+Vue3.0+WebSocket技术，分别实现前后端分离的论坛系统，以及在线聊天系统，让你彻底掌握Flask。是目前互联网上鲜有的
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="article__footer">
+
+                                        <time class="article__date" datetime="2022年2月20日 00:36">
+
+                                           时间: 2022年02月20日    浏览次数:4841
+
+                                        </time>
+                                        
+   
+
+                                    </div>
+
+                                </div>
+
+
+                            </article>
+
+                        </div>
+
+
+
+                    
+
+                        <div class="col-md-4 col-sm-6  clear-sm">
+
+                            <article class="article--small">
+
+                                <a href="video-7.html" title="">
+
+                                    <div class="article__image" style="background-image: url(
+                                                 static/image/fastAPI2.jpg )">
+
+                                    </div>
+
+                                </a>
+
+                                <div class="article__content">
+
+                                    <div class="article__description">
+
+                                        <a href="video-7.html" title="FastApi入门与项目实战,打造高性能网盘系统">
+
+                                            <h3>FastApi入门与项目实战,打造高性能网盘系统</h3>
+
+                                        </a>
+
+                                        <p>
+
+                                            FastApi入门到实战，用FastApi打造高性能的网盘系统，让你真正的学以致用。FastAPI是Python工程师的必备技能。
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="article__footer">
+
+                                        <time class="article__date" datetime="2022年3月9日 18:12">
+
+                                           时间: 2022年03月09日    浏览次数:3493
+
+                                        </time>
+                                        
+   
+
+                                    </div>
+
+                                </div>
+
+
+                            </article>
+
+                        </div>
+
+
+
+                    
+
+                        <div class="col-md-4 col-sm-6  clear-sm">
+
+                            <article class="article--small">
+
+                                <a href="video-8.html" title="">
+
+                                    <div class="article__image" style="background-image: url(
+                                                 static/image/python11.jpg )">
+
+                                    </div>
+
+                                </a>
+
+                                <div class="article__content">
+
+                                    <div class="article__description">
+
+                                        <a href="video-8.html" title="项目实战带你从零开始学Python数据分析">
+
+                                            <h3>项目实战带你从零开始学Python数据分析</h3>
+
+                                        </a>
+
+                                        <p>
+
+                                            数据化的时代，Python数据分析是很多学Python的朋友绕不开的话题，因为很多人就是因为要进行数据分析才去学Python的。
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="article__footer">
+
+                                        <time class="article__date" datetime="2022年4月29日 17:53">
+
+                                           时间: 2022年04月29日    浏览次数:1787
+
+                                        </time>
+                                        
+   
+
+                                    </div>
+
+                                </div>
+
+
+                            </article>
+
+                        </div>
+
+
+
+                    
+
+                        <div class="col-md-4 col-sm-6  clear-sm">
+
+                            <article class="article--small">
+
+                                <a href="video-9.html" title="">
+
+                                    <div class="article__image" style="background-image: url(
+                                                 static/image/pac.jpg )">
+
+                                    </div>
+
+                                </a>
+
+                                <div class="article__content">
+
+                                    <div class="article__description">
+
+                                        <a href="video-9.html" title="零开始系统学习Python分布式爬虫">
+
+                                            <h3>零开始系统学习Python分布式爬虫</h3>
+
+                                        </a>
+
+                                        <p>
+
+                                            爬虫的作用非常多，可以做私人搜索引擎、可以收集资源、可以做数据分析、可以做SEO、可以进行金融投资分析、可以收集客户进行营销等等。
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="article__footer">
+
+                                        <time class="article__date" datetime="2022年5月10日 20:15">
+
+                                           时间: 2022年05月10日    浏览次数:3279
+
+                                        </time>
+                                        
+   
+
+                                    </div>
+
+                                </div>
+
+
+                            </article>
+
+                        </div>
+
+
+
+                    
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    
+    <footer>
+	 <h3>加入Django中文交流社区，分享交流，携手同行</h3>
+
+	  <ul class="list-inline">
+				<li><a href="index.html" class="neon">首 页</a></li>
+				<li><a href="article.html" class="neon">文 章</a></li>
+                <li><a href="course.html" class="neon">教 程</a></li>
+                <li><a href="" class="neon">视 频</a></li>
+				<li><a href="forum.html" class="neon">社 区</a></li>
+				<li><a href="about.html" class="neon">关于我们</a></li>
+				<li><a href="contact.html" class="neon">联系我们</a></li>
+
+	  </ul>
+
+		<p class="copyright">Copyright © 2018 <a href="index1.html" target="_blank">django.cn</a>
+			<span class="second-line">All Rights Reserved.</span><br>
+            Powered by <a href="index.html">Django3</a><br>
+           <a href="https://beian.miit.gov.cn" target="_blank">备案号：湘ICP备17023990号-1</a>
+		</p>
+</footer>
+
+</div>
+
+    <!-- JavaScripts -->
+
+    <script type="text/javascript">
+
+  $('#confirm-delete').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  // var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var aid = button.data('aid')
+  var id = button.data('id')
+  var tag = button.data('tag')
+  var modal = $(this)
+  // modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('input[name="aid"]').val(aid)
+  modal.find('input[name="id"]').val(id)
+  modal.find('input[name="tag"]').val(tag)
+
+  // console.log('ok')
+})
+
+  // btn_delete_comment
+  $('#btn_delete_comment').click(function(event){
+    // var form = new FormData(document.getElementById("delete_comment"))
+    // var pwd1 = $('#change-pwd [name="password1"]').val()
+    console.log('in comment delete')
+    var aid = $('#delete_comment [name="aid"]').val()
+    var id = $('#delete_comment [name="id"]').val()
+    var tag = $('#delete_comment [name="tag"]').val()
+    var token = $('#delete_comment [name="csrfmiddlewaretoken"]').val()
+    if(!tag){
+        return
+    }
+
+    var form = new FormData();
+    form.append("id", 'id');
+    form.append("csrfmiddlewaretoken", token);
+    form.append('method','delete')
+
+        $.ajax({
+            type: 'POST',
+            url: '/comment/'+id+'/',
+            // data:'json',
+            processData: false,
+            contentType: false,
+            data: form,
+            success: function(response) {
+                if(tag == 'forum'){
+                    window.location.href = '/forum/forum-'+aid+'.html';
+                }
+                if(tag == 'article'){
+                    window.location.href = '/article/show-'+aid+'.html';
+                }
+                if(tag == 'course'){
+                    window.location.href = '/course/show-'+aid+'.html';
+                }
+            }
+        })
+  })
+</script>
+ <script src="static/js/bundle.js"></script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>

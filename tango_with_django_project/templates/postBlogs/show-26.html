@@ -1,0 +1,792 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baidu-site-verification" content="TcPgCnDcOJ">
+    <link rel="apple-touch-icon" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="icon" sizes="192x192" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="shortcut icon" href="https://www.django.cn/static/images/favicon.ico">
+    
+    <title>Django常用命令介绍，新手建议阅读-Django社区,Django中文网,django教程,Django！</title>
+    <meta name="keywords" content="dajngo,django常用命令">
+    <meta name="description" content="django里的django-admin和manege.py都是Django的命令工具集，用于处理系统管理相关操作，而manage.py是在创建Django工程时自动生成的，manage.py是对django-admin.py的简单包装，二者的作用基本一致。">
+
+    <meta name="theme-color" content="#ffffff">
+    <link href="static/css/fonts.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/toastr.min.css" rel="stylesheet">
+    <link href="static/css/app.css" rel="stylesheet">
+    <link href="static/css/font-awesome.min.css" rel="stylesheet">
+     
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/highlight.min.js"></script>
+    <script src="static/js/toastr.min.js"></script>
+
+   <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?9b0ccd50ff8935f331889174a8280dc2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div style='text-align: center;font-size: 20px'>确定删除?</div>
+            </div>
+            <div class="modal-footer">
+                <form action="/comment/" method="POST" id='delete_comment' style='float: left'>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="aAwanGhPkqha8ZlRCrKShD4zu6dJI4G7CVSQdrUkT2NS4YFo4Ch5GpjUnKgHheLO">
+                    <input type="hidden" name="tag">
+                    <input type="hidden" name="aid">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="method" value='delete'>
+                    <input type='button' class="btn btn-danger btn-ok" id='btn_delete_comment' value='删除'>
+                </form>
+                <!-- <a class="btn btn-danger btn-ok"><span>删除</span></a> -->
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span>取消</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="page__wrapper page--landing">
+   
+    <header class="header--main animate-search">
+
+    
+    <div class="container-fluid">
+        <nav class="nav--main">
+            <div class="nav__logo">
+                <a href="index.html">
+                    <span>Django中文网</span>
+                </a>
+            </div>
+
+            
+                <ul class="nav__items nav__items--right">
+                    <li class="nav__item">
+                        <a href="search.html" class="search-trigger icon-magnifier"></a>
+                    </li>
+                    <li id="login" class="nav__item">
+                        <a href="login.html">
+                            登录
+                        </a>
+                    </li>
+                    <li id="register" class="nav__item">
+                        <a href="register.html">
+                            <span class="btn btn-success">注册</span>
+                        </a>
+                    </li>
+                </ul>
+
+            
+
+            <ul class="nav__items nav__items--left">
+                <li class="nav__item nav__item--main">
+                    <a href="article.html" class="articles ">
+                        文章
+                    </a>
+                </li>
+                 <li class="nav__item nav__item--main">
+                    <a href="course.html" class="posts ">
+                        教程
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                    <a href="video.html" class="posts ">
+                        视频
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                     <a href="forum.html" class="posts ">
+                        社区
+                    </a>
+                </li>
+            </ul>
+
+
+        </nav> <!-- .nav--main -->
+    </div>
+
+
+    <a href="#0" class="nav-trigger icon-menu"></a>
+
+    <div id="search" class="main-search">
+    <div class="container-fluid">
+        <form id="search-form-top" class="form__search" action="/search/" method="GET">
+        <input type="search" name="search" placeholder="Search..." value="" autocomplete="off" required="">
+
+</form>
+
+        <div class="search-suggestions">
+
+        </div>
+        <a href="#0" class="close text-replace">Close Form</a>
+    </div>
+</div> <!-- .main-search -->
+</header>
+
+<div class="cover-layer"></div> <!-- cover main content when search form is open -->
+
+
+    
+    <div class="cover-layer"></div>
+    <!-- cover main content when search form is open -->
+    <main class="main-content" style=" margin-top:40px;">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9 article-content">
+                        <article class="article--big">
+                            <!--<a href="https://jq.qq.com/?_wv=1027&k=0kNpqlZH" target="_blank"><img src="/static/img/web2.jpg"> </a>-->
+                            
+                                <div class="article__image" style="background-image: url(static/image/mingling.jpg)"></div>
+                            
+                            <div class="article__content">
+                                <h1 class="article__title">
+                                    Django常用命令介绍，新手建议阅读
+
+                                </h1>
+                                <div class="article__header">
+                                    <div class="article__date">
+                                        <time>2019年04月17日</time>
+                                    </div>
+                                    <div class="article__date">点击次数：34490 </div>
+                                </div>
+                                <div class="article__body">
+                                    
+                                    <p>在DJango里django-admin.py和manage.py都是Django的命令工具集，用于处理系统管理相关操作，而manage.py是在创建Django工程时自动生成的，manage.py是对django-admin.py的简单包装，二者的作用基本一致。</p><p>区别：</p><p>1、django-admin存放在Python的site-packages\django\bin 里，manage.py存放在项目工程文件夹里。</p><p>2、django-admin可以对不同的项目进行设置，而manege.py只能当前的工程有效。</p><p>下面我们以manage.py为例，列出一些常用的命令：</p><p>语法：</p><p>django-admin &lt;subcommand&gt; [options]</p><p>manage.py &lt;subcommand&gt; [options]</p><p>subcommand是子命令；options是可选的</p><pre class="brush:python;toolbar:false">常用子命令：
+startproject:创建一个项目（*）
+startapp:创建一个app（*）
+runserver：运行开发服务器（*）
+shell：进入django&nbsp;shell（*）
+dbshell：进入django&nbsp;dbshell
+check：检查django项目完整性
+flush：清空数据库
+compilemessages：编译语言文件
+makemessages：创建语言文件
+makemigrations：生成数据库同步脚本（*）
+migrate：同步数据库（*）
+showmigrations：查看生成的数据库同步脚本（*）
+sqlflush：查看生成清空数据库的脚本（*）
+sqlmigrate：查看数据库同步的sql语句（*）
+dumpdata:导出数据
+loaddata:导入数据
+diffsettings:查看你的配置和django默认配置的不同之处
+manage.py特有的一些子命令：
+createsuperuser:创建超级管理员（*）
+changepassword:修改密码（*）
+clearsessions：清除session</pre><p><strong>1、help</strong></p><p>作用：获得帮助信息</p><p>语法：</p><pre class="brush:bash;toolbar:false">#显示帮助信息和可用命令
+python&nbsp;manege.py&nbsp;help
+#显示可用命令列表
+python&nbsp;manege.py&nbsp;help&nbsp;--commands
+#显示指定命令的详细文档
+python&nbsp;manage.py&nbsp;help&nbsp;&nbsp;#commands为需要指定显示的命令</pre><p><span style="font-weight: bold;">2、version</span></p><p>作用：获取到当前DJango的版本</p><p>语法：</p><pre class="brush:bash;toolbar:false">python&nbsp;manage.py&nbsp;version</pre><p><span style="font-weight: bold;">3、check</span></p><p>作用：检查工程中是否存在错误（检查完整性）</p><p>语法：</p><pre class="brush:bash;toolbar:false">python&nbsp;manage.py&nbsp;check&nbsp;[appname]&nbsp;&nbsp;&nbsp;#命令后面跟APP名称</pre><p><span style="font-weight: bold;">4、startproject</span></p><p>作用：创建Django工程</p><p>语法：</p><pre class="brush:bash;toolbar:false">django-admin&nbsp;startproject&nbsp;name&nbsp;[项目想要存放的路径]</pre><p><span style="font-weight: bold;">5、startapp</span></p><p>作用：创建Django应用程序</p><p>语法：</p><pre class="brush:bash;toolbar:false">django-admin&nbsp;startapp&nbsp;name&nbsp;[应用想要存放的路径]
+python&nbsp;manage.py&nbsp;startapp&nbsp;name</pre><p><span style="font-weight: bold;">6、runserver</span></p><p>作用：在当前机器启动一个Web服务器，运行Django项目</p><p>语法：</p><pre class="brush:bash;toolbar:false">#默认是8000端口
+python&nbsp;manage.py&nbsp;runserver
+#指定IP和端口
+python&nbsp;manage.py&nbsp;runserver&nbsp;127.0.0.1:8000
+#指定端口
+python&nbsp;manage.py&nbsp;runserver&nbsp;8000</pre><p><span style="font-weight: bold;">7、shell</span></p><p>作用：启动一个交互窗口</p><p>语法：</p><pre class="brush:bash;toolbar:false">python&nbsp;manage.py&nbsp;shell
+#如果想使用ipython、bpython交互模式的话需要先安装以上交互工具，安装命令：pip&nbsp;install&nbsp;ipython
+#启用命令
+python&nbsp;manage.py&nbsp;shell&nbsp;--i&nbsp;[ipyhton]</pre><p><span style="font-weight: bold;">8、migrations</span></p><p>Django通过migrations命令将Models中的任何修改写入到数库中，比如：新增加的模型或修改已有的字段等。</p><p><span style="color: rgb(223, 64, 42); font-weight: bold;">makemigrations</span></p><p>作用：根据models的变化生成对应的Python代码，该代码用于更新数据库</p><p>语法：</p><pre class="brush:bash;toolbar:false">python&nbsp;manage.py&nbsp;makemigrations
+python&nbsp;manage.py&nbsp;makemigrations&nbsp;[appname]</pre><p><span style="color: rgb(223, 64, 42); font-weight: bold;">migrate</span></p><p>作用：将model里的修改应用到数据库</p><p>语法：</p><pre class="brush:bash;toolbar:false">python&nbsp;manage.py&nbsp;migrate&nbsp;#默认是所有的APP的修改应用到数据库
+python&nbsp;manage.py&nbsp;migrate&nbsp;[appname]&nbsp;#指定APP的修改应用到数据库
+python&nbsp;manage.py&nbsp;migrate&nbsp;[appname]&nbsp;[migrations_name]&nbsp;#将操作恢复到指定版本</pre><p><span style="color: rgb(223, 64, 42); font-weight: bold;">注意：</span></p><p>如果执行migrate的命令同时给了应用程序的名字和migtrations名字，系统会把数据库恢复到之前指定的一个版本。</p><pre class="brush:bash;toolbar:false">python&nbsp;manage.py&nbsp;migrate&nbsp;myblog&nbsp;0001_initial&nbsp;#指定blog应用恢复到0001_initial&nbsp;这个版本</pre><p>Django所有的migration信息都保存在django_migrations这个数据库表中，如下图所示：</p><p><img src="static/picture/clipboard_20190417034155_566.png" title="" alt="clipboard.png"></p><p>如果想撤销所有的数据库更改，我们可以使用 zero代替 上面的命令:</p><pre class="brush:bash;toolbar:false">python&nbsp;manage.py&nbsp;migrate&nbsp;blog&nbsp;zero</pre><p><span style="color: rgb(223, 64, 42);">高级用法：</span></p><p>如果数据库里，已经手动更新了数据库，我们只是想设置当前的migration状态，就使用下面的命令去实现，这个命令并不会真正的去更新数据库。</p><p>语法：</p><pre class="brush:bash;toolbar:false">python&nbsp;manage.py&nbsp;migrate&nbsp;blog&nbsp;zero</pre><p><span style="color: rgb(223, 64, 42); font-weight: bold;">sqlmigrate</span></p><p>作用：输出某一个migrate对应的SQL语句</p><p>语法：</p><pre class="brush:bash;toolbar:false">python&nbsp;manage.py&nbsp;sqlmigrate&nbsp;blog&nbsp;0001_initial</pre><p><span style="color: rgb(227, 108, 9);"><strong>showmigrations</strong></span></p><p>作用：显示migrations记录</p><p>语法：</p><pre class="brush:bash;toolbar:false">python&nbsp;manage.py&nbsp;showmigrations</pre><p><img src="static/picture/clipboard2_20190417034426_899.png" title="" alt="clipboard2.png"></p><p><strong>留意：</strong>记录前有<span style="color: rgb(223, 64, 42);">[X]</span>的表示已经部署到数据库里去了，没有的则显示<span style="color: rgb(223, 64, 42);"> [ ]</span> </p><p><br></p>
+                                    
+                                </div>
+
+                                <div class="container">
+                                    <button type="button" class="btn btn-primary" title="加微信与站长交流" data-container="body" data-toggle="popover" data-placement="top" data-content="站长微信：VIPdjango">
+                                        联系站长
+                                    </button>
+
+                                </div>
+                                <script>
+                                    $(function () {
+                                        $("[data-toggle='popover']").popover();
+                                    });
+                                </script>
+
+                                <div class="article__footer">
+                                    <div class="tags"><b>上一篇：</b>
+                                        
+                                            <a href="show-25.html" class="article-tag">django视频教程,项目实战,从入门到进阶</a>
+                                        
+
+                                    </div>
+                                    <div class="tags"><b>下一篇：</b>
+                                        
+                                            <a href="show-27.html" class="article-tag">Django3.0 Alpha 发布，此版本将不再支持Python3.5</a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <!--  广告位置 -->
+                        <section id="comments">
+                            <div class="comments__container">
+                                <h3>文章评论 <span class="comment__count">2</span></h3>
+                                
+                                    <div class="comment__add">
+                                        <div class="login-card">
+                                            <a href="login1.html" class="btn btn-primary btn-login"><span>登录评论</span></a>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                                
+<div class="comments__list-wrapper">
+<div id="comment__preview" style="display: none"></div>
+<ul class="comments__list">
+    
+<li class="comment__list-item">
+<article id="comment-404" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/CC1688/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/CC1688" class="neon">
+            CC1688
+        </a>
+    </div>
+    <time datetime="2019-10-28">
+        <a class="neon">
+            2019-10-28
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>太好了</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-474" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/wfg@wfg.cn/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/wfg@wfg.cn" class="neon">
+            wfg@wfg.cn
+        </a>
+    </div>
+    <time datetime="2020-01-10">
+        <a class="neon">
+            2020-01-10
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>很好</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+</ul>
+</div>
+
+
+                                <div class="comments--legacy"></div>
+                        </section>
+                    </div>
+                    <aside class="col-md-3 hidden-sm hidden-xs">
+                        <div class="article__author">
+                            <div class="user">
+                                <div class="profile__user-avatar" style="background-image: url('static/image/timg.jpg')"></div>
+                                <div class="profile__info">
+                                    <div class="profile__name">吴秀峰</div>
+                                    <div class="badges"><span class="badge admin-badge" data-type="admin"></span></div>
+                                    <!-- <div class="profile__karma" title="Karma: 113">113</div> -->
+                                </div>
+                                <div class="profile__description">
+                                    <p>当你的才华和能力还不足以支撑你的野心的时候，静下心来，学习！</p>
+                                </div>
+                                <!--'data-hide=meta data-default=#default-links'-->
+                                <ul class="profile__links" style="">
+                                    <li class="profile__link-item change-github" data-change="github" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Github URL"> <span class="link__icon link__icon--github"></span>
+                                        <div class="change-github" data-change="github"></div>
+                                    </a></li>
+                                    <li class="profile__link-item change-twitter" data-change="twitter" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Twitter URL"> <span class="link__icon link__icon--twitter"></span>
+                                        <div class="change-twitter" data-change="twitter"></div>
+                                    </a></li>
+                                    <li class="profile__link-item change-website" data-change="website" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Website URL"> <span class="link__icon link__icon--website"></span>
+                                        <div class="change-website" data-change="website"></div>
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="section sticky-content">
+                                <div>
+                                    <div class="sidebar-articles-group">
+                                        <div class="group-title"><strong>最新文章</strong> <a href="article.html">更多</a></div>
+                                        <ul class="list-group">
+                                            
+                                                <li>
+
+                                                    <a href="show-39.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/12653.png')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django5.0正式发布，是你期待的吗？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-38.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/chatgpt.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>新手如何用Python玩转ChatGPT API,详细讲解</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-37.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/drf.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>几个例子让新手快速了解Django REST Framework (DRF)</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-36.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/python232323.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>提升效率,python的多线程详细使用方法</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-35.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/djangoQ_Z4PNibz.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django-Q，轻量级消息队列Django-Q初体验</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-34.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/Paginator.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>简单讲解Django分页Paginator和Page的用法</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-33.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('https://www.django.cn/static/images/article_default.png')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>django4.0版本到底有哪些新功能和特性？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-32.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/bushu.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django+uWSGI+nginx部署原理及工作流程</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-31.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/django-blog.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django入门视频教程之Blog开发详解</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-30.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/bt_django.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>使用宝塔面板快速部署Django项目</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+
+                                        </ul>
+                                    </div>
+                                    <div class="sidebar-articles-group">
+                                        <div class="group-title"><strong>论坛新帖</strong> <a href="forum.html">更多</a></div>
+                                        <ul class="list-group">
+                                            
+                                                <li>
+                                                    <a href="forum-69779.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>123</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69749.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>为什么每次只能导入一行数据呢？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69325.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>请教下django查询问题，开始时间2023-7-15 00:00:00 结束时间2023-7-20 23:59:59，查询统计出每天的数据总和，并输出这几天每天的总和</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69324.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>请教：Invalid block tag on line 51: &#x27;empty&#x27;. Did you forget to register or load this tag?</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69323.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django如何实现视图函数被调用之后异步回调</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68919.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>我在用Django过程中碰到一个棘手的问题，关于SESSION_COOKIE_AGE</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68918.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/avatar_-_副本.jpg')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>求教Python小版本更新升级</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68846.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>在pycharm中运行Django如何解决呢？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68845.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>项目启动失败</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68844.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>json解析错误</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            <div class="sidebar-articles-group sidebar-videos">
+                                    <div class="group-title">
+                                        <strong>视频教程</strong>
+                                        <a class="subscribe-link" target="_blank" href="video.html">更多</a>
+                                    </div>
+                                    <ul class="sidebar-video-thumbnails">
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-3.html">
+                                                <img class="video-thumb" src="static/picture/api.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-3.html">
+                                                <h4 class="video-title">Django+DRF+Vue打造专业的API自动化测试平台</h4>
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-2.html">
+                                                <img class="video-thumb" src="static/picture/djangovue_H3w7CBm.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-2.html">
+                                                <h4 class="video-title">django+vue前后端分离仿美团外卖电商项目</h4>
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-1.html">
+                                                <img class="video-thumb" src="static/picture/qiyekaifa.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-1.html">
+                                                <h4 class="video-title">django企业项目开发实战案例视频教程</h4>
+                                            </a>
+                                        </li>
+                                        
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+	 <h3>加入Django中文交流社区，分享交流，携手同行</h3>
+
+	  <ul class="list-inline">
+				<li><a href="index.html" class="neon">首 页</a></li>
+				<li><a href="article.html" class="neon">文 章</a></li>
+                <li><a href="course.html" class="neon">教 程</a></li>
+                <li><a href="video.html" class="neon">视 频</a></li>
+				<li><a href="forum.html" class="neon">社 区</a></li>
+				<li><a href="about.html" class="neon">关于我们</a></li>
+				<li><a href="contact.html" class="neon">联系我们</a></li>
+
+	  </ul>
+
+		<p class="copyright">Copyright © 2018 <a href="index1.html" target="_blank">django.cn</a>
+			<span class="second-line">All Rights Reserved.</span><br>
+            Powered by <a href="index.html">Django3</a><br>
+           <a href="https://beian.miit.gov.cn" target="_blank">备案号：湘ICP备17023990号-1</a>
+		</p>
+</footer>
+
+</div>
+
+    <!-- JavaScripts -->
+
+    <script type="text/javascript">
+
+  $('#confirm-delete').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  // var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var aid = button.data('aid')
+  var id = button.data('id')
+  var tag = button.data('tag')
+  var modal = $(this)
+  // modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('input[name="aid"]').val(aid)
+  modal.find('input[name="id"]').val(id)
+  modal.find('input[name="tag"]').val(tag)
+
+  // console.log('ok')
+})
+
+  // btn_delete_comment
+  $('#btn_delete_comment').click(function(event){
+    // var form = new FormData(document.getElementById("delete_comment"))
+    // var pwd1 = $('#change-pwd [name="password1"]').val()
+    console.log('in comment delete')
+    var aid = $('#delete_comment [name="aid"]').val()
+    var id = $('#delete_comment [name="id"]').val()
+    var tag = $('#delete_comment [name="tag"]').val()
+    var token = $('#delete_comment [name="csrfmiddlewaretoken"]').val()
+    if(!tag){
+        return
+    }
+
+    var form = new FormData();
+    form.append("id", 'id');
+    form.append("csrfmiddlewaretoken", token);
+    form.append('method','delete')
+
+        $.ajax({
+            type: 'POST',
+            url: '/comment/'+id+'/',
+            // data:'json',
+            processData: false,
+            contentType: false,
+            data: form,
+            success: function(response) {
+                if(tag == 'forum'){
+                    window.location.href = '/forum/forum-'+aid+'.html';
+                }
+                if(tag == 'article'){
+                    window.location.href = '/article/show-'+aid+'.html';
+                }
+                if(tag == 'course'){
+                    window.location.href = '/course/show-'+aid+'.html';
+                }
+            }
+        })
+  })
+</script>
+ <script src="static/js/bundle.js"></script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>

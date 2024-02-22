@@ -1,0 +1,749 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baidu-site-verification" content="TcPgCnDcOJ">
+    <link rel="apple-touch-icon" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="icon" sizes="192x192" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="shortcut icon" href="https://www.django.cn/static/images/favicon.ico">
+    
+    <title>项目实战带你从零开始学Python数据分析-django视频教程,Django</title>
+    <meta name="keywords" content="Python数据分析,Python数据可视化">
+    <meta name="description" content="数据化的时代，Python数据分析是很多学Python的朋友绕不开的话题，因为很多人就是因为要进行数据分析才去学Python的。">
+
+    <meta name="theme-color" content="#ffffff">
+    <link href="static/css/fonts.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/toastr.min.css" rel="stylesheet">
+    <link href="static/css/app.css" rel="stylesheet">
+    <link href="static/css/font-awesome.min.css" rel="stylesheet">
+     
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/highlight.min.js"></script>
+    <script src="static/js/toastr.min.js"></script>
+
+   <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?9b0ccd50ff8935f331889174a8280dc2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div style='text-align: center;font-size: 20px'>确定删除?</div>
+            </div>
+            <div class="modal-footer">
+                <form action="/comment/" method="POST" id='delete_comment' style='float: left'>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="WUvhpgykReEYIKSUsA784uknIik3caZLofRXf1bPqQaGEJcrULEltgzIBWn1Lk4s">
+                    <input type="hidden" name="tag">
+                    <input type="hidden" name="aid">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="method" value='delete'>
+                    <input type='button' class="btn btn-danger btn-ok" id='btn_delete_comment' value='删除'>
+                </form>
+                <!-- <a class="btn btn-danger btn-ok"><span>删除</span></a> -->
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span>取消</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="page__wrapper page--landing">
+   
+    <header class="header--main animate-search">
+
+    
+    <div class="container-fluid">
+        <nav class="nav--main">
+            <div class="nav__logo">
+                <a href="index.html">
+                    <span>Django中文网</span>
+                </a>
+            </div>
+
+            
+                <ul class="nav__items nav__items--right">
+                    <li class="nav__item">
+                        <a href="search.html" class="search-trigger icon-magnifier"></a>
+                    </li>
+                    <li id="login" class="nav__item">
+                        <a href="login.html">
+                            登录
+                        </a>
+                    </li>
+                    <li id="register" class="nav__item">
+                        <a href="register.html">
+                            <span class="btn btn-success">注册</span>
+                        </a>
+                    </li>
+                </ul>
+
+            
+
+            <ul class="nav__items nav__items--left">
+                <li class="nav__item nav__item--main">
+                    <a href="article.html" class="articles ">
+                        文章
+                    </a>
+                </li>
+                 <li class="nav__item nav__item--main">
+                    <a href="course.html" class="posts ">
+                        教程
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                    <a href="video.html" class="posts ">
+                        视频
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                     <a href="forum.html" class="posts ">
+                        社区
+                    </a>
+                </li>
+            </ul>
+
+
+        </nav> <!-- .nav--main -->
+    </div>
+
+
+    <a href="#0" class="nav-trigger icon-menu"></a>
+
+    <div id="search" class="main-search">
+    <div class="container-fluid">
+        <form id="search-form-top" class="form__search" action="/search/" method="GET">
+        <input type="search" name="search" placeholder="Search..." value="" autocomplete="off" required="">
+
+</form>
+
+        <div class="search-suggestions">
+
+        </div>
+        <a href="#0" class="close text-replace">Close Form</a>
+    </div>
+</div> <!-- .main-search -->
+</header>
+
+<div class="cover-layer"></div> <!-- cover main content when search form is open -->
+
+
+    
+    <div class="cover-layer"></div>
+    <!-- cover main content when search form is open -->
+    <main class="main-content" style=" margin-top:40px;">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9 article-content">
+                        <article class="article--big">
+                            <!--<a href="https://jq.qq.com/?_wv=1027&k=0kNpqlZH" target="_blank"><img src="/static/img/web2.jpg"> </a>-->
+                            
+                                <div class="article__image" style="background-image: url(static/image/python11.jpg)"></div>
+                            
+                            <div class="article__content">
+                                <h1 class="article__title">
+                                    项目实战带你从零开始学Python数据分析
+
+                                </h1>
+                                <div class="article__header">
+                                    <div class="article__date">
+                                        <time>2022年04月29日</time>
+                                    </div>
+                                    <div class="article__date">点击次数：1788 </div>
+
+                                </div>
+                                <div class="article__body">
+                                    <p>数据化的时代，Python数据分析是很多学Python的朋友绕不开的话题，很多人就是因为要进行数据分析才去学Python的。这门课程主要讲数据分析，数据可视化，21天，250多课时，带你用数据认识这个世界！</p><p>细致的课程讲解，丰富真实的项目案例，让你快速掌握数据分析技能。课程不仅仅讲解Python方面相关的库，还介绍了数据分析相关的统计学和分析方法，更加入了类似Echarts.js库，增强在企业的核心竞争力！</p><p><img src="static/picture/w1_20220429175237_241.jpg" title="" alt="w1.jpg"><img src="static/picture/w2_20220429175326_748.jpg" title="" alt="w2.jpg"></p><p><span style="font-size: 18px;"><strong>课程售价：<span style="font-size: 18px; color: rgb(192, 80, 77);">358元</span></strong></span></p><p><span style="font-size: 18px;"></span></p><p><strong><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602" style="">购买联系微信:<span style="color: rgb(192, 80, 77);">VIPdjango</span></span></strong><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602" style=""><br></span></p><p><span style="font-size: 18px;"><strong><img src="static/picture/dddd_20220215181015_581.jpg" title="" alt="dddd.jpg" style="width: 198px; height: 199px;" width="198" height="199"><br></strong></span></p><p><span style="color: rgb(192, 80, 77);"><strong>关于课程收看方法：</strong></span></p><p>购买后，可以通过手机、电脑在线播放，永久观看。</p><p><span style="color: rgb(192, 80, 77);"><strong>相关素材与文档:</strong></span></p><p>购买后统一加售后群分发，群内有老师在线解惑。</p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609">============================================================================</span></span></span></span></span></span></p><p><span style="font-size: 18px;"><strong>课程详细目录：</strong></span></p><p><span style="font-size: 18px; color: rgb(192, 0, 0);"><strong>第一天∶数据分析入门</strong></span></p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong>章节1∶</strong></p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时1【数据分析准备】课程介绍</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时2【数据分析准备】什么是数据分析</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时3【数据分析准备】开发环境搭建</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时4 【数据分析准备】jupyter notebook详细讲解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时5【数据分析准备】作业-前奏部分作业</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong>章节2∶</strong></p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style="color: rgb(192, 0, 0); font-size: 18px;"><strong>第二天∶ Numpy数据处理库（1）</strong></span></p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时6【Numpy库】Numpy库介绍</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时7【Numpy库】数组的创建方式【</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时8 Numpy库】数组的数据类型详解<br>课时9【Numpy库】多维数组及其简单操作</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时10【Numpy库】数组的索引和切片详解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时11【Numpy库】布尔索引</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时12【Numpy库】】数组值的替换</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时13【Numpy库】索引和切片作业<br> 课时14【Numpy库】数组的广播机制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时15【Numpy库】数组形状操作-reshpae、resize、flatten、ravel</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时16【Numpy库】数组形状操作-数组的叠力口</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时17【Numpy库】数组形状操作-数组切割</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时18【Numpy库】数组形状操作-转置</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时19【Numpy库】数组的浅拷贝和深拷贝</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时20【Numpy库】文件操作-cSV文件操作</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时21【Numpy库】文件操作-save和load方式</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时22【csv文件】读取csv文件的两种方式</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时23【csv文件】写入csV文件的两种方式</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时24【Numpy库】作业-数组操作和文件操作作业</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong>章节3∶</strong></p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong><span style="color: rgb(192, 0, 0); font-size: 18px;">&nbsp;第三天∶Numpy数据处理库（2）</span></strong></p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时25【Numpy库】NAN和INF值的认识</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时26【Numpy库】NAN和INF值处理-删除</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时27【Numpy库】NAN和INF值处理-替换<br> 课时28【Numpy库】random模块</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时29【Numpy库】axis轴理解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时30【Numpy库】通用函数一元函数</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时31【Numpy库】通用函数-二元函数</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时32【Numpy库】通用函数-聚合函数</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时33【Numpy库】通用函数-布尔判断函数</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时34【Numpy库】通用函数-排序</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时35【Numpy库】通用函数-其他函数补充</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style="font-size: 18px;"><strong><span style="color: rgb(192, 0, 0);">章节4、</span></strong></span><strong><span style="color: rgb(192, 0, 0); font-size: 18px;">Pandas新版∶</span></strong></p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时36【Pandas库】Pandas库介绍</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时37【Pandas库】Series数据结构介绍</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时38【Pandas库】DataFrame对象的创建</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时39【Pandas库】查看DataFrame对象 <br>课时40【Pandas库】DataFrame的基本操作</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时1【Pandas库】索引类型详解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时42【Pandas库】Series索引操作</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时43【Pandas库】DataFrame索引操作</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时44【Pandas库】4种重置索引的方法</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时45【Pandas库】数据类型转化（1）</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时46【Pandas库】数据类型转化（2）</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时47【Pandas库】数据类型转化（3）</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时48【Pandas库】CSV文件操作详解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时49【Pandas库】Excel文件操作详解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时50【Pandas库】SQL文件操作详解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时51【Pandas库】缺失值处理</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时52【Pandas库】apply、applymap以及axis理解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时53【Pandas库】sort_values和sort_index排序</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时54【Pandas库】逻辑运算与query方法详解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时55【Pandas库】统计函数与累计函数</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时56【Pandas库】数据离散化</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时57【Pandas库】数据合并concat方法 <br>课时58【Pandas库】数据合并merge详解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时59 【Pandas库】分组和聚合<br>课时60【Pandas库】交叉表使用详解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时6【Pandas库】交叉表实战</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时62【Pandas库】透视表使用详解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style="font-size: 18px;"><strong><span style="color: rgb(192, 0, 0);"><span style="font-size: 18px;"><strong><span style="color: rgb(192, 0, 0);">章节5、</span></strong></span>第四天∶Pandas库数据处理库（1）</span></strong></span><br>课时63【Pandas库】pandas介绍</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时64【Pandas库】Series创建</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时65【Pandas库】Series基本用法</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时66【Pandas库】Series总结</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时67【Pandas库】】Series作业</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时68【Pandas库】DataFrame介绍</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时69【Pandas库】DataFrame创建-字典类</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时70【Pandas库】DataFrame创建-列表类</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时71【Pandas库】DataFrame基本使用</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时72【Pandas库】DataFrame作业</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style="font-size: 18px; color: rgb(192, 0, 0);"><strong><span style="font-size: 18px;"><strong><span style="color: rgb(192, 0, 0);">章节6、</span></strong></span>第五天∶Pandas数据处理库（2）</strong></span></p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时73【Pandas库】Pandas索引操作-index对象</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时74【Pandas库】Pandas索引操作-重新索引</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时75【Pandas库】Pandas索引操作-增</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时76【Pandas库】Pandas索引操作-删</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时77【Pandas库】Pandas索引操作改</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时78【Pandas库】Pandas索引操作一查</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时79【Pandas库】Pandas索引操作--高级索引</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时80【Pandas库】Pandas索引操作-作业</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong><span style="color: rgb(192, 0, 0); font-size: 18px;"><span style="font-size: 18px;"><strong><span style="color: rgb(192, 0, 0);">章节7、</span></strong></span>第六天∶ Pandas数据处理库（3）</span></strong><br></p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时81【Pandas库】Pandas对齐运算一算术运算和数据对齐</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时82【Pandas库】Pandas对齐运算-填充值</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时83【Pandas库】Pandas对齐运算一混合运算</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时84【Pandas库】Pandas函数应用-apply和applymap</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时85【Pandas库】Pandas函数应用一排序</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时86【Pandas库】Pandas函数应用-唯一值和成员属性</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时87【Pandas库】Pandas函数应用一处理缺失数据</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时88【Pandas库】Pandas层级索引</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时89【Pandas库】Pandas统计计算和描述</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时90【Pandas库】Pandas入门总结</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">章节8∶</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style="font-size: 18px;"><strong><span style="color: rgb(192, 0, 0);">章节8，第七天∶ Pandas数据处理库（4）</span></strong></span><br>课时91【Pandas库】数据加载，存储与文件格式一读写文本格式文件</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时92【Pandas库】数据清洗和准备一处理缺失数据</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时93【Pandas库】数据清洗和准备-移除重复数据</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时94【Pandas库】数据清洗和准备一利用映射或函数转换数据</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时95【Pandas库】数据清洗和准备-替换值</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时96【Pandas库】数据清洗和准备-重命名轴索引</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时97【Pandas库】数据清洗和准备-离散化和面元划分</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时98【Pandas库】数据清洗和准备--检测和过滤异常值</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时99【Pandas库】数据清洗和准备--排列和随机采样</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时100【Pandas库】数据清洗和准备-字符串对象方法</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时101【Pandas库】数据清洗和准备-正则表达式</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时102【Pandas库】数据清洗和准备--pandas的矢量化字符串函数</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时103【Pandas库】数据清洗和准备--总结</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时104【Pandas库】数据清洗和准备--作业</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style="font-size: 18px;"><strong><span style="color: rgb(192, 0, 0);">章节9∶ 第八天∶ Pandas数据处理库（5）</span></strong></span><br>课时105【Pandas库】数据规整一层次化索引</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时106【Pandas库】数据规整-数据连接</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时107【Pandas库】数据规整一数据合并</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时108 【Pandas库】数据规整一重塑层次化索引<br>课时109【Pandas库】数据规整-轴向旋转</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时110【Pandas库】数据分组和聚合</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时111【Pandas库】数据分组和聚合-补充</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时112【Pandas库】数据规整，分组聚合一作业</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong><span style="color: rgb(192, 0, 0); font-size: 18px;">章节10∶ 第九天∶Matplotlib绘图库（1）</span></strong><br>课时113【Matploblib库】数据分析中的常用图剖析</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时114【Matploblib库】matplotib基本使用<br> 课时115【Matploblib库】设置折线图的线条样式</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时116【Matploblib库】设置图标题和显示中文</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时117【Matploblib库】设置轴刻度和文本显示</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时118【Matploblib库】设置marker和注释文本</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时119【Matploblib库】画板样式设置和保存图片<br> 课时120【Matploblib库】绘制多个子图和matplotlib风格设置</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时121【Matploblib库】作业-折线图作业要求</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong><span style="color: rgb(192, 0, 0); font-size: 18px;">章节11∶ 第十天∶Matplotlib绘图库（2）</span></strong><br>课时122【Matploblib库】条形图-垂直条形图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时123【Matploblib库】条形图-横向条形图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时124【Matploblib库】条形图-分组条形图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时125【Matploblib库】条形图-堆叠条形图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时126 【Matploblib库】作业-条形图作业要求.<br>课时127【Matploblib库】直方图-直方图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时128【Matploblib库】作业-直方图作业要求</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong><span style="color: rgb(192, 0, 0); font-size: 18px;">章节12∶第十—天∶ Matplotlib绘图库（3）</span></strong><br>课时129【Matploblib库】散点图-散点图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时130【Matploblib库】散点图-绘制回归曲线</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时131【Matploblib库】作业-散点图作业要求</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时132 【Matploblib库】饼图-饼图的绘制<br>课时133【Matploblib库】作业-饼图的作业要求</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时134【Matploblib库】箱线图-箱线图详解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时135【Matploblib库】箱线图-箱线图的绘制<br> 课时136【Matploblib库】作业-箱线图作业要求</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时137【Matploblib库】雷达图-雷达图的绘制<br> 课时138【Matploblib库】作业-雷达图作业要求</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong><span style="color: rgb(192, 0, 0); font-size: 18px;">章节13∶ 第十二天∶Matplotlib绘图库（4）</span></strong><br>课时139【Matploblib库】matplotlib图结构分析</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时140【Matploblib库】Axes对象讲解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时141【Matploblib库】Axis对象讲解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时142【Matploblib库】Tick对象讲解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时143【Matploblib库】多子图调整布局</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时144【Matplobli库】自定义多图布局<br> 课时145【Matploblib库】散点图直方图综合案例</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时146【Matploblib库】rcParams配置详解</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong><span style="color: rgb(192, 0, 0); font-size: 18px;">章节14∶ 第十三天∶Seaborn绘图库</span></strong><br>课时147【Seaborn库】关系图-散点图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时148【Seaborn库】关系图-折线图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时149【Seaborn库】分类图-分类散点图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时150 【Seaborn库】分类图-分类分布图的绘制<br>课时151【Seaborn库】分类图-分类统计图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时152【Seaborn库】分布图-单一变量分布图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时153【Seaborn库】分布图-二变量分布图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时154【Seaborn库】分布图-pairplot分布图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时155【Seaborn库】线性回归-线性回归图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时156【Seaborn库】FacetGrid绘图-FacetGrid讲解（1）</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时157【Seaborn库】FacetGrid绘图-FacetGrid讲解（2）</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时158【Seaborn库】FacetGrid绘图-FacetGrid讲解（3）</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时159【Seaborn库】seaborn样式和风格设置</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时160【Seaborn库】调色盘-调色盘的使用和定性调色盘</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时161【Seaborn库】调色盘-连续和离散调色盘</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时162【Seaborn库】作业-seaborn作业要求</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong><span style="color: rgb(192, 0, 0); font-size: 18px;">章节15∶ Pyecharts库</span></strong><br>课时163【pyecharts】pyecharts介绍</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时164【pyecharts】pyecharts快速入门</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时165【pyecharts】绘图配置项数据准备</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时166【pyecharts】绘图配置项讲解（1）</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时167【pyecharts】绘图配置项讲解（2）</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时168【pyecharts】条形图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时169【pyecharts】箱线图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时170【pyecharts】地图的绘制</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong><span style="color: rgb(192, 0, 0); font-size: 18px;">章节16∶ 第十四天∶数据分析实战</span></strong><br>课时171【绝地求生】数据集介绍和缺失值处理</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时172【绝地求生】数据集内存压缩</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时173【绝地求生】异常数据处理</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时174【绝地求生】计算是否吃鸡特性</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时175【绝地求生】武器和吃鸡的关系分析</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时176【绝地求生】寻找吃鸡概率最高的队友</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时177【绝地求生】射击距离与枪的选择</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时178【绝地求生】移动距离与吃鸡分布</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时179【黑色星期五】黑色星期五个人消费金额分析<br> 课时180【黑色星期五】性别和婚姻状况分布分析</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时181【黑色星期五】年龄和产品购买信息挖掘</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时182【黑色星期五】产品销售情况分析</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时183【黑色星期五】城市与购买力之间的分析</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时184【黑色星期五】相同产品在不同城市的购买力分析</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><strong><span style="color: rgb(192, 0, 0); font-size: 18px;">章节17∶ 第十五天∶机器学习（1）</span></strong><br>课时186【机器学习】认识机器学习</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时187【机器学习】scikit-earn库介绍</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时188【机器学习】算法介绍<br> 课时189【机器学习】sklearn数据集介绍</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时190【机器学习】K近邻算法原理</p><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">课时191【机器学习】使用sklearn实现K近邻</p><p>课时192【机器学习】K近邻预测约会是否受欢迎</p><p>课时193【机器学习】标准化原理和代码实现</p><p>课时194【机器学习】K近邻总结和作业</p><p><strong><span style="color: rgb(192, 80, 77); font-size: 18px;">章节18∶第十六天∶机器学习（2）</span></strong></p><p>课时195【机器学习】朴素贝叶斯公式详解</p><p>课时196【机器学习】朴素贝叶斯文档分类原理</p><p>课时197【机器学习】特征抽取-CountVectorizer</p><p>课时198【机器学习】朴素贝叶斯文章分类实战</p><p>课时199【机器学习】多项式、高斯、伯努利模型</p><p>课时200【机器学习】决策树理解</p><p>课时201【机器学习】决策树之信息熵</p><p>课时202【机器学习】决策树之信息熵补充</p><p>课时203【机器学习】决策树之信息增益</p><p>课时204【机器学习】决策树之算法选择（ID3，C4.5，CART）</p><p>课时205【机器学习】决策树算法之预剪枝和后剪枝</p><p>课时206【机器学习】实战-泰坦尼克号获救预测（1）</p><p>课时207【机器学习】实战-泰坦尼克号获救预测（2）</p><p>课时208【机器学习】决策树的绘制</p><p>课时209【机器学习】随机森林原理</p><p>课时210【机器学习】sklearn实现随机森林</p><p><span style="color: rgb(192, 80, 77); font-size: 18px;"><strong>章节19∶ 第十七天∶机器学习（3）</strong></span></p><p>课时211【机器学习】线性回归通俗解释</p><p>课时212【机器学习】线性回归方程和损失函数</p><p>课时213【机器学习】线性回归推导-求解对象转换</p><p>课时214【机器学习】线性回归推导-似然函数</p><p>课时215【机器学习】线性回归推导-梯度下降</p><p>课时216【机器学习】线性回归预测波士顿房价</p><p>课时217【机器学习】正则化和岭回归</p><p>课时218【机器学习】逻辑回归原理</p><p>课时219【机器学习】逻辑回归预测是否患癌症</p><p>课时220【机器学习】精确率和召回率</p><p><span style="font-size: 18px;"><strong><span style="color: rgb(192, 80, 77);">章节20∶ 第十八天∶机器学习（4）</span></strong></span><br>课时221【机器学习】特征工程字典特征抽取</p><p>课时222【机器学习】特征工程-文本特征抽取和ieba分词</p><p>课时223【机器学习】特征工程-TFIDF特征抽取</p><p>课时224【机器学习】特征工程-归—化</p><p>课时225【机器学习】特征工程-标准化</p><p>课时226【机器学习】特征工程-缺失值处理</p><p>课时227【机器学习】特征工程-特征选择</p><p>课时228【机器学习】特征工程-PCA原理分析</p><p>课时229【机器学习】特征工程-PCA实例</p><p><strong><span style="color: rgb(192, 80, 77); font-size: 18px;">章节21∶ 第十九天∶机器学习实战（1）</span></strong></p><p>课时230【项目实战】Airbnb数据集-价格因素分析</p><p>课时231【项目实战】Airbnb数据集-房屋数据预处理</p><p>课时232【项目实战】Airbnb数据集-房间类型和社区分析</p><p>课时233【项目实战】Airbnb数据集-房间类型和社区对比分析</p><p>课时234【项目实战】Airbnb数据集-房东房源数量分析</p><p>课时235【项目实战】Airbnb数据集-评论数量与时间分析</p><p>课时236【项目实战】Airbnb数据集-评论数量与时间综合分析</p><p>课时237【项目实战】Airbnb数据集-房屋价格预测（1）</p><p>课时238【项目实战】Airbnb数据集-房屋价格预测（2）</p><p>课时239【项目实战】Airbnb数据集-评论数量预测</p><p>课时240【项目实战】Airbnb数据集-预测结果可视化</p><p><strong><span style="color: rgb(192, 80, 77); font-size: 18px;">章节22∶第二十天∶机器学习项目实战（2）</span></strong></p><p>课时241【项目实战】心脏病预测数据集介绍</p><p>课时242【项目实战】心脏病预测-性别与患病分析</p><p>课时243【项目实战】心脏病预测-年龄与患病分析</p><p>课时244【项目实战】心脏病预测-特征相关性分析</p><p>课时245【项目实战】心脏病预测-特征预处理</p><p>课时246【项目实战】心脏病预测-K近邻预测</p><p>课时247【项目实战】心脏病预测-精准率召回率以及ROC曲线</p><p>课时248【项目实战】心脏病预测-决策树算去评估</p><p>课时249【项目实战】心脏病预测-随机森林算去评估</p><p>课时250【项目实战】心脏病预测-逻辑回归算法评估</p><p>课时251【项目实战】心脏病预测-SGD分类算评估</p><p>课时252【项目实战】心脏病预测-特征重要性分析</p>
+                                </div>
+
+                                    <div class="article__header tags" style="margin-top: 10px;">
+                                    <b>文章标签:</b>
+                                    
+
+                                </div>
+
+                                <div class="container">
+                                    <button type="button" class="btn btn-primary" title="加站长微信与作者交流" data-container="body" data-toggle="popover" data-placement="top" data-content="站长微信：VIPdjango ">
+                                        与站长交流
+                                    </button>
+
+                                </div>
+                                <script>
+                                    $(function () {
+                                        $("[data-toggle='popover']").popover();
+                                    });
+                                </script>
+
+                            </div>
+                        </article>
+                        <!--  广告位置 -->
+
+                        <div id="article__related-articles">
+                            <h3>推荐阅读</h3>
+                            <div class="row no-margin">
+                            
+                                <div class="col-sm-4">
+                                    <article class="related-article">
+                                        <a href="/article/show-11.html" class="article-related-link">
+                                            <div class="article__image" style="background-image: url('static/image/user.jpg')">
+                                                
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__description">
+                                                    <h3>Django进阶教程:如何扩展Django用户模型</h3>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </article>
+                                </div>
+                            
+                                <div class="col-sm-4">
+                                    <article class="related-article">
+                                        <a href="show-28.html" class="article-related-link">
+                                            <div class="article__image" style="background-image: url('static/image/django30.jpg')">
+                                                
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__description">
+                                                    <h3>支持异步？django3新特性ASGI初体验</h3>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </article>
+                                </div>
+                            
+                                <div class="col-sm-4">
+                                    <article class="related-article">
+                                        <a href="show-24.html" class="article-related-link">
+                                            <div class="article__image" style="background-image: url('static/image/redis_ft0hWBs.jpg')">
+                                                
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__description">
+                                                    <h3>centos和ubuntu下redis的安装与使用</h3>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </article>
+                                </div>
+                            
+                                <div class="col-sm-4">
+                                    <article class="related-article">
+                                        <a href="show-15.html" class="article-related-link">
+                                            <div class="article__image" style="background-image: url('static/image/orm.jpg')">
+                                                
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__description">
+                                                    <h3>Django ORM常用操作介绍（新手必看）</h3>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </article>
+                                </div>
+                            
+                                <div class="col-sm-4">
+                                    <article class="related-article">
+                                        <a href="show-21.html" class="article-related-link">
+                                            <div class="article__image" style="background-image: url('static/image/iis.jpg')">
+                                                
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__description">
+                                                    <h3>Windows server iis部署Django详细操作</h3>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </article>
+                                </div>
+                            
+                                <div class="col-sm-4">
+                                    <article class="related-article">
+                                        <a href="show-23.html" class="article-related-link">
+                                            <div class="article__image" style="background-image: url('static/image/blog.jpg')">
+                                                
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__description">
+                                                    <h3>django搭建blog,django快速搭建blog</h3>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </article>
+                                </div>
+                            
+
+
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <aside class="col-md-3 hidden-sm hidden-xs">
+                        <div class="article__author">
+                            <div class="user">
+                                <div class="profile__user-avatar" style="background-image: url('static/image/timg.jpg')"></div>
+                                <div class="profile__info">
+                                    <div class="profile__name">吴秀峰</div>
+                                    <div class="badges"><span class="badge admin-badge" data-type="admin"></span></div>
+                                    <!-- <div class="profile__karma" title="Karma: 113">113</div> -->
+                                </div>
+                                <div class="profile__description">
+                                    <p>当你的才华和能力还不足以支撑你的野心的时候，静下心来，学习！</p>
+                                </div>
+                                <!--'data-hide=meta data-default=#default-links'-->
+                                <ul class="profile__links" style="">
+                                    <li class="profile__link-item change-github" data-change="github" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Github URL"> <span class="link__icon link__icon--github"></span>
+                                        <div class="change-github" data-change="github"></div>
+                                    </a></li>
+                                    <li class="profile__link-item change-twitter" data-change="twitter" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Twitter URL"> <span class="link__icon link__icon--twitter"></span>
+                                        <div class="change-twitter" data-change="twitter"></div>
+                                    </a></li>
+                                    <li class="profile__link-item change-website" data-change="website" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Website URL"> <span class="link__icon link__icon--website"></span>
+                                        <div class="change-website" data-change="website"></div>
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="section sticky-content">
+                                <div>
+                                    <div class="sidebar-articles-group">
+                                        <div class="group-title"><strong>最新文章</strong> <a href="article.html">更多</a></div>
+                                        <ul class="list-group">
+                                            
+                                                <li>
+
+                                                    <a href="show-39.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/12653.png')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django5.0正式发布，是你期待的吗？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-38.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/chatgpt.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>新手如何用Python玩转ChatGPT API,详细讲解</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-37.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/drf.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>几个例子让新手快速了解Django REST Framework (DRF)</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-36.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/python232323.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>提升效率,python的多线程详细使用方法</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-35.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/djangoQ_Z4PNibz.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django-Q，轻量级消息队列Django-Q初体验</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-34.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/Paginator.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>简单讲解Django分页Paginator和Page的用法</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-33.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/article_default.png')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>django4.0版本到底有哪些新功能和特性？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-32.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/bushu.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django+uWSGI+nginx部署原理及工作流程</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-31.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/django-blog.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django入门视频教程之Blog开发详解</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-30.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/bt_django.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>使用宝塔面板快速部署Django项目</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+
+                                        </ul>
+                                    </div>
+                                    <div class="sidebar-articles-group">
+                                        <div class="group-title"><strong>论坛新帖</strong> <a href="forum.html">更多</a></div>
+                                        <ul class="list-group">
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-70.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>为什么我的详细信息视图网页模板不显示，求大神</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-500.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>在学习博客教程的时候遇到问题</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-76.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>mxshop vue_djangorestframework项目访问报错，访问地址：http://127.0.0.1:8000/goods/</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-45755.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/timg.jpg')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>普通人如何体验和使用ChatGPT？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-466.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>博客开发教程里关于标签页显示的问题</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-58.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>django如何用streamresponse实现视频播放？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-538.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>想找一个能独立完成项目的以及维护修改功能的长期合作</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-150.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django入门求助，第一次建项目404</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-502.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>求助：如何在ModelForm中根据其他字段来确定另一个字段的选值范围？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-20447.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>(&#x27;Connection aborted.&#x27;, ConnectionResetError(104, &#x27;Connection reset by peer&#x27;))</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+                                <div class="sidebar-articles-group sidebar-videos">
+                                    <div class="group-title">
+                                        <strong>视频教程</strong>
+                                        <a class="subscribe-link" target="_blank" href="video.html">更多</a>
+                                    </div>
+                                    <ul class="sidebar-video-thumbnails">
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-3.html">
+                                                <img class="video-thumb" src="static/picture/api.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-3.html">
+                                                <h4 class="video-title">Django+DRF+Vue打造专业的API自动化测试平台</h4>
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-2.html">
+                                                <img class="video-thumb" src="static/picture/djangovue_H3w7CBm.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-2.html">
+                                                <h4 class="video-title">django+vue前后端分离仿美团外卖电商项目</h4>
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-1.html">
+                                                <img class="video-thumb" src="static/picture/qiyekaifa.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-1.html">
+                                                <h4 class="video-title">django企业项目开发实战案例视频教程</h4>
+                                            </a>
+                                        </li>
+                                        
+
+                                    </ul>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+	 <h3>加入Django中文交流社区，分享交流，携手同行</h3>
+
+	  <ul class="list-inline">
+				<li><a href="index.html" class="neon">首 页</a></li>
+				<li><a href="article.html" class="neon">文 章</a></li>
+                <li><a href="course.html" class="neon">教 程</a></li>
+                <li><a href="video.html" class="neon">视 频</a></li>
+				<li><a href="forum.html" class="neon">社 区</a></li>
+				<li><a href="about.html" class="neon">关于我们</a></li>
+				<li><a href="contact.html" class="neon">联系我们</a></li>
+
+	  </ul>
+
+		<p class="copyright">Copyright © 2018 <a href="index1.html" target="_blank">django.cn</a>
+			<span class="second-line">All Rights Reserved.</span><br>
+            Powered by <a href="index.html">Django3</a><br>
+           <a href="https://beian.miit.gov.cn" target="_blank">备案号：湘ICP备17023990号-1</a>
+		</p>
+</footer>
+
+</div>
+
+    <!-- JavaScripts -->
+
+    <script type="text/javascript">
+
+  $('#confirm-delete').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  // var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var aid = button.data('aid')
+  var id = button.data('id')
+  var tag = button.data('tag')
+  var modal = $(this)
+  // modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('input[name="aid"]').val(aid)
+  modal.find('input[name="id"]').val(id)
+  modal.find('input[name="tag"]').val(tag)
+
+  // console.log('ok')
+})
+
+  // btn_delete_comment
+  $('#btn_delete_comment').click(function(event){
+    // var form = new FormData(document.getElementById("delete_comment"))
+    // var pwd1 = $('#change-pwd [name="password1"]').val()
+    console.log('in comment delete')
+    var aid = $('#delete_comment [name="aid"]').val()
+    var id = $('#delete_comment [name="id"]').val()
+    var tag = $('#delete_comment [name="tag"]').val()
+    var token = $('#delete_comment [name="csrfmiddlewaretoken"]').val()
+    if(!tag){
+        return
+    }
+
+    var form = new FormData();
+    form.append("id", 'id');
+    form.append("csrfmiddlewaretoken", token);
+    form.append('method','delete')
+
+        $.ajax({
+            type: 'POST',
+            url: '/comment/'+id+'/',
+            // data:'json',
+            processData: false,
+            contentType: false,
+            data: form,
+            success: function(response) {
+                if(tag == 'forum'){
+                    window.location.href = '/forum/forum-'+aid+'.html';
+                }
+                if(tag == 'article'){
+                    window.location.href = '/article/show-'+aid+'.html';
+                }
+                if(tag == 'course'){
+                    window.location.href = '/course/show-'+aid+'.html';
+                }
+            }
+        })
+  })
+</script>
+ <script src="static/js/bundle.js"></script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>

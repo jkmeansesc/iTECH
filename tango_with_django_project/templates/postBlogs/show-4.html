@@ -1,0 +1,2383 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baidu-site-verification" content="TcPgCnDcOJ">
+    <link rel="apple-touch-icon" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="icon" sizes="192x192" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="shortcut icon" href="https://www.django.cn/static/images/favicon.ico">
+    
+    <title>CentOS7下部署Django项目详细操作步骤-Django社区,Django中文网,django教程,Django！</title>
+    <meta name="keywords" content="CentOS7下部署Django,Django部署,CentOS部署django">
+    <meta name="description" content="CentOS7下部署Django项目详细操作步骤，django在centos下部署的方法">
+
+    <meta name="theme-color" content="#ffffff">
+    <link href="static/css/fonts.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/toastr.min.css" rel="stylesheet">
+    <link href="static/css/app.css" rel="stylesheet">
+    <link href="static/css/font-awesome.min.css" rel="stylesheet">
+     
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/highlight.min.js"></script>
+    <script src="static/js/toastr.min.js"></script>
+
+   <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?9b0ccd50ff8935f331889174a8280dc2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div style='text-align: center;font-size: 20px'>确定删除?</div>
+            </div>
+            <div class="modal-footer">
+                <form action="/comment/" method="POST" id='delete_comment' style='float: left'>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="KHY4erO56mndPcvFloZlPcfjr3aoy6lBc2kK4crAFYTVLbPcNzwyeYuEkHdm7gqi">
+                    <input type="hidden" name="tag">
+                    <input type="hidden" name="aid">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="method" value='delete'>
+                    <input type='button' class="btn btn-danger btn-ok" id='btn_delete_comment' value='删除'>
+                </form>
+                <!-- <a class="btn btn-danger btn-ok"><span>删除</span></a> -->
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span>取消</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="page__wrapper page--landing">
+   
+    <header class="header--main animate-search">
+
+    
+    <div class="container-fluid">
+        <nav class="nav--main">
+            <div class="nav__logo">
+                <a href="index.html">
+                    <span>Django中文网</span>
+                </a>
+            </div>
+
+            
+                <ul class="nav__items nav__items--right">
+                    <li class="nav__item">
+                        <a href="search.html" class="search-trigger icon-magnifier"></a>
+                    </li>
+                    <li id="login" class="nav__item">
+                        <a href="login.html">
+                            登录
+                        </a>
+                    </li>
+                    <li id="register" class="nav__item">
+                        <a href="register.html">
+                            <span class="btn btn-success">注册</span>
+                        </a>
+                    </li>
+                </ul>
+
+            
+
+            <ul class="nav__items nav__items--left">
+                <li class="nav__item nav__item--main">
+                    <a href="article.html" class="articles ">
+                        文章
+                    </a>
+                </li>
+                 <li class="nav__item nav__item--main">
+                    <a href="course.html" class="posts ">
+                        教程
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                    <a href="video.html" class="posts ">
+                        视频
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                     <a href="forum.html" class="posts ">
+                        社区
+                    </a>
+                </li>
+            </ul>
+
+
+        </nav> <!-- .nav--main -->
+    </div>
+
+
+    <a href="#0" class="nav-trigger icon-menu"></a>
+
+    <div id="search" class="main-search">
+    <div class="container-fluid">
+        <form id="search-form-top" class="form__search" action="/search/" method="GET">
+        <input type="search" name="search" placeholder="Search..." value="" autocomplete="off" required="">
+
+</form>
+
+        <div class="search-suggestions">
+
+        </div>
+        <a href="#0" class="close text-replace">Close Form</a>
+    </div>
+</div> <!-- .main-search -->
+</header>
+
+<div class="cover-layer"></div> <!-- cover main content when search form is open -->
+
+
+    
+    <div class="cover-layer"></div>
+    <!-- cover main content when search form is open -->
+    <main class="main-content" style=" margin-top:40px;">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9 article-content">
+                        <article class="article--big">
+                            <!--<a href="https://jq.qq.com/?_wv=1027&k=0kNpqlZH" target="_blank"><img src="/static/img/web2.jpg"> </a>-->
+                            
+                                <div class="article__image" style="background-image: url(static/image/centosbs.jpg)"></div>
+                            
+                            <div class="article__content">
+                                <h1 class="article__title">
+                                    CentOS7下部署Django项目详细操作步骤
+
+                                </h1>
+                                <div class="article__header">
+                                    <div class="article__date">
+                                        <time>2018年07月09日</time>
+                                    </div>
+                                    <div class="article__date">点击次数：81002 </div>
+                                </div>
+                                <div class="article__body">
+                                    
+                                    <h1 style="text-align: left;"><span style="color: rgb(0, 0, 0); font-size: 18px;"><strong>部署是基于：centos7+nginx+uwsgi+python3+django 之上做的</strong></span></h1><p style="text-align: left;">软件版本详细介绍，纯净操作系统：Centos7.0&nbsp; Python版本：python3.6 Django版本:django2.0.6 <br style="text-align: left;">本文包括以下几个部分内容：</p><p style="text-align: left;">㈠、<a href="#buzhou" target="_self">服务器环境部署详细步骤</a><br></p><p style="text-align: left;">㈡、<a href="#banqian" target="_self">本地项目搬迁到服务器</a><br></p><p style="text-align: left;">㈢、<a href="#yangsi" target="_self">Django后台样式丢失解决办法</a><br></p><p>㈣、<a href="#ssl" target="_self">Django开启SSL证书（https域名）详细步骤</a></p><p>㈤、<a href="#duo" target="_self">Django多站点部署方法</a><br></p><p>如果觉得看文字没意思，想看视频教程的，请点击这里：<a href="https://mp.weixin.qq.com/s/vF8yC0WUM9B0PmsQSMutiQ" target="_blank">Django项目部署视频教程</a><br></p><hr><p style="text-align: left;"><strong id="buzhou">详细步骤(下面步骤都是ROOT权限执行):</strong></p><p style="text-align: left;"><span style="color: rgb(192, 0, 0);"><strong>一、更新系统软件包</strong></span><br style="text-align: left;">yum update -y</p><p style="text-align: left;"><span style="color: rgb(192, 0, 0);"><strong>二、安装软件管理包和可能使用的依赖</strong></span></p><pre>yum&nbsp;-y&nbsp;groupinstall&nbsp;&quot;Development&nbsp;tools&quot;
+yum&nbsp;install&nbsp;openssl-devel&nbsp;bzip2-devel&nbsp;expat-devel&nbsp;gdbm-devel&nbsp;readline-devel&nbsp;sqlite-devel&nbsp;psmisc&nbsp;libffi-devel</pre><p style="text-align: left;"><span style="color: rgb(192, 0, 0);"><strong>三、下载Pyhton3到/usr/local 目录 <br></strong></span></p><pre class="brush:bash;toolbar:false">cd&nbsp;/usr/local</pre><pre>wget&nbsp;https://www.python.org/ftp/python/3.6.6/Python-3.6.6.tgz</pre><p style="text-align: left;">解压</p><pre>tar&nbsp;-zxvf&nbsp;Python-3.6.6.tgz</pre><p style="text-align: left;">进入 Python-3.6.6路径</p><pre class="brush:bash;toolbar:false">cd&nbsp;Python-3.6.6</pre><p style="text-align: left;">编译安装到指定路径</p><pre>./configure&nbsp;--prefix=/usr/local/python3</pre><p style="text-align: left;">注意：/usr/local/python3 路径可以自己指定，自己记着就行，下边要用到。</p><p style="text-align: left;">安装python3</p><pre>make
+make&nbsp;install</pre><p style="text-align: left;">安装完成之后 建立软链接 添加变量 方便在终端中直接使用python3</p><pre>ln&nbsp;-s&nbsp;/usr/local/python3/bin/python3.6&nbsp;/usr/bin/python3</pre><p style="text-align: left;">Python3安装完成之后pip3也一块安装完成，不需要再单独安装<br style="text-align: left;">同样给pip3建立软链接</p><pre>ln&nbsp;-s&nbsp;/usr/local/python3/bin/pip3.6&nbsp;/usr/bin/pip3</pre><p style="text-align: left;"><strong><span style="color: rgb(192, 0, 0);">四、查看Python3和pip3安装情况</span></strong></p><p style="text-align: left;"><img src="static/picture/timg_20180709220813_231.jpg" title="" alt="timg.jpg"></p><p style="text-align: left;"><span style="color: rgb(192, 0, 0);"><strong>五、安装virtualenv ，建议大家都安装一个virtualenv，方便不同版本项目管理。</strong></span></p><pre>pip3&nbsp;install&nbsp;virtualenv</pre><p style="text-align: left;">建立软链接</p><pre>ln&nbsp;-s&nbsp;/usr/local/python3/bin/virtualenv&nbsp;/usr/bin/virtualenv</pre><p style="text-align: left;">安装成功在根目录下建立两个文件夹，主要用于存放env和网站文件的。(个人习惯，其它人可根据自己的实际情况处理)</p><pre>mkdir&nbsp;-p&nbsp;/data/env
+mkdir&nbsp;-p&nbsp;/data/wwwroot</pre><p style="text-align: left;"><span style="color: rgb(192, 80, 77);"><strong>六、切换到/data/env/下，创建指定版本的虚拟环境。</strong></span></p><pre>virtualenv&nbsp;--python=/usr/bin/python3&nbsp;pyweb</pre><p style="text-align: left;">然后进入/data/env/pyweb/bin <br style="text-align: left;">启动虚拟环境：</p><pre>source&nbsp;activate</pre><p style="text-align: left;"><img data-img-idx="1" data-src="null"></p><p style="text-align: left;"><img src="static/picture/timg_20180709220840_146.jpg" title="" alt="timg.jpg"></p><p style="text-align: left;">留意我标记的位置，出现(pyweb)，说明是成功进入虚拟环境。</p><p style="text-align: left;"><span style="color: rgb(192, 80, 77);"><strong>七、虚拟环境里用pip3安django和uwsgi</strong></span></p><pre>pip3&nbsp;install&nbsp;django&nbsp;（如果用于生产的话，则需要指定安装和你项目相同的版本）
+pip3&nbsp;install&nbsp;uwsgi</pre><p style="text-align: left;"><span style="color: rgb(192, 0, 0);"><strong>留意：</strong></span><strong>uwsgi要安装两次</strong>，先在系统里安装一次，然后进入对应的虚拟环境安装一次。</p><p style="text-align: left;">给uwsgi建立软链接，方便使用</p><pre>ln&nbsp;-s&nbsp;/usr/local/python3/bin/uwsgi&nbsp;/usr/bin/uwsgi</pre><p style="text-align: left;"><span style="color: rgb(192, 80, 77);"></span></p><p><span style="color: rgb(192, 80, 77);"><strong>注意：</strong></span>如果是项目在本地，想部署到线上的，之后这几步可以不用看，建议跳转到：<a href="#banqian" target="_self">本地项目搬迁到服务器</a></p><p style="text-align: left;"><span style="color: rgb(192, 80, 77);"><strong>八、切换到网站目录/data/wwwroot,创建Django项目</strong></span></p><pre>django-admin.py&nbsp;startproject&nbsp;mysite</pre><p style="text-align: left;">创建成功之后，/data/wwwroot下面就会多出一个mysite文件夹，我们的项目就在这个文件夹里。</p><p style="text-align: left;"><img src="static/picture/timg_20180709220907_136.jpg" title="" alt="timg.jpg"></p><p style="text-align: left;">然后新建立一个名叫blog的APP</p><pre>python3&nbsp;manage.py&nbsp;startapp&nbsp;blog</pre><p style="text-align: left;">进入项目文件夹/data/wwwroot/mysite,添加static和templates，分别用于存放静态文件和模板文件。<br style="text-align: left;">编辑项目里mysite/settings.py文件</p><pre>vim&nbsp;/data/wwwroot/mysite/mysite/settings.py</pre><p style="text-align: left;"><br style="text-align: left;">在INSTALLED_APPS 列表里添加&#39;blog&#39;，注意，后面要加上一个逗号&#39;,&#39;.<br></p><p style="text-align: left;"><img data-img-idx="4" data-src="null"><img src="static/picture/timg_20180709220933_398.jpg" title="" alt="timg.jpg" style="float: left;"></p><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p><p style="text-align: left;">修改ALLOWED_HOSTS，[&#39;*&#39;]，可以让任何IP访问</p><p style="text-align: left;"><img data-img-idx="6" data-src="null"></p><p style="text-align: left;"><img src="static/picture/timg_20180709220957_316.jpg" title="" alt="timg.jpg" style="float: left;"></p><p style="text-align: left;"><br style="text-align: left;"></p><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p><p style="text-align: left;">TEMPLATES的DIRS里添加模板路径</p><pre class="brush:bash;toolbar:false">os.path.join(BASE_DIR,&nbsp;&#39;templates&#39;)</pre><p style="text-align: left;"><img src="static/picture/timg_20180709221023_288.jpg" title="" alt="timg.jpg" style="float: left;"></p><p style="text-align: left;"><img data-img-idx="9" data-src="null"></p><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p><p style="text-align: left;">尾部添加<br style="text-align: left;"></p><pre class="brush:bash;toolbar:false">STATICFILES_DIRS&nbsp;=&nbsp;(
+&nbsp;&nbsp;&nbsp;&nbsp;os.path.join(BASE_DIR,&#39;static&#39;),
+&nbsp;&nbsp;&nbsp;&nbsp;)</pre><p style="text-align: left;"><img data-img-idx="10" data-src="null"></p><p style="text-align: left;"><img src="static/picture/timg_20180709221044_569.jpg" title="" alt="timg.jpg" style="float: left;"></p><p style="text-align: left;"><br style="text-align: left;"></p><p style="text-align: left;"><br></p><p style="text-align: left;">然后 :wq 保存</p><p style="text-align: left;"><span style="color: rgb(192, 80, 77);"><strong>九、在templates下添加index.html文件，输入下面内容。</strong></span><br style="text-align: left;">vim /data/wwwroot/mystie/templates/index.html<br style="text-align: left;"></p><pre class="brush:html;toolbar:false">&lt;!DOCTYPE&nbsp;html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta&nbsp;charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;我的网站&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;欢迎光临我的网站！&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre><p style="text-align: left;"><br style="text-align: left;"><span style="color: rgb(192, 80, 77);"><strong>十、配置URL</strong></span><br style="text-align: left;"></p><pre class="brush:bash;toolbar:false">vim&nbsp;/data/wwwroot/mysite/mysite/urls.py
+
+from&nbsp;blog&nbsp;import&nbsp;views&nbsp;&nbsp;#导入views
+urlpatterns&nbsp;=&nbsp;[
+&nbsp;&nbsp;&nbsp;&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;path(&#39;&#39;,&nbsp;views.index),&nbsp;#添加这行
+&nbsp;&nbsp;&nbsp;&nbsp;....
+]</pre><p style="text-align: left;"><img src="static/picture/timg_20180709221111_605.jpg" title="" alt="timg.jpg"></p><p style="text-align: left;"><img data-img-idx="13" data-src="null"></p><p style="text-align: left;"><br style="text-align: left;"><span style="color: rgb(192, 80, 77);"><strong>十一、编辑blog APP下的views.py</strong></span><br style="text-align: left;"></p><pre class="brush:bash;toolbar:false">vim&nbsp;/data/wwwroot/mysite/blog/views.py
+
+def&nbsp;index(request):
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;render(request,&nbsp;&#39;index.html&#39;)</pre><p style="text-align: left;"><img data-img-idx="14" data-src="null"></p><p style="text-align: left;"><img src="static/picture/timg_20180709221133_214.jpg" title="" alt="timg.jpg"></p><p style="text-align: left;"><br style="text-align: left;"><span style="color: rgb(192, 80, 77);"><strong>十二、启动项目</strong></span><br style="text-align: left;"></p><pre class="brush:python;toolbar:false">python3&nbsp;manage.py&nbsp;runserver</pre><p style="text-align: left;"><img data-img-idx="16" data-src="null"></p><p style="text-align: left;"><img src="static/picture/timg_20180709221156_198.jpg" title="" alt="timg.jpg"><br style="text-align: left;">正常运行！</p><p style="text-align: left;"><span style="color: rgb(192, 80, 77);"><strong>十三、Django正常运行之后我们就开始配置一下uwsgi。</strong></span></p><p style="text-align: left;"><span style="color: rgb(192, 80, 77);"></span>配置uwsgi有多种方式,这里我向大家介绍两种,我们使用的时候只需要使用其中一个就行了.</p><p style="text-align: left;"><strong>第一种:XML格式的配置文件</strong><br></p><p style="text-align: left;">我们网站项目路径是 /data/wwwroot/<span style="color: rgb(192, 80, 77);">mysite</span>/,在项目根目录下创建<br style="text-align: left;"><span style="color: rgb(192, 80, 77);">mysite</span>.xml文件，输入如下内容：<br style="text-align: left;"></p><pre class="brush:xml;toolbar:false">&lt;uwsgi&gt;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&lt;socket&gt;127.0.0.1:8997&lt;/socket&gt;&nbsp;&lt;!--&nbsp;内部端口，自定义&nbsp;--&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&lt;chdir&gt;/data/wwwroot/mysite/&lt;/chdir&gt;&nbsp;&lt;!--&nbsp;项目路径&nbsp;--&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&lt;module&gt;mysite.wsgi&lt;/module&gt;&nbsp;&nbsp;&lt;!--&nbsp;mysite为wsgi.py所在目录名--&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&lt;processes&gt;4&lt;/processes&gt;&nbsp;&lt;!--&nbsp;进程数&nbsp;--&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&lt;daemonize&gt;uwsgi.log&lt;/daemonize&gt;&nbsp;&lt;!--&nbsp;日志文件&nbsp;--&gt;
+&lt;/uwsgi&gt;</pre><p style="text-align: left;">保存<br style="text-align: left;">注意&lt;module&gt;里的<span style="color: rgb(192, 80, 77);">mysite</span>，为wsgi.py所在的目录名。</p><p style="text-align: left;">这种方式的配置,可以用下面的命令启动.</p><pre class="brush:bash;toolbar:false">#启动uwsgl
+uwsgi&nbsp;-x&nbsp;mysite.xml
+
+#uwsgi有没有启动成功,可以用下面的命令查看
+ps&nbsp;-ef|grep&nbsp;uwsgi
+#如果想重启uwsgi,先使用下面的命令杀掉进程,再启动uwsgi
+killall&nbsp;-9&nbsp;uwsgi</pre><p style="text-align: left;"><br></p><p><strong>第二种:ini格式的配置文件</strong></p><p style="text-align: left;">在项目文件里创建 uwsgi.ini 文件,编辑文件 ，设置uwsgi属性</p><pre class="brush:bash;toolbar:false">#添加配置选择
+[uwsgi]
+#配置和nginx连接的socket连接
+socket=127.0.0.1:8997
+#配置项目路径，项目的所在目录
+chdir=/data/wwwroot/mysite/
+#配置wsgi接口模块文件路径,也就是wsgi.py这个文件所在的目录名
+wsgi-file=mysite/wsgi.py
+#配置启动的进程数
+processes=4
+#配置每个进程的线程数
+threads=2
+#配置启动管理主进程
+master=True
+#配置存放主进程的进程号文件
+pidfile=uwsgi.pid
+#配置dump日志记录
+daemonize=uwsgi.log`</pre><p style="text-align: left;">通过下面的命令启动运行uwsgi</p><pre class="brush:bash;toolbar:false">uwsgi&nbsp;&nbsp;--ini&nbsp;&nbsp;uwsgi.ini</pre><p style="text-align: left;">显示 [uWSGI] getting INI configuration from uwsgi.ini 表明uwsgi运行成功</p><p style="text-align: left;">可能通过ps -ef|grep uwsgi &nbsp; 查看确认是否uwsgi启动.</p><p style="text-align: left;">ini配置文件其它相关命令:</p><pre class="brush:bash;toolbar:false">#停止运行uwsgi，通过包含主进程编号的文件设置停止项目
+uwsgi&nbsp;--stop&nbsp;uwsgi.pid
+
+#重启uwsgi
+uwsgi&nbsp;--reload&nbsp;uwsgi.pid</pre><p style="text-align: left;"><br></p><p style="text-align: left;"><span style="color: rgb(192, 80, 77);"><strong>十四、安装nginx和配置nginx.conf文件</strong></span><br style="text-align: left;">进入home目录，执行下面命令</p><pre class="brush:bash;toolbar:false">cd&nbsp;/home/</pre><pre class="brush:bash;toolbar:false">wget&nbsp;http://nginx.org/download/nginx-1.13.7.tar.gz</pre><p style="text-align: left;">下载完成后，执行解压命令：<br style="text-align: left;"></p><pre class="brush:bash;toolbar:false">tar&nbsp;-zxvf&nbsp;nginx-1.13.7.tar.gz</pre><p style="text-align: left;">进入解压后的nginx-1.13.7文件夹，依次执行以下命令：<br style="text-align: left;"></p><pre class="brush:bash;toolbar:false">./configure
+make
+make&nbsp;install</pre><p style="text-align: left;">nginx一般默认安装好的路径为/usr/local/nginx<br style="text-align: left;">在/usr/local/nginx/conf/中先备份一下nginx.conf文件，以防意外。<br></p><pre class="brush:bash;toolbar:false">cp&nbsp;nginx.conf&nbsp;nginx.conf.bak</pre><p style="text-align: left;">然后打开nginx.conf，把原来的内容删除，直接加入以下内容：</p><pre class="brush:bash;toolbar:false">events&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;worker_connections&nbsp;&nbsp;1024;
+}
+http&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;include&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mime.types;
+&nbsp;&nbsp;&nbsp;&nbsp;default_type&nbsp;&nbsp;application/octet-stream;
+&nbsp;&nbsp;&nbsp;&nbsp;sendfile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on;
+&nbsp;&nbsp;&nbsp;&nbsp;server&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;80;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;www.django.cn;&nbsp;#改为自己的域名，没域名修改为127.0.0.1:80
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;charset&nbsp;utf-8;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;/&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include&nbsp;uwsgi_params;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uwsgi_pass&nbsp;127.0.0.1:8997;&nbsp;&nbsp;#端口要和uwsgi里配置的一样
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uwsgi_param&nbsp;UWSGI_SCRIPT&nbsp;mysite.wsgi;&nbsp;&nbsp;#wsgi.py所在的目录名+.wsgi
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uwsgi_param&nbsp;UWSGI_CHDIR&nbsp;/data/wwwroot/mysite/;&nbsp;#项目路径
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;/static/&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alias&nbsp;/data/wwwroot/mysite/static/;&nbsp;#静态资源路径
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre><p style="text-align: left;">&nbsp;要留意备注的地方，要和UWSGI配置文件mysite.xml，还有项目路径对应上。 <br style="text-align: left;">进入/usr/local/nginx/sbin/目录<br style="text-align: left;">执行./nginx -t命令先检查配置文件是否有错，没有错就执行以下命令：<br style="text-align: left;"></p><pre class="brush:bash;toolbar:false">./nginx</pre><p style="text-align: left;"><br style="text-align: left;">终端没有任何提示就证明nginx启动成功。可以使用你的服务器地址查看，成功之后就会看到一个nginx欢迎页面。</p><p style="text-align: left;">之后，在settings.py里设置：</p><p style="text-align: left;">1、关闭DEBUG模式。<br></p><p style="text-align: left;">DEBUG = <span style="color: rgb(192, 0, 0);">False&nbsp; </span><span style="color: rgb(192, 0, 0);"></span><br></p><p style="text-align: left;">2、ALLOWED_HOSTS设置为* 表示任何IP都可以访问网站。<br></p><p style="text-align: left;">ALLOWED_HOSTS = [&#39;<span style="color: rgb(192, 0, 0);">*</span>&#39;]</p><p style="text-align: left;"><span style="color: rgb(192, 80, 77);"><strong>十五、访问项目的页面。</strong></span><br style="text-align: left;">进入网站项目目录<br style="text-align: left;"></p><pre class="brush:bash;toolbar:false">cd&nbsp;/data/wwwroot/mysite/</pre><p style="text-align: left;">执行下面命令(xml配置文件为例)：<br style="text-align: left;"></p><pre class="brush:bash;toolbar:false">uwsgi&nbsp;-x&nbsp;mysite.xml</pre><p style="text-align: left;">以上步骤都没有出错的话。<br style="text-align: left;">进入/usr/local/nginx/sbin/目录<br style="text-align: left;">执行：<br></p><pre class="brush:bash;toolbar:false">./nginx&nbsp;-s&nbsp;reload</pre><p style="text-align: left;">重启nginx 。<br style="text-align: left;">然后在浏览器里访问你的项目地址！<br></p><p style="text-align: left;"><img data-img-idx="18" data-src="null"></p><p style="text-align: left;"><img src="static/picture/timg_20180709221319_954.jpg" title="" alt="timg.jpg"></p><p style="text-align: left;"><br style="text-align: left;">成功访问！<br style="text-align: left;">里面最值得留意的就是项目的路径不要弄错，还有，项目的所有操作都要在虚拟环境下进行。<br style="text-align: left;"></p><p style="text-align: left;">环境部署部份，懒的话，直接复制我的代码直接部署就行。</p><hr><p style="text-align: left;"><span style="font-size: 18px; color: rgb(192, 0, 0);"><strong id="banqian">本地项目搬迁到服务器</strong></span><br></p><p style="text-align: left;">本地项目想要部署上线，可以参考下面的步骤：</p><p style="text-align: left;">1、备份本地数据库。使用sqlite数据库的话，直接打包数据库文件上传到服务器即可。使用Mysql数据库，要先在本地Mysql里备份导出数据，然后在服务器上安装Mysql数据库软件,把备份的数据导入，Mysql安装具体操作请看：</p><h3><a href="show-2.html" target="_blank" title="CentOS7操作系统下快速安装MySQL5.7" textvalue="CentOS7操作系统下快速安装MySQL5.7">CentOS7操作系统下快速安装MySQL5.7</a></h3><p style="text-align: left;">2、在项目目录下用下面的命令把当前的环境依赖包导出到requirements.txt文件<br></p><pre>pip&nbsp;freeze&nbsp;&gt;&nbsp;requirements.txt</pre><p style="text-align: left;">3、把项目源码压缩打包。</p><p style="text-align: left;">4、把项目上传到服务器对应的目录里，解压。</p><p style="text-align: left;">5、创建新的虚拟环境（参照上面第六步）<br></p><p style="text-align: left;">6、进入虚拟环境然后进入项目路径安装requirements.txt里的依赖包。</p><pre class="brush:bash;toolbar:false">pip3&nbsp;install&nbsp;-r&nbsp;requirements.txt</pre><p style="text-align: left;">7、导入数据库到服务器。（如果用的是Mysql的话）</p><p style="text-align: left;">默认使用的是SQLite数据库，就不用做此操作。数据库原来是SQLite的，想换成Mysql，请查看文章：<a href="show-17.html" target="_blank" textvalue="如何把SQLite数据库转换为Mysql数据库">如何把SQLite数据库转换为Mysql数据库</a><br></p><p style="text-align: left;">如果是Mysql数据库的，则在命令行里输入：</p><pre class="brush:sql;toolbar:false">#导出Mysql,django为你的数据库
+mysqldump&nbsp;-uroot&nbsp;-ppassword&nbsp;django&gt;django.sql
+#把django.sql上传到服务器，在服务器里用下面命令导入
+mysql&nbsp;-uroot&nbsp;-ppassword
+use&nbsp;dajngo;
+source&nbsp;your&nbsp;Path\django.sql</pre><p style="text-align: left;">8、通过python3 manage.py runserver 运行一下项目，如果能正常启动则进行下一步，不能正常运行往上检查。</p><p style="text-align: left;">9、在项目根目录里添加uwsgi配置文件（参照上面第十三步）</p><p style="text-align: left;">10、配置Nginx配置文件。（参考上面第十四步）</p><p style="text-align: left;"><span style="color: rgb(192, 0, 0);"><strong>留意：</strong></span>一定要注意Uwsgi和Nginx配置文件里的项目路径和静态资源路径，填写正确了才能成功访问。不然会出现502错误。还有就是，修改Django文件和其它配置文件之后，一定要重启Uwsgi和Nginx，不然不生效。</p><p style="text-align: left;">Uwsgi和Nginx重启方法：</p><pre class="brush:bash;toolbar:false">#查看Uwsgi进程
+ps&nbsp;-ef|grep&nbsp;uwsgi&nbsp;
+#用kill方法把uwsgi进程杀死，然后启动uwsgi
+killall&nbsp;-9&nbsp;uwsgi
+#启动方法
+uwsgi&nbsp;-x&nbsp;mysite.xml
+
+#Nginx平滑重启方法
+/usr/local/nginx/sbin/nginx&nbsp;-s&nbsp;reload</pre><p style="text-align: left;">然后在浏览器里访问服务器地址（域名），就能查看到项目。<br></p><p style="text-align: left;">如果想使用域名访问项目，先在域名管理后台把域名解析到服务器IP上来，之后在Nginx配置文件里绑定域名。然后在浏览器里通过绑定的域名访问项目。<br></p><hr><p style="text-align: left;"><span style="color: rgb(192, 0, 0); font-size: 18px;"><strong id="yangsi">关于线上部署admin后台样式没有生效的问题：</strong></span></p><p style="text-align: left;"><strong>方法一：</strong><br></p><p style="text-align: left;">1、在settings.py尾部：</p><pre class="brush:bash;toolbar:false">STATIC_ROOT&nbsp;&nbsp;=&nbsp;os.path.join(BASE_DIR,&nbsp;&#39;static&#39;)#指定样式收集目录
+#或
+STATIC_ROOT&nbsp;=&nbsp;&#39;/www/mysite/mysite/static&#39;&nbsp;&nbsp;#指定样式收集目录</pre><p style="text-align: left;">2、收集CSS样式，在终端输入：<br></p><pre class="brush:bash;toolbar:false">python&nbsp;manage.py&nbsp;collectstatic</pre><p style="text-align: left;">运行这个命令之后，就会自动把后台CSS样式收集到/static/目录下。刷新页面就能恢复样式！<br></p><p style="text-align: left;"><strong>方法二：</strong><br></p><p style="text-align: left;">在Python安装目录下（如果使用虚拟环境，则在虚拟环境目录下）找到\Lib\site-packages\django\contrib\admin\templates目录，把里面的admin目录复制到指定目录即可。<br></p><p style="text-align: left;">注意：收集或复制前一定先在settings里配置并指定STATIC_ROOT路径，static/ 个目录可以自己定。指定的时候一定要在settings.py和nginx里指定新的路径。不然无法生效。<br></p><hr><p style="text-align: left;"><span style="font-size: 18px; color: rgb(192, 0, 0);"><strong id="ssl">Django启用SSL证书(https域名)</strong></span></p><p style="text-align: left;">群里好多朋友都需要使用SSL证书，在使用我这个部署教程的基础上部署SSL证书，总是遇到不少坑。在这，我在这补充一下安装SSL证书的方法，供大家参考。</p><p style="text-align: left;">1、进入之前我们下载nginx的源码目录</p><pre class="brush:bash;toolbar:false">cd&nbsp;/home/nginx-1.13.7/</pre><p style="text-align: left;">2、安装PCRE库</p><pre>yum&nbsp;-y&nbsp;install&nbsp;pcre</pre><p style="text-align: left;">3、安装SSL<br></p><pre>yum&nbsp;-y&nbsp;install&nbsp;openssl&nbsp;openssl-devel</pre><p style="text-align: left;">4、依次执行下面两行代码重新编译一下<br></p><pre>./configure
+
+./configure&nbsp;--with-http_ssl_module</pre><p style="text-align: left;">5、执行<span style="color: rgb(192, 0, 0);">make</span><br></p><pre>make</pre><p style="text-align: left;"><span style="color: rgb(192, 0, 0);">注意：是make而不是make install </span><br></p><p style="text-align: left;">6、备份原来的nginx<br></p><pre>cp&nbsp;/usr/local/nginx/sbin/nginx&nbsp;/usr/local/nginx/sbin/nginx.bak</pre><p style="text-align: left;">7、将新的 nginx 覆盖旧安装目录</p><pre>cp&nbsp;objs/nginx&nbsp;/usr/local/nginx/sbin/nginx</pre><p style="text-align: left;">如果报错，刚用执行下面的命令覆盖<br></p><pre>cp&nbsp;-rfp&nbsp;objs/nginx&nbsp;/usr/local/nginx/sbin/nginx</pre><p style="text-align: left;">8、免费证书下载后有两个文件。（以阿里云免费证书为例）一个是扩展名为.pem的文件，一个是扩展名为.key的文件。.pem文件中已经包含服务器证书和CA中间证书，第一段为服务器证书，第二段为CA中间证书，您可以使用文本编辑器自行提取。.key文件是证书私钥。这里我们直接把域名证书复制到网站根目录里去就行。</p><p style="text-align: left;">9、配置nginx.conf文件。<br></p><pre class="brush:bash;toolbar:false">events&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;worker_connections&nbsp;&nbsp;1024;
+}
+http&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;include&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mime.types;
+&nbsp;&nbsp;&nbsp;&nbsp;default_type&nbsp;&nbsp;application/octet-stream;
+&nbsp;&nbsp;&nbsp;&nbsp;sendfile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on;
+&nbsp;&nbsp;&nbsp;&nbsp;server&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;443&nbsp;ssl&nbsp;http2;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;www.django.cn&nbsp;django.cn;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;/data/wwwroot/mysite;#项目路径
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;charset&nbsp;utf-8;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssl_certificate&nbsp;&nbsp;&nbsp;&nbsp;/data/wwwroot/mysite/1_www.django.cn.pem;#.pem证书路径
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssl_certificate_key&nbsp;&nbsp;/data/wwwroot/mysite/2_www.django.cn.key;#.key证书路径
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssl_protocols&nbsp;TLSv1&nbsp;TLSv1.1&nbsp;TLSv1.2;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssl_ciphers&nbsp;ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssl_prefer_server_ciphers&nbsp;on;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssl_session_cache&nbsp;shared:SSL:10m;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssl_session_timeout&nbsp;10m;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_page&nbsp;497&nbsp;&nbsp;https://$host$request_uri;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;/&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include&nbsp;uwsgi_params;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uwsgi_pass&nbsp;127.0.0.1:8997;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uwsgi_param&nbsp;UWSGI_SCRIPT&nbsp;wechatProject.wsgi;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uwsgi_param&nbsp;UWSGI_CHDIR&nbsp;/data/wwwroot/mysite/;#项目路径
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;/static/&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alias&nbsp;/data/wwwroot/mysite/static/;&nbsp;#静态资源路径
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;access_log&nbsp;&nbsp;/data/wwwroot/mysite/www.django.cn.log;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_log&nbsp;&nbsp;/data/wwwroot/mysite/www.django.cn.error.log;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre><p>留意证书的路径，我们主要是把原来的80端口，修改成443，然后再加一些SSL证书配置，大家可以和前面的nginx的配置进行对比一下。<br></p><p>10、测试配置文件是否正确</p><pre class="brush:bash;toolbar:false">/usr/local/nginx/sbin/nginx&nbsp;-t</pre><p style="text-align: left;">如果没有报错则重启nginx即可。</p><pre>/usr/local/nginx/sbin/nginx&nbsp;-s&nbsp;reload</pre><p style="text-align: left;"><strong>留意：</strong>使用https时，要开启服务器的443端口，如果开启了服务器还不能访问，可能需要到服务器提供商后台安全组给端口放行。</p><hr><p style="text-align: left;"><span style="font-size: 18px; color: rgb(192, 0, 0);"><strong id="duo">Django多站点部署</strong></span></p><p style="text-align: left;">有的时候我们一台服务器需要部署多个项目，那么我们应该怎么部署呢？</p><p style="text-align: left;">1、进入Nginx的配置文件目录/usr/local/nginx/conf/，然后新建一个目录：<br></p><pre>mkdir&nbsp;vhost</pre><p style="text-align: left;">之后在vhost目录里建立两个以.conf结尾的文件（有几个项目就放几个），里面的内容如下：</p><pre class="brush:bash;toolbar:false">server&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;80;
+&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;&nbsp;www.django.cn;
+&nbsp;&nbsp;&nbsp;&nbsp;charset&nbsp;utf-8;
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;/&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include&nbsp;uwsgi_params;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uwsgi_pass&nbsp;127.0.0.1:8997;&nbsp;&nbsp;#端口要和uwsgi里配置的一样&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uwsgi_param&nbsp;UWSGI_SCRIPT&nbsp;mysite.wsgi;&nbsp;&nbsp;#wsgi.py所在的目录名+.wsgi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uwsgi_param&nbsp;UWSGI_CHDIR&nbsp;/data/wwwroot/mysite/;&nbsp;#项目路径&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;/static/&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alias&nbsp;/data/wwwroot/mysite/static/;&nbsp;#静态资源路径&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}</pre><p style="text-align: left;">项目路径、端口、静态资源与所属项目对应好。<span style="color: rgb(192, 0, 0);"><strong>注意：</strong></span>项目里的uwsgi端口不能与另一个项目重复。</p><p style="text-align: left;">2、/usr/local/nginx/conf/目录下的原来默认的nginx.conf文件，先备份一下，然后把里面的代码删除，修改成如下代码：</p><pre class="brush:bash;toolbar:false">events&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;worker_connections&nbsp;&nbsp;1024;
+}
+http&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;include&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mime.types;
+&nbsp;&nbsp;&nbsp;&nbsp;default_type&nbsp;&nbsp;application/octet-stream;
+&nbsp;&nbsp;&nbsp;&nbsp;sendfile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on;
+&nbsp;&nbsp;&nbsp;&nbsp;include&nbsp;/usr/local/nginx/conf/vhost/*.conf;#主要是这个地方，把新建的两配置文件包含进来
+&nbsp;&nbsp;&nbsp;&nbsp;server&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;80&nbsp;default_server;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server_name&nbsp;_;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;404;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}</pre><p style="text-align: left;">3、新建立一个虚拟环境，把<span style="color: rgb(192, 0, 0);">新项目</span>上传到到服务器。进入虚拟环境，在新的虚拟环境再装一次uwsgi，和安装项目所需依赖包，然后在项目根目录新建立一个uwsgi配置文件，里面的<span style="color: rgb(192, 0, 0);">端口和配置文件名</span>不要和其它项目相同，路径换成自己的项目路径。</p><p style="text-align: left;">4、在虚拟环境启动uwsgi，重启Nginx，就能成功访问。哪个项目不能访问，就把原来的uwsgi进行杀死，然后再进入对应虚拟环境，启动uwsgi即可。</p><hr><p style="text-align: left;"><span style="color: rgb(192, 0, 0);"><strong>关于CentOS防火墙端口打开的方法：</strong></span></p><p style="text-align: left;">有些服务器外网默认是无法访问的，因为防火墙不允许，所以要开启防火墙，让其可以访问需要访问的端口号。</p><p style="text-align: left;">1、运行命令：<br></p><pre class="brush:bash;toolbar:false">firewall-cmd&nbsp;--get-active-zones</pre><p style="text-align: left;">运行完成之后，可以看到zone名称。</p><p style="text-align: left;">2、执行下面命令打开需要打开的端口，以80端口为例<br></p><pre class="brush:bash;toolbar:false">firewall-cmd&nbsp;--zone=public&nbsp;--add-port=80/tcp&nbsp;--permanent</pre><p style="text-align: left;"><span style="color:#242729;">3、重启防火墙</span></p><pre class="brush:bash;toolbar:false">firewall-cmd&nbsp;--reload</pre><p style="text-align: left;"><span style="color:#242729;">4、查看端口号是否开启</span></p><pre class="brush:bash;toolbar:false">firewall-cmd&nbsp;--query-port=80/tcp</pre><p style="text-align: left;">有些服务器在防火墙里开启端口之后还不能访问，那就需要到对应的服务器提供商的管理后台安全组里开启对应的端口才能正常访问。<br></p><p style="text-align: left;">如果还有其它疑问，大家可以在文章后面留言，也可以加QQ群10218442讨论。本教程会持续更新！<br></p><p>更多关于其它服务器部署Django的，请查看下面的文章：</p><h3><a href="" target="_blank" title="CentOS7下部署Django项目详细操作步骤"></a></h3><h3><a href="" target="_blank" title="CentOS7下部署Django项目详细操作步骤">CentOS7下部署Django项目详细操作步骤</a></h3><h3><a href="show-21.html" target="_blank" title="Windows&nbsp;server&nbsp;iis部署Django详细操作">Windows&nbsp;server&nbsp;iis部署Django详细操作</a></h3><h3><a href="show-22.html" target="_blank" title="用Ubuntu部署Django项目详解方法">Ubuntu部署Django项目方法详解</a></h3><h3><a href="show-30.html" title="使用宝塔面板快速部署Django项目">使用宝塔面板快速部署Django项目（新手建议直接使用这种方法）</a></h3><p>在部署的过程中，如果发现其它问题，可以文章后面留言，方便我收集错误和更新处理方法。</p>
+                                    
+                                </div>
+
+                                <div class="container">
+                                    <button type="button" class="btn btn-primary" title="加微信与站长交流" data-container="body" data-toggle="popover" data-placement="top" data-content="站长微信：VIPdjango">
+                                        联系站长
+                                    </button>
+
+                                </div>
+                                <script>
+                                    $(function () {
+                                        $("[data-toggle='popover']").popover();
+                                    });
+                                </script>
+
+                                <div class="article__footer">
+                                    <div class="tags"><b>上一篇：</b>
+                                        
+                                            <a href="show-3.html" class="article-tag">Ubuntu系统下MySQL5.7安装教程</a>
+                                        
+
+                                    </div>
+                                    <div class="tags"><b>下一篇：</b>
+                                        
+                                            <a href="show-5.html" class="article-tag">virtualenv使用技巧大全,python新手必备知识</a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <!--  广告位置 -->
+                        <section id="comments">
+                            <div class="comments__container">
+                                <h3>文章评论 <span class="comment__count">35</span></h3>
+                                
+                                    <div class="comment__add">
+                                        <div class="login-card">
+                                            <a href="login1.html" class="btn btn-primary btn-login"><span>登录评论</span></a>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                                
+<div class="comments__list-wrapper">
+<div id="comment__preview" style="display: none"></div>
+<ul class="comments__list">
+    
+<li class="comment__list-item">
+<article id="comment-48" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/Cyice/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/1400663389720.jpg)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/Cyice" class="neon">
+            Cyice
+        </a>
+    </div>
+    <time datetime="2018-08-04">
+        <a class="neon">
+            2018-08-04
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p></p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-49" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/django                                    `/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/django                                    `" class="neon">
+            django                                    `
+        </a>
+    </div>
+    <time datetime="2018-08-05">
+        <a class="neon">
+            2018-08-05
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>规划局规划局规划局</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-96" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/ali_na@foxmail.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/ali_na@foxmail.com" class="neon">
+            ali_na@foxmail.com
+        </a>
+    </div>
+    <time datetime="2018-09-30">
+        <a class="neon">
+            2018-09-30
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>感谢博主的文章】章。作为一个新入门的菜鸟，哥们我受教了！
+不过，博文里有个小小的东西，坑了我一个星期啊。。。
+一直没注意nginx配置文件中，/static/别名路径少一个  “/”  斜杠/斜杠/斜杠/ 啊啊啊</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+<li class="comment__list-item">
+<article id="comment-103" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="吴秀峰.html" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/timg.jpg)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="吴秀峰.html" class="neon">
+            吴秀峰
+        </a>
+    </div>
+    <time datetime="2018-10-11">
+        <a class="neon">
+            2018-10-11
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>哪个位置少了？</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-104" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/13209290422@163.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/13209290422@163.com" class="neon">
+            13209290422@163.com
+        </a>
+    </div>
+    <time datetime="2018-10-13">
+        <a class="neon">
+            2018-10-13
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>成功之后,在wwwroot文件下为什么没有项目文件了,找不到在哪修改项目了</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-108" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/X/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/X" class="neon">
+            X
+        </a>
+    </div>
+    <time datetime="2018-10-19">
+        <a class="neon">
+            2018-10-19
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>小白看的话还是不会的,
+比如
+三、下载Pyhton3到/usr/local 目录</p>
+<p>wget https://www.python.org/ftp/python/3.6.6/Python-3.6.6.tgz</p>
+<p>应该写成:
+三、下载Pyhton3到/usr/local 目录
+ 在命令行提示符下输入:
+ cd /usr/local
+wget https://www.python.org/ftp/python/3.6.6/Python-3.6.6.tgz</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+<li class="comment__list-item">
+<article id="comment-109" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="吴秀峰.html" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/timg.jpg)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="吴秀峰.html" class="neon">
+            吴秀峰
+        </a>
+    </div>
+    <time datetime="2018-10-20">
+        <a class="neon">
+            2018-10-20
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>我写这个教程默认有Linux的基本知识了。我重新更新一下！谢谢提出建议！</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-132" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/xiaolv234@gmail.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/xiaolv234@gmail.com" class="neon">
+            xiaolv234@gmail.com
+        </a>
+    </div>
+    <time datetime="2018-10-27">
+        <a class="neon">
+            2018-10-27
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>部署Django的时候用cors-headers开启了允许跨域，用uwsgi启动还是会被服务器拒绝。楼主知道这个是什么问题吗？</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-144" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/26882380@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/26882380@qq.com" class="neon">
+            26882380@qq.com
+        </a>
+    </div>
+    <time datetime="2018-11-17">
+        <a class="neon">
+            2018-11-17
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>重启nginx 。（本地项目搬迁到服务器之前）
+然后在浏览器里访问你的项目地址后 网页展示：
+504 Gateway Time-out
+nginx/1.13.7</p>
+<p>请博主指导一下 是什么情况？</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+<li class="comment__list-item">
+<article id="comment-147" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="吴秀峰.html" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/timg.jpg)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="吴秀峰.html" class="neon">
+            吴秀峰
+        </a>
+    </div>
+    <time datetime="2018-11-20">
+        <a class="neon">
+            2018-11-20
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>你可能是你的Django项目出错。如果Django项目不能正常支行。这就会出现类似的错误！</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-200" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/865660073@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/865660073@qq.com" class="neon">
+            865660073@qq.com
+        </a>
+    </div>
+    <time datetime="2018-12-20">
+        <a class="neon">
+            2018-12-20
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>感谢楼主，好文章，群主还很热心，给你大大的拥抱</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-202" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/1165772354@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/1165772354@qq.com" class="neon">
+            1165772354@qq.com
+        </a>
+    </div>
+    <time datetime="2018-12-22">
+        <a class="neon">
+            2018-12-22
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>博主，输入网址出现400 Bad Request是什么原因？求指导</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-210" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/lmbr.0@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/lmbr.0@qq.com" class="neon">
+            lmbr.0@qq.com
+        </a>
+    </div>
+    <time datetime="2018-12-26">
+        <a class="neon">
+            2018-12-26
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>后台样式丢失  可以直接在  nginx 里面配置</p>
+<pre class="codehilite"><code>  location /static/xadmin/ {
+    expires 15d;
+    autoindex on;
+    alias /data/wwwroot/website/extra_apps/xadmin/static/xadmin/; #静态资源路径
+    }</code></pre>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-260" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/sasaky/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/5f44fb257ce1ab336a539ce567cb96ca.jpg)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/sasaky" class="neon">
+            sasaky
+        </a>
+    </div>
+    <time datetime="2019-03-14">
+        <a class="neon">
+            2019-03-14
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>在创建虚拟环境的时候报错：-bash: virtualenv: command not found
+网上查到用以下命令可以解决：
+python3 -m virtualenv pyweb</p>
+<p>希望对后面的同学有帮助</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-292" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/85863947@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/85863947@qq.com" class="neon">
+            85863947@qq.com
+        </a>
+    </div>
+    <time datetime="2019-05-23">
+        <a class="neon">
+            2019-05-23
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>在浏览器输入服务器ip地址后, 显示502 Bad Gateway nginx/1.13.7, 请问是什么原因啊!!</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+<li class="comment__list-item">
+<article id="comment-295" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="吴秀峰.html" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/timg.jpg)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="吴秀峰.html" class="neon">
+            吴秀峰
+        </a>
+    </div>
+    <time datetime="2019-06-02">
+        <a class="neon">
+            2019-06-02
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>这个是服务器配置出错的原因，不明白的可以加我VX:VIPdjango 或者QQ：445813</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+<li class="comment__list-item">
+<article id="comment-857" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/3208323813@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/3208323813@qq.com" class="neon">
+            3208323813@qq.com
+        </a>
+    </div>
+    <time datetime="2021-12-03">
+        <a class="neon">
+            2021-12-03
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>你好同意一下</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-302" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/zhouxiaochun/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/zhouxiaochun" class="neon">
+            zhouxiaochun
+        </a>
+    </div>
+    <time datetime="2019-06-26">
+        <a class="neon">
+            2019-06-26
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>操作过程中1，多个django 多个虚拟环境 env1 env2 启动 #uwsgi -x env1 .xml没有问题，然后再另一个虚拟环境中 启动#uwsgi -x env2 .xml 的时候，查看进程的时候 uwsgi env1进程没有</p>
+<p>操作过程中2，单个站点的时候，也是虚拟环境env1，在虚拟环境中启动 python3 manage.py runserver  访问django项目 127.0.0.1:8000 正常访问 然后启动   #uwsgi -x env1 .xml （设置的端口号是8080）进程中是有uwsgi evn1进程的 但是访问 127.0.0.1:8080 访问不了，不知道哪里出了问题，谢谢</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-329" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/1040970792@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/1040970792@qq.com" class="neon">
+            1040970792@qq.com
+        </a>
+    </div>
+    <time datetime="2019-08-12">
+        <a class="neon">
+            2019-08-12
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>博主我按照你的https配置教程来，报了这个错，是不是缺少http2模块。</p>
+<pre class="codehilite"><code>nginx: [emerg] the &amp;quot;http2&amp;quot; parameter requires ngx_http_v2_module in /usr/local/nginx/conf/nginx.conf:12</code></pre>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-375" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/1241642375@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/logo.png)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/1241642375@qq.com" class="neon">
+            1241642375@qq.com
+        </a>
+    </div>
+    <time datetime="2019-09-29">
+        <a class="neon">
+            2019-09-29
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>一步到胃，舒服</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-383" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/小铁匠/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/WX20191012-1008002x.png)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/小铁匠" class="neon">
+            小铁匠
+        </a>
+    </div>
+    <time datetime="2019-10-10">
+        <a class="neon">
+            2019-10-10
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>本人新手，受教了，不过本地项目的打包和上传还是不清楚怎么操作</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+<li class="comment__list-item">
+<article id="comment-387" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/小铁匠/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/WX20191012-1008002x.png)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/小铁匠" class="neon">
+            小铁匠
+        </a>
+    </div>
+    <time datetime="2019-10-12">
+        <a class="neon">
+            2019-10-12
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>Internal Server Error  报这个错，不知道怎么调试</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+<li class="comment__list-item">
+<article id="comment-486" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/lx514622@163.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/lx514622@163.com" class="neon">
+            lx514622@163.com
+        </a>
+    </div>
+    <time datetime="2020-02-07">
+        <a class="neon">
+            2020-02-07
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>我也碰到这个问题了，请问你解决了吗？除了我使用的是centos7.7.1908，不是7.0，其他的操作，版本都一致</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+<li class="comment__list-item">
+<article id="comment-562" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/2466632626@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/E9UE1R7W2LGKK4FSV.png)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/2466632626@qq.com" class="neon">
+            2466632626@qq.com
+        </a>
+    </div>
+    <time datetime="2020-04-18">
+        <a class="neon">
+            2020-04-18
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>我也是这个问题</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+<li class="comment__list-item">
+<article id="comment-904" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/dongzhensong@126.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/IMG_0447.JPG)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/dongzhensong@126.com" class="neon">
+            dongzhensong@126.com
+        </a>
+    </div>
+    <time datetime="2022-03-13">
+        <a class="neon">
+            2022-03-13
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>注意setting.py中的配置是否有误，我在这犯过错误： ALLOWED_HOSTS = [&#x27;*&#x27;]</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-901" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/dongzhensong@126.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/IMG_0447.JPG)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/dongzhensong@126.com" class="neon">
+            dongzhensong@126.com
+        </a>
+    </div>
+    <time datetime="2022-03-13">
+        <a class="neon">
+            2022-03-13
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>注意setting.py中的配置是否有误，我在这犯过错误：
+ALLOWED_HOSTS = [&#x27;*&#x27;]</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-590" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/wind/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/u32217769052714679562fm26gp0.jpg)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/wind" class="neon">
+            wind
+        </a>
+    </div>
+    <time datetime="2020-05-09">
+        <a class="neon">
+            2020-05-09
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>作者您好，首先非常感谢您的Django教程。然后想请示一下，我能否复制您的Django部署过程到我的笔记中，我已在笔记中著名来源和作者。如果不行，请回复我消息，我尽快删除，再次感谢您的教程。</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+<li class="comment__list-item">
+<article id="comment-651" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="吴秀峰.html" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/timg.jpg)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="吴秀峰.html" class="neon">
+            吴秀峰
+        </a>
+    </div>
+    <time datetime="2020-07-12">
+        <a class="neon">
+            2020-07-12
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>没有问题的。</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-594" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/945048933@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/945048933@qq.com" class="neon">
+            945048933@qq.com
+        </a>
+    </div>
+    <time datetime="2020-05-10">
+        <a class="neon">
+            2020-05-10
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>已经转账，如何获取视频</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-597" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/3148923191@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/3148923191@qq.com" class="neon">
+            3148923191@qq.com
+        </a>
+    </div>
+    <time datetime="2020-05-12">
+        <a class="neon">
+            2020-05-12
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>Server Error (500) 只要添加article就报这个错</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-608" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/22366220@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/22366220@qq.com" class="neon">
+            22366220@qq.com
+        </a>
+    </div>
+    <time datetime="2020-05-26">
+        <a class="neon">
+            2020-05-26
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p><strong>编译完python3,发现pip3并没有一起安装</strong></p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-624" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/jinzijie0@163.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/jinzijie0@163.com" class="neon">
+            jinzijie0@163.com
+        </a>
+    </div>
+    <time datetime="2020-06-11">
+        <a class="neon">
+            2020-06-11
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>想问一下，为啥我的static文件夹里面的css,js,加载不出来，页面样式都丢失了，自我感觉应该没有配置错</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-636" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/89061458@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/89061458@qq.com" class="neon">
+            89061458@qq.com
+        </a>
+    </div>
+    <time datetime="2020-06-28">
+        <a class="neon">
+            2020-06-28
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>大佬  我照搬  到这里 python3 manage.py runserver出问题了   </p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+<li class="comment__list-item">
+<article id="comment-652" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="吴秀峰.html" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/timg.jpg)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="吴秀峰.html" class="neon">
+            吴秀峰
+        </a>
+    </div>
+    <time datetime="2020-07-12">
+        <a class="neon">
+            2020-07-12
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>说明程序环境没有安装好。或者其它方面的问题，你可以看一下错误信息，通过错误信息进行修改。</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-746" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/645052463@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/645052463@qq.com" class="neon">
+            645052463@qq.com
+        </a>
+    </div>
+    <time datetime="2020-10-25">
+        <a class="neon">
+            2020-10-25
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>感谢楼主无私奉献. 让我才能把 django 的服务器环境给部署好. 
+只是看着楼主的这个太麻烦了. 都要一个个命令去部署. 少一步就有问题.
+所以我整了个集合. 用 sh 脚本一键部署
+本来想要发个帖子..
+结果不会排版. 发图片. 就搁浅了
+有需要的可以留言我</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+</ul>
+</div>
+
+
+                                <div class="comments--legacy"></div>
+                        </section>
+                    </div>
+                    <aside class="col-md-3 hidden-sm hidden-xs">
+                        <div class="article__author">
+                            <div class="user">
+                                <div class="profile__user-avatar" style="background-image: url('static/image/timg.jpg')"></div>
+                                <div class="profile__info">
+                                    <div class="profile__name">吴秀峰</div>
+                                    <div class="badges"><span class="badge admin-badge" data-type="admin"></span></div>
+                                    <!-- <div class="profile__karma" title="Karma: 113">113</div> -->
+                                </div>
+                                <div class="profile__description">
+                                    <p>当你的才华和能力还不足以支撑你的野心的时候，静下心来，学习！</p>
+                                </div>
+                                <!--'data-hide=meta data-default=#default-links'-->
+                                <ul class="profile__links" style="">
+                                    <li class="profile__link-item change-github" data-change="github" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Github URL"> <span class="link__icon link__icon--github"></span>
+                                        <div class="change-github" data-change="github"></div>
+                                    </a></li>
+                                    <li class="profile__link-item change-twitter" data-change="twitter" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Twitter URL"> <span class="link__icon link__icon--twitter"></span>
+                                        <div class="change-twitter" data-change="twitter"></div>
+                                    </a></li>
+                                    <li class="profile__link-item change-website" data-change="website" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Website URL"> <span class="link__icon link__icon--website"></span>
+                                        <div class="change-website" data-change="website"></div>
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="section sticky-content">
+                                <div>
+                                    <div class="sidebar-articles-group">
+                                        <div class="group-title"><strong>最新文章</strong> <a href="article.html">更多</a></div>
+                                        <ul class="list-group">
+                                            
+                                                <li>
+
+                                                    <a href="show-39.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/12653.png')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django5.0正式发布，是你期待的吗？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-38.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/chatgpt.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>新手如何用Python玩转ChatGPT API,详细讲解</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-37.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/drf.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>几个例子让新手快速了解Django REST Framework (DRF)</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-36.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/python232323.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>提升效率,python的多线程详细使用方法</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-35.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/djangoQ_Z4PNibz.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django-Q，轻量级消息队列Django-Q初体验</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-34.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/Paginator.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>简单讲解Django分页Paginator和Page的用法</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-33.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('https://www.django.cn/static/images/article_default.png')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>django4.0版本到底有哪些新功能和特性？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-32.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/bushu.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django+uWSGI+nginx部署原理及工作流程</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-31.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/django-blog.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django入门视频教程之Blog开发详解</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-30.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/bt_django.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>使用宝塔面板快速部署Django项目</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+
+                                        </ul>
+                                    </div>
+                                    <div class="sidebar-articles-group">
+                                        <div class="group-title"><strong>论坛新帖</strong> <a href="forum.html">更多</a></div>
+                                        <ul class="list-group">
+                                            
+                                                <li>
+                                                    <a href="forum-69779.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>123</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69749.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>为什么每次只能导入一行数据呢？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69325.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>请教下django查询问题，开始时间2023-7-15 00:00:00 结束时间2023-7-20 23:59:59，查询统计出每天的数据总和，并输出这几天每天的总和</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69324.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>请教：Invalid block tag on line 51: &#x27;empty&#x27;. Did you forget to register or load this tag?</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69323.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django如何实现视图函数被调用之后异步回调</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68919.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>我在用Django过程中碰到一个棘手的问题，关于SESSION_COOKIE_AGE</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68918.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/avatar_-_副本.jpg')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>求教Python小版本更新升级</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68846.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>在pycharm中运行Django如何解决呢？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68845.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>项目启动失败</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68844.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>json解析错误</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            <div class="sidebar-articles-group sidebar-videos">
+                                    <div class="group-title">
+                                        <strong>视频教程</strong>
+                                        <a class="subscribe-link" target="_blank" href="video.html">更多</a>
+                                    </div>
+                                    <ul class="sidebar-video-thumbnails">
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-3.html">
+                                                <img class="video-thumb" src="static/picture/api.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-3.html">
+                                                <h4 class="video-title">Django+DRF+Vue打造专业的API自动化测试平台</h4>
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-2.html">
+                                                <img class="video-thumb" src="static/picture/djangovue_H3w7CBm.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-2.html">
+                                                <h4 class="video-title">django+vue前后端分离仿美团外卖电商项目</h4>
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-1.html">
+                                                <img class="video-thumb" src="static/picture/qiyekaifa.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-1.html">
+                                                <h4 class="video-title">django企业项目开发实战案例视频教程</h4>
+                                            </a>
+                                        </li>
+                                        
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+	 <h3>加入Django中文交流社区，分享交流，携手同行</h3>
+
+	  <ul class="list-inline">
+				<li><a href="index.html" class="neon">首 页</a></li>
+				<li><a href="article.html" class="neon">文 章</a></li>
+                <li><a href="course.html" class="neon">教 程</a></li>
+                <li><a href="video.html" class="neon">视 频</a></li>
+				<li><a href="forum.html" class="neon">社 区</a></li>
+				<li><a href="about.html" class="neon">关于我们</a></li>
+				<li><a href="contact.html" class="neon">联系我们</a></li>
+
+	  </ul>
+
+		<p class="copyright">Copyright © 2018 <a href="index1.html" target="_blank">django.cn</a>
+			<span class="second-line">All Rights Reserved.</span><br>
+            Powered by <a href="index.html">Django3</a><br>
+           <a href="https://beian.miit.gov.cn" target="_blank">备案号：湘ICP备17023990号-1</a>
+		</p>
+</footer>
+
+</div>
+
+    <!-- JavaScripts -->
+
+    <script type="text/javascript">
+
+  $('#confirm-delete').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  // var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var aid = button.data('aid')
+  var id = button.data('id')
+  var tag = button.data('tag')
+  var modal = $(this)
+  // modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('input[name="aid"]').val(aid)
+  modal.find('input[name="id"]').val(id)
+  modal.find('input[name="tag"]').val(tag)
+
+  // console.log('ok')
+})
+
+  // btn_delete_comment
+  $('#btn_delete_comment').click(function(event){
+    // var form = new FormData(document.getElementById("delete_comment"))
+    // var pwd1 = $('#change-pwd [name="password1"]').val()
+    console.log('in comment delete')
+    var aid = $('#delete_comment [name="aid"]').val()
+    var id = $('#delete_comment [name="id"]').val()
+    var tag = $('#delete_comment [name="tag"]').val()
+    var token = $('#delete_comment [name="csrfmiddlewaretoken"]').val()
+    if(!tag){
+        return
+    }
+
+    var form = new FormData();
+    form.append("id", 'id');
+    form.append("csrfmiddlewaretoken", token);
+    form.append('method','delete')
+
+        $.ajax({
+            type: 'POST',
+            url: '/comment/'+id+'/',
+            // data:'json',
+            processData: false,
+            contentType: false,
+            data: form,
+            success: function(response) {
+                if(tag == 'forum'){
+                    window.location.href = '/forum/forum-'+aid+'.html';
+                }
+                if(tag == 'article'){
+                    window.location.href = '/article/show-'+aid+'.html';
+                }
+                if(tag == 'course'){
+                    window.location.href = '/course/show-'+aid+'.html';
+                }
+            }
+        })
+  })
+</script>
+ <script src="static/js/bundle.js"></script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>

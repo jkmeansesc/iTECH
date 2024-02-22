@@ -1,0 +1,869 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baidu-site-verification" content="TcPgCnDcOJ">
+    <link rel="apple-touch-icon" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="icon" sizes="192x192" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="shortcut icon" href="https://www.django.cn/static/images/favicon.ico">
+    
+    <title>Django文章,Django教程,Django文档-Django社区,Django中文网,django！</title>
+    <meta name="keywords" content="django教程,django,django社区,django中文">
+    <meta name="description" content="Django文章,Django教程,Django文档,Django相关资讯你都可以在这里找到！">
+    
+    <meta name="theme-color" content="#ffffff">
+    <link href="static/css/fonts.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/toastr.min.css" rel="stylesheet">
+    <link href="static/css/app.css" rel="stylesheet">
+    <link href="static/css/font-awesome.min.css" rel="stylesheet">
+     
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/highlight.min.js"></script>
+    <script src="static/js/toastr.min.js"></script>
+
+   <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?9b0ccd50ff8935f331889174a8280dc2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div style='text-align: center;font-size: 20px'>确定删除?</div>
+            </div>
+            <div class="modal-footer">
+                <form action="/comment/" method="POST" id='delete_comment' style='float: left'>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="OpzDNporXKYcl83EgOBSdfvLOYZiGVLQgKVjDa1WwmuUh7nbIZ85C1K6HC2gf5Qx">
+                    <input type="hidden" name="tag">
+                    <input type="hidden" name="aid">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="method" value='delete'>
+                    <input type='button' class="btn btn-danger btn-ok" id='btn_delete_comment' value='删除'>
+                </form>
+                <!-- <a class="btn btn-danger btn-ok"><span>删除</span></a> -->
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span>取消</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="page__wrapper page--landing">
+   
+    <header class="header--main animate-search">
+
+    
+    <div class="container-fluid">
+        <nav class="nav--main">
+            <div class="nav__logo">
+                <a href="index.html">
+                    <span>Django中文网</span>
+                </a>
+            </div>
+
+            
+                <ul class="nav__items nav__items--right">
+                    <li class="nav__item">
+                        <a href="search.html" class="search-trigger icon-magnifier"></a>
+                    </li>
+                    <li id="login" class="nav__item">
+                        <a href="login.html">
+                            登录
+                        </a>
+                    </li>
+                    <li id="register" class="nav__item">
+                        <a href="register.html">
+                            <span class="btn btn-success">注册</span>
+                        </a>
+                    </li>
+                </ul>
+
+            
+
+            <ul class="nav__items nav__items--left">
+                <li class="nav__item nav__item--main">
+                    <a href="article.html" class="articles ">
+                        文章
+                    </a>
+                </li>
+                 <li class="nav__item nav__item--main">
+                    <a href="course.html" class="posts ">
+                        教程
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                    <a href="video.html" class="posts ">
+                        视频
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                     <a href="forum.html" class="posts ">
+                        社区
+                    </a>
+                </li>
+            </ul>
+
+
+        </nav> <!-- .nav--main -->
+    </div>
+
+
+    <a href="#0" class="nav-trigger icon-menu"></a>
+
+    <div id="search" class="main-search">
+    <div class="container-fluid">
+        <form id="search-form-top" class="form__search" action="/search/" method="GET">
+        <input type="search" name="search" placeholder="Search..." value="" autocomplete="off" required="">
+
+</form>
+
+        <div class="search-suggestions">
+
+        </div>
+        <a href="#0" class="close text-replace">Close Form</a>
+    </div>
+</div> <!-- .main-search -->
+</header>
+
+<div class="cover-layer"></div> <!-- cover main content when search form is open -->
+
+
+    
+
+    <main class="main-content" style="margin-top: 20px;">
+        <div class="content-wrapper">
+            <div class="container-fluid articles">
+                <div class="row">
+                    <div class="section-header">
+                <!--<a href="https://jq.qq.com/?_wv=1027&k=0kNpqlZH" target="_blank"><img src="/static/img/web1.jpg" class="align-self-center mx-auto"></a> <br />-->
+                        <h2>Articles</h2>
+                        <ul class="section-header__subheading article__tags text-center">
+                            <li class='active' style="font-size: large">
+                                <a href="article.html">全部</a>
+                            </li>
+                            
+                                <li style="font-size: large">
+                                    <a href="article-Django.html">Django </a>
+                                </li>
+                            
+                                <li style="font-size: large">
+                                    <a href="article-python.html">python </a>
+                                </li>
+                            
+                                <li style="font-size: large">
+                                    <a href="article-Bootstrap.html">Bootstrap </a>
+                                </li>
+                            
+                                <li style="font-size: large">
+                                    <a href="article-Vue.html">Vue </a>
+                                </li>
+                            
+                                <li style="font-size: large">
+                                    <a href="article-AdminUI.html">AdminUI </a>
+                                </li>
+                            
+                                <li style="font-size: large">
+                                    <a href="article-E78EAFE5A283E983A8E7BDB2.html">环境部署 </a>
+                                </li>
+                            
+                        </ul>
+                     
+                    </div>
+                    
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="show-24.html" title="centos和ubuntu下redis的安装与使用">
+                                <div class="article__image" style="background-image: url(static/image/redis_ft0hWBs.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-24.html" title="centos和ubuntu下redis的安装与使用">
+                                        <h3>centos和ubuntu下redis的安装与使用</h3>
+                                    </a>
+                                    <p>
+                                       Redis 是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-24.html" title="View comments">
+                                        <span>0</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-E78EAFE5A283E983A8E7BDB2.html" class="article-tag resources">
+                                            环境部署
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2019年1月1日 13:35">
+                                        2019年01月01日  点击:10018
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="show-23.html" title="django搭建blog,django快速搭建blog">
+                                <div class="article__image" style="background-image: url(static/image/blog.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-23.html" title="django搭建blog,django快速搭建blog">
+                                        <h3>django搭建blog,django快速搭建blog</h3>
+                                    </a>
+                                    <p>
+                                       django博客开发教程,用django快速搭建blog,本教程能让你快速的使用Djang
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-23.html" title="View comments">
+                                        <span>9</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-Django.html" class="article-tag resources">
+                                            Django
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年11月19日 00:44">
+                                        2018年11月19日  点击:38371
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="show-22.html" title="Ubuntu部署Django项目方法详解">
+                                <div class="article__image" style="background-image: url(static/image/ubuntudjango_cpk1R73.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-22.html" title="Ubuntu部署Django项目方法详解">
+                                        <h3>Ubuntu部署Django项目方法详解</h3>
+                                    </a>
+                                    <p>
+                                       Ubuntu下部署Django与Centos下部署Django相差不大，无非是一些特有的命
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-22.html" title="View comments">
+                                        <span>11</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-E78EAFE5A283E983A8E7BDB2.html" class="article-tag resources">
+                                            环境部署
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年10月25日 22:55">
+                                        2018年10月25日  点击:40840
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="show-21.html" title="Windows server iis部署Django详细操作">
+                                <div class="article__image" style="background-image: url(static/image/iis.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-21.html" title="Windows server iis部署Django详细操作">
+                                        <h3>Windows server iis部署Django详细操作</h3>
+                                    </a>
+                                    <p>
+                                       教程基于Windows server2012+Python3.6+IIS之上部署djang
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-21.html" title="View comments">
+                                        <span>4</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-E78EAFE5A283E983A8E7BDB2.html" class="article-tag resources">
+                                            环境部署
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年10月19日 13:08">
+                                        2018年10月19日  点击:50163
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="show-20.html" title="python3安装详细步骤，新手必备技能">
+                                <div class="article__image" style="background-image: url(static/image/1.png )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-20.html" title="python3安装详细步骤，新手必备技能">
+                                        <h3>python3安装详细步骤，新手必备技能</h3>
+                                    </a>
+                                    <p>
+                                       做Python开发的第一步就是要安装好Python开发环境。Python3的安装需要留意的
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-20.html" title="View comments">
+                                        <span>0</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-python.html" class="article-tag resources">
+                                            python
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年10月9日 00:26">
+                                        2018年10月09日  点击:12019
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="show-19.html" title="最全的Python程序员面试必备常用问题解析与答案">
+                                <div class="article__image" style="background-image: url(static/image/miansi.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-19.html" title="最全的Python程序员面试必备常用问题解析与答案">
+                                        <h3>最全的Python程序员面试必备常用问题解析与答案</h3>
+                                    </a>
+                                    <p>
+                                       以下就是小编整理的Python面试常用问题和参考答案，供广大Python程序员参考，希望能
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-19.html" title="View comments">
+                                        <span>5</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-python.html" class="article-tag resources">
+                                            python
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年9月30日 15:37">
+                                        2018年09月30日  点击:9763
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="show-18.html" title="Django身份认证系统auth模块详解">
+                                <div class="article__image" style="background-image: url(static/image/auth.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-18.html" title="Django身份认证系统auth模块详解">
+                                        <h3>Django身份认证系统auth模块详解</h3>
+                                    </a>
+                                    <p>
+                                       Django 带有一个用户认证系统。用于处理用户帐户，组，权限和基于 cookie 的用户
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-18.html" title="View comments">
+                                        <span>0</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-Django.html" class="article-tag resources">
+                                            Django
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年9月26日 21:14">
+                                        2018年09月26日  点击:25784
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="show-17.html" title="Django如何把SQLite数据库转换为Mysql数据库">
+                                <div class="article__image" style="background-image: url(static/image/sqllite_mysql.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-17.html" title="Django如何把SQLite数据库转换为Mysql数据库">
+                                        <h3>Django如何把SQLite数据库转换为Mysql数据库</h3>
+                                    </a>
+                                    <p>
+                                       大部分新手刚学Django开发的时候默认用的都是SQLite数据库，上线部署的时候，大多用
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-17.html" title="View comments">
+                                        <span>3</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-E78EAFE5A283E983A8E7BDB2.html" class="article-tag resources">
+                                            环境部署
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年9月12日 19:27">
+                                        2018年09月12日  点击:25151
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="show-16.html" title="Pycharm新手教程,只需要看这篇就够了">
+                                <div class="article__image" style="background-image: url(static/image/pycharm2.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-16.html" title="Pycharm新手教程,只需要看这篇就够了">
+                                        <h3>Pycharm新手教程,只需要看这篇就够了</h3>
+                                    </a>
+                                    <p>
+                                       pycharm是一款高效的python IDE工具，它非常强大，且可以跨平台，是新手首选工
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-16.html" title="View comments">
+                                        <span>1</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-E78EAFE5A283E983A8E7BDB2.html" class="article-tag resources">
+                                            环境部署
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年8月29日 21:19">
+                                        2018年08月29日  点击:17372
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="show-15.html" title="Django ORM常用操作介绍（新手必看）">
+                                <div class="article__image" style="background-image: url(static/image/orm.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-15.html" title="Django ORM常用操作介绍（新手必看）">
+                                        <h3>Django ORM常用操作介绍（新手必看）</h3>
+                                    </a>
+                                    <p>
+                                       Django开发过程中对表(model)的增删改查是最常用的功能之一，本文介绍笔者在使用m
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-15.html" title="View comments">
+                                        <span>5</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-Django.html" class="article-tag resources">
+                                            Django
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年8月15日 22:41">
+                                        2018年08月15日  点击:32556
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="show-14.html" title="Django2.1发布，Django2.1新特性">
+                                <div class="article__image" style="background-image: url( static/image/default.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-14.html" title="Django2.1发布，Django2.1新特性">
+                                        <h3>Django2.1发布，Django2.1新特性</h3>
+                                    </a>
+                                    <p>
+                                       Django 2.1 现已正式发布，官方表示随着 2.1 的发布，对 2.0 系列的主流支
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-14.html" title="View comments">
+                                        <span>1</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-Django.html" class="article-tag resources">
+                                            Django
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年8月12日 12:34">
+                                        2018年08月12日  点击:6756
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="show-13.html" title="使用Pycharm里的Database对数据库进行可视化操作">
+                                <div class="article__image" style="background-image: url(static/image/database.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-13.html" title="使用Pycharm里的Database对数据库进行可视化操作">
+                                        <h3>使用Pycharm里的Database对数据库进行可视化操作</h3>
+                                    </a>
+                                    <p>
+                                       Pycharm是一个十分强大的工具，它本身自带着一个叫Database的数据库管理工具。我
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-13.html" title="View comments">
+                                        <span>0</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-E78EAFE5A283E983A8E7BDB2.html" class="article-tag resources">
+                                            环境部署
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年8月6日 02:13">
+                                        2018年08月06日  点击:36092
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="/article/show-12.html" title="怎么样在Django里实现联动下拉列表选项？">
+                                <div class="article__image" style="background-image: url( static/image/default.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="/article/show-12.html" title="怎么样在Django里实现联动下拉列表选项？">
+                                        <h3>怎么样在Django里实现联动下拉列表选项？</h3>
+                                    </a>
+                                    <p>
+                                       从属或链接下拉列表是一个特殊字段，它依赖于先前选择的字段，以显示已过滤选项的列表。
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="/article/show-12.html" title="View comments">
+                                        <span>1</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-Django.html" class="article-tag resources">
+                                            Django
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年7月13日 14:13">
+                                        2018年07月13日  点击:19561
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="/article/show-11.html" title="Django进阶教程:如何扩展Django用户模型">
+                                <div class="article__image" style="background-image: url(static/image/user.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="/article/show-11.html" title="Django进阶教程:如何扩展Django用户模型">
+                                        <h3>Django进阶教程:如何扩展Django用户模型</h3>
+                                    </a>
+                                    <p>
+                                       Django的内置身份验证系统非常棒。我们可以开箱即用，节省大量开发和测试工作。
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="/article/show-11.html" title="View comments">
+                                        <span>2</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-Django.html" class="article-tag resources">
+                                            Django
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年7月11日 23:56">
+                                        2018年07月11日  点击:9809
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+                    <div class="col-md-4 col-sm-6  clear-sm">
+                        <article class="article--small">
+                            <a href="/article/show-10.html" title="django-import-export插件使用教程">
+                                <div class="article__image" style="background-image: url(static/image/django-import-export.jpg )">
+                                </div>
+                            </a>
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="/article/show-10.html" title="django-import-export插件使用教程">
+                                        <h3>django-import-export插件使用教程</h3>
+                                    </a>
+                                    <p>
+                                       django-import-export这是一个用于处理导入和导出数据的库。本文教大家如何
+                                    </p>
+                                </div>
+
+                                <div class="article__footer">
+                                    <a class="btn-more" href="/article/show-10.html" title="View comments">
+                                        <span>2</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-Django.html" class="article-tag resources">
+                                            Django
+                                        </a>
+                                    </div>
+
+                                    <time class="article__date" datetime="2018年7月11日 22:49">
+                                        2018年07月11日  点击:18366
+                                    </time>
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+
+               
+
+                </div>
+
+                <div class="pagination__container">
+                    <div class="pagination-pages visible-xs">
+                        1 - 3
+                    </div>
+                    <ul class="pagination">
+                        
+                            <li class="previous"><a href="/article//?category=&page=1" rel="prev"></a></li>
+                        
+
+                        
+                            
+                                
+                                    <li><a href="/article/?category=&page=1">1</a></li>
+                                
+                            
+                        
+                            
+                                
+                                    <li class="active"><span>2</span></li>
+                                
+                            
+                        
+                            
+                                
+                                    <li><a href="article-3.html">3</a></li>
+                                
+                            
+                        
+
+                        
+                            <li class="next"><a href="/article/?page=3&category=" rel="next"></a></li>
+                        
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+	 <h3>加入Django中文交流社区，分享交流，携手同行</h3>
+
+	  <ul class="list-inline">
+				<li><a href="index.html" class="neon">首 页</a></li>
+				<li><a href="article.html" class="neon">文 章</a></li>
+                <li><a href="course.html" class="neon">教 程</a></li>
+                <li><a href="video.html" class="neon">视 频</a></li>
+				<li><a href="forum.html" class="neon">社 区</a></li>
+				<li><a href="about.html" class="neon">关于我们</a></li>
+				<li><a href="contact.html" class="neon">联系我们</a></li>
+
+	  </ul>
+
+		<p class="copyright">Copyright © 2018 <a href="index1.html" target="_blank">django.cn</a>
+			<span class="second-line">All Rights Reserved.</span><br>
+            Powered by <a href="index.html">Django3</a><br>
+           <a href="https://beian.miit.gov.cn" target="_blank">备案号：湘ICP备17023990号-1</a>
+		</p>
+</footer>
+
+</div>
+
+    <!-- JavaScripts -->
+
+    <script type="text/javascript">
+
+  $('#confirm-delete').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  // var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var aid = button.data('aid')
+  var id = button.data('id')
+  var tag = button.data('tag')
+  var modal = $(this)
+  // modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('input[name="aid"]').val(aid)
+  modal.find('input[name="id"]').val(id)
+  modal.find('input[name="tag"]').val(tag)
+
+  // console.log('ok')
+})
+
+  // btn_delete_comment
+  $('#btn_delete_comment').click(function(event){
+    // var form = new FormData(document.getElementById("delete_comment"))
+    // var pwd1 = $('#change-pwd [name="password1"]').val()
+    console.log('in comment delete')
+    var aid = $('#delete_comment [name="aid"]').val()
+    var id = $('#delete_comment [name="id"]').val()
+    var tag = $('#delete_comment [name="tag"]').val()
+    var token = $('#delete_comment [name="csrfmiddlewaretoken"]').val()
+    if(!tag){
+        return
+    }
+
+    var form = new FormData();
+    form.append("id", 'id');
+    form.append("csrfmiddlewaretoken", token);
+    form.append('method','delete')
+
+        $.ajax({
+            type: 'POST',
+            url: '/comment/'+id+'/',
+            // data:'json',
+            processData: false,
+            contentType: false,
+            data: form,
+            success: function(response) {
+                if(tag == 'forum'){
+                    window.location.href = '/forum/forum-'+aid+'.html';
+                }
+                if(tag == 'article'){
+                    window.location.href = '/article/show-'+aid+'.html';
+                }
+                if(tag == 'course'){
+                    window.location.href = '/course/show-'+aid+'.html';
+                }
+            }
+        })
+  })
+</script>
+ <script src="static/js/bundle.js"></script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>

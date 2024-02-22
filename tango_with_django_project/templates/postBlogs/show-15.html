@@ -1,0 +1,930 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baidu-site-verification" content="TcPgCnDcOJ">
+    <link rel="apple-touch-icon" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="icon" sizes="192x192" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="shortcut icon" href="https://www.django.cn/static/images/favicon.ico">
+    
+    <title>Django ORM常用操作介绍（新手必看）-Django社区,Django中文网,django教程,Django！</title>
+    <meta name="keywords" content="Django ORM, ORM常用操作">
+    <meta name="description" content="Django开发过程中对表(model)的增删改查是最常用的功能之一，本文介绍笔者在使用model 操作过程中遇到的一些操作">
+
+    <meta name="theme-color" content="#ffffff">
+    <link href="static/css/fonts.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/toastr.min.css" rel="stylesheet">
+    <link href="static/css/app.css" rel="stylesheet">
+    <link href="static/css/font-awesome.min.css" rel="stylesheet">
+     
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/highlight.min.js"></script>
+    <script src="static/js/toastr.min.js"></script>
+
+   <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?9b0ccd50ff8935f331889174a8280dc2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div style='text-align: center;font-size: 20px'>确定删除?</div>
+            </div>
+            <div class="modal-footer">
+                <form action="/comment/" method="POST" id='delete_comment' style='float: left'>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="TtZRDql1ammZx4VWDOmbozIdlWzLJtUilOlxtbYwJYSHt3ft5ZToNlXyeACJiDZZ">
+                    <input type="hidden" name="tag">
+                    <input type="hidden" name="aid">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="method" value='delete'>
+                    <input type='button' class="btn btn-danger btn-ok" id='btn_delete_comment' value='删除'>
+                </form>
+                <!-- <a class="btn btn-danger btn-ok"><span>删除</span></a> -->
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span>取消</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="page__wrapper page--landing">
+   
+    <header class="header--main animate-search">
+
+    
+    <div class="container-fluid">
+        <nav class="nav--main">
+            <div class="nav__logo">
+                <a href="index.html">
+                    <span>Django中文网</span>
+                </a>
+            </div>
+
+            
+                <ul class="nav__items nav__items--right">
+                    <li class="nav__item">
+                        <a href="search.html" class="search-trigger icon-magnifier"></a>
+                    </li>
+                    <li id="login" class="nav__item">
+                        <a href="login.html">
+                            登录
+                        </a>
+                    </li>
+                    <li id="register" class="nav__item">
+                        <a href="register.html">
+                            <span class="btn btn-success">注册</span>
+                        </a>
+                    </li>
+                </ul>
+
+            
+
+            <ul class="nav__items nav__items--left">
+                <li class="nav__item nav__item--main">
+                    <a href="article.html" class="articles ">
+                        文章
+                    </a>
+                </li>
+                 <li class="nav__item nav__item--main">
+                    <a href="course.html" class="posts ">
+                        教程
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                    <a href="video.html" class="posts ">
+                        视频
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                     <a href="forum.html" class="posts ">
+                        社区
+                    </a>
+                </li>
+            </ul>
+
+
+        </nav> <!-- .nav--main -->
+    </div>
+
+
+    <a href="#0" class="nav-trigger icon-menu"></a>
+
+    <div id="search" class="main-search">
+    <div class="container-fluid">
+        <form id="search-form-top" class="form__search" action="/search/" method="GET">
+        <input type="search" name="search" placeholder="Search..." value="" autocomplete="off" required="">
+
+</form>
+
+        <div class="search-suggestions">
+
+        </div>
+        <a href="#0" class="close text-replace">Close Form</a>
+    </div>
+</div> <!-- .main-search -->
+</header>
+
+<div class="cover-layer"></div> <!-- cover main content when search form is open -->
+
+
+    
+    <div class="cover-layer"></div>
+    <!-- cover main content when search form is open -->
+    <main class="main-content" style=" margin-top:40px;">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9 article-content">
+                        <article class="article--big">
+                            <!--<a href="https://jq.qq.com/?_wv=1027&k=0kNpqlZH" target="_blank"><img src="/static/img/web2.jpg"> </a>-->
+                            
+                                <div class="article__image" style="background-image: url(static/image/orm.jpg)"></div>
+                            
+                            <div class="article__content">
+                                <h1 class="article__title">
+                                    Django ORM常用操作介绍（新手必看）
+
+                                </h1>
+                                <div class="article__header">
+                                    <div class="article__date">
+                                        <time>2018年08月15日</time>
+                                    </div>
+                                    <div class="article__date">点击次数：32556 </div>
+                                </div>
+                                <div class="article__body">
+                                    
+                                    <p>Django开发过程中对表(model)的增删改查是最常用的功能之一，本文介绍笔者在使用model 操作过程中遇到的一些操作。</p><h1 style="color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;font-weight: bold;font-size: 1.6em;"><span style="font-size: inherit;color: inherit;line-height: inherit;">model update常规用法</span></h1><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">假如我们的表结构是这样的</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">class</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(165, 218, 45);word-wrap: inherit !important;word-break: inherit !important;">User</span><span class="" style="font-size: inherit;line-height: inherit;color: rgb(255, 152, 35);word-wrap: inherit !important;word-break: inherit !important;">(models.Model)</span>:</span><br>&nbsp;&nbsp;&nbsp;&nbsp;username&nbsp;=&nbsp;models.CharField(max_length=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">255</span>,&nbsp;unique=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;用户名&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;is_active&nbsp;=&nbsp;models.BooleanField(default=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">False</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;激活状态&#39;</span>)<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">那么我们修改用户名和状态可以使用如下两种方法：</p><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">方法一：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">User.objects.filter(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>).update(username=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;nick&#39;</span>,is_active=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>)<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">方法二：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">_t&nbsp;=&nbsp;User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>)<br>_t.username=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;nick&#39;</span><br>_t.is_active=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">True</span><br>_t.save()<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">方法一适合更新一批数据，类似于mysql语句<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">update user set username=&#39;nick&#39; where id = 1</code></p><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">方法二适合更新一条数据，也只能更新一条数据，当只有一条数据更新时推荐使用此方法，另外此方法还有一个好处，我们接着往下看</p><h1 style="color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;font-weight: bold;font-size: 1.6em;"><span style="font-size: inherit;color: inherit;line-height: inherit;">具有auto_now属性字段的更新</span></h1><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">我们通常会给表添加三个默认字段</p><ul style="" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">自增ID，这个django已经默认加了，就像上边的建表语句，虽然只写了username和is_active两个字段，但表建好后也会有一个默认的自增id字段</span></p></li><li><p>创建时间，用来标识这条记录的创建时间，具有<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">auto_now_add</code>属性，创建记录时会自动填充当前时间到此字段</p></li><li><p>修改时间，用来标识这条记录最后一次的修改时间，具有<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">auto_now</code>属性，当记录发生变化时填充当前时间到此字段</p></li></ul><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">就像下边这样的表结构</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">class</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(165, 218, 45);word-wrap: inherit !important;word-break: inherit !important;">User</span><span class="" style="font-size: inherit;line-height: inherit;color: rgb(255, 152, 35);word-wrap: inherit !important;word-break: inherit !important;">(models.Model)</span>:</span><br>&nbsp;&nbsp;&nbsp;&nbsp;create_time&nbsp;=&nbsp;models.DateTimeField(auto_now_add=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;创建时间&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;update_time&nbsp;=&nbsp;models.DateTimeField(auto_now=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;更新时间&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;username&nbsp;=&nbsp;models.CharField(max_length=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">255</span>,&nbsp;unique=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;用户名&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;is_active&nbsp;=&nbsp;models.BooleanField(default=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">False</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;激活状态&#39;</span>)<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;"><strong style="font-size: inherit;color: inherit;line-height: inherit;">当表有字段具有<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">auto_now</code>属性且你希望他能自动更新时，必须使用上边方法二的更新，不然auto_now字段不会更新</strong>，也就是：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">_t&nbsp;=&nbsp;User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>)<br>_t.username=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;nick&#39;</span><br>_t.is_active=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">True</span><br>_t.save()<br></code></pre><h1 style="color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;font-weight: bold;font-size: 1.6em;"><span style="font-size: inherit;color: inherit;line-height: inherit;">json/dict类型数据更新字段</span></h1><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">目前主流的web开放方式都讲究前后端分离，分离之后前后端交互的数据格式大都用通用的json型，那么如何用最少的代码方便的更新json格式数据到数据库呢？同样可以使用如下两种方法：</p><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">方法一：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">data</span>&nbsp;=&nbsp;{<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;username&#39;</span>:<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;nick&#39;</span>,<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;is_active&#39;</span>:<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;0&#39;</span>}<br>User.objects.filter(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>).update(**<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">data</span>)<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p>同样这种方法不能自动更新具有<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">auto_now</code>属性字段的值</p></li><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">通常我们再变量前加一个星号(*)表示这个变量是元组/列表，加两个星号表示这个参数是字典</span></p></li></ul><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">方法二：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">data</span>&nbsp;=&nbsp;{<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;username&#39;</span>:<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;nick&#39;</span>,<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;is_active&#39;</span>:<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;0&#39;</span>}<br>_t&nbsp;=&nbsp;User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>)<br>_t.__dict__.update(**<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">data</span>)<br>_t.save()<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p>方法二和方法一同样无法自动更新<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">auto_now</code>字段的值</p></li><li><p>注意这里使用到了一个<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);"><strong style="font-size: inherit;color: inherit;line-height: inherit;">dict</strong></code>方法</p></li></ul><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">方法三：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>&nbsp;=&nbsp;User.objects.get(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>)<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>.role=Role.objects.get(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">3</span>)<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>.save()<br></code></pre><h1 style="color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;font-weight: bold;font-size: 1.6em;"><span style="font-size: inherit;color: inherit;line-height: inherit;">ForeignKey字段更新</span></h1><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">假如我们的表中有Foreignkey外键时，该如何更新呢？</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">class</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(165, 218, 45);word-wrap: inherit !important;word-break: inherit !important;">User</span><span class="" style="font-size: inherit;line-height: inherit;color: rgb(255, 152, 35);word-wrap: inherit !important;word-break: inherit !important;">(models.Model)</span>:</span><br>&nbsp;&nbsp;&nbsp;&nbsp;create_time&nbsp;=&nbsp;models.DateTimeField(auto_now_add=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;创建时间&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;update_time&nbsp;=&nbsp;models.DateTimeField(auto_now=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;更新时间&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;username&nbsp;=&nbsp;models.CharField(max_length=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">255</span>,&nbsp;unique=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;用户名&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;is_active&nbsp;=&nbsp;models.BooleanField(default=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">False</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;激活状态&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;role&nbsp;=&nbsp;models.ForeignKey(Role,&nbsp;on_delete=models.CASCADE,&nbsp;null=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;角色&#39;</span>)<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">方法一：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">User.objects.filter(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">id</span>=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>).update(role=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">2</span>)<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">最简单的方法，直接让给role字段设置为一个id即可</span></p></li><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">当然也可以用dict作为参数更新：</span></p></li></ul><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">User.objects.filter(id=1).update(**{<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;username&#39;</span>:<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;nick&#39;</span>,<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;role&#39;</span>:3})<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">方法二：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">_role&nbsp;=&nbsp;Role.objects.get(id=2)<br>User.objects.filter(id=1).update(role=_role)<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">也可以赋值一个实例给role</span></p></li><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">当然也可以用dict作为参数更新：</span></p></li></ul><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">_role&nbsp;=&nbsp;Role.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>)<br>User.objects.filter(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>).update(**{<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;username&#39;</span>:<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;nick&#39;</span>,<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;role&#39;</span>:_role})<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">方法三：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>&nbsp;=&nbsp;User.objects.get(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>)<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>.role=Role.objects.get(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">3</span>)<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>.save()<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p>注意：<strong style="font-size: inherit;color: inherit;line-height: inherit;">这里的role必须赋值为一个对象，不能写id</strong>，不然会报错<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">&quot;User.role&quot; must be a &quot;Role&quot; instance</code></p></li><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">当使用dict作为参数更新时又有一点不同，如下代码：</span></p></li></ul><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">_t&nbsp;=&nbsp;User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>)<br>_t.__dict__.update(**{<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;username&#39;</span>:<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;nick&#39;</span>,<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;role_id&#39;</span>:<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">2</span>})<br>_t.save()<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p><strong style="font-size: inherit;color: inherit;line-height: inherit;">Foreignkey外键必须加上`_id`</strong>，例如：{&#39;role_id&#39;:3}</p></li><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">role_id后边必须跟一个id（int或str类型都可），不能跟role实例</span></p></li></ul><h1 style="color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;font-weight: bold;font-size: 1.6em;"><span style="font-size: inherit;color: inherit;line-height: inherit;">ManyToManyField字段更新</span></h1><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">假如我们的表中有ManyToManyField字段时更新又有什么影响呢？</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">class</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(165, 218, 45);word-wrap: inherit !important;word-break: inherit !important;">User</span><span class="" style="font-size: inherit;line-height: inherit;color: rgb(255, 152, 35);word-wrap: inherit !important;word-break: inherit !important;">(models.Model)</span>:</span><br>&nbsp;&nbsp;&nbsp;&nbsp;create_time&nbsp;=&nbsp;models.DateTimeField(auto_now_add=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;创建时间&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;update_time&nbsp;=&nbsp;models.DateTimeField(auto_now=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;更新时间&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;username&nbsp;=&nbsp;models.CharField(max_length=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">255</span>,&nbsp;unique=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;用户名&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;is_active&nbsp;=&nbsp;models.BooleanField(default=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">False</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;激活状态&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;role&nbsp;=&nbsp;models.ForeignKey(Role,&nbsp;on_delete=models.CASCADE,&nbsp;null=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;角色&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;groups&nbsp;=&nbsp;models.ManyToManyField(Group,&nbsp;null=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>,&nbsp;verbose_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;组&#39;</span>)<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">m2m更新：m2m字段没有直接更新的方法，只能通过清空再添加的方法更新了</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>&nbsp;=&nbsp;User.objects.get(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>)<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>.groups.clear()<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>.groups.add(*[<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>,<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">3</span>,<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">5</span>])<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>.save()<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p><code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">add()</code>：m2m字段添加一个值，当有多个值的时候可用列表，参照上边例子</p></li><ul style="list-style-type: square;" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">_t.groups.add(2)</span></p></li><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">_t.groups.add(Group.objects.get(id=2))</span></p></li></ul><li><p><code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">remove()</code>：m2m字段移除一个值，，当有多个值的时候可用列表，参照上边例子</p></li><ul style="list-style-type: square;" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">_t.groups.remove(2)</span></p></li><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">_t.groups.remove(Group.objects.get(id=2))</span></p></li></ul><li><p><code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">clear()</code>：清空m2m字段的值</p></li></ul><p><span style="font-size: 18px;"></span></p><h2 class="rich_media_title" id="activity-name">Django model select的各种用法详解</h2><p><span style="font-size: 18px;"></span><br></p><h1 style="line-height: inherit;margin-top: 1.5em;font-weight: bold;font-size: 1.6em;margin-bottom: 2em;margin-right: 5px;padding: 8px 15px;letter-spacing: 2px;background-image: linear-gradient(to right bottom, rgb(0, 188, 212), rgb(63, 81, 181));background-color: rgb(63, 81, 181);color: rgb(255, 255, 255);border-left: 10px solid rgb(51, 51, 51);border-radius: 5px;text-shadow: rgb(102, 102, 102) 1px 1px 1px;box-shadow: rgb(102, 102, 102) 1px 1px 2px;"><span style="font-size: inherit;color: inherit;line-height: inherit;">基本操作</span></h1><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(91, 218, 237);word-wrap: inherit !important;word-break: inherit !important;">#</span><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;">&nbsp;获取所有数据，对应SQL：select&nbsp;*&nbsp;from&nbsp;User</span><br>User.objects.all()<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(91, 218, 237);word-wrap: inherit !important;word-break: inherit !important;"><br>#</span><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;">&nbsp;匹配，对应SQL：select&nbsp;*&nbsp;from&nbsp;User&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">where</span>&nbsp;name&nbsp;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;</span></span><br>User.objects.filter(name=&#39;运维咖啡吧&#39;)<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(91, 218, 237);word-wrap: inherit !important;word-break: inherit !important;"><br>#</span><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;">&nbsp;不匹配，对应SQL：select&nbsp;*&nbsp;from&nbsp;User&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">where</span>&nbsp;name&nbsp;!=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;</span></span><br>User.objects.exclude(name=&#39;运维咖啡吧&#39;)<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(91, 218, 237);word-wrap: inherit !important;word-break: inherit !important;"><br>#</span><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;">&nbsp;获取单条数据（有且仅有一条，id唯一），对应SQL：select&nbsp;*&nbsp;from&nbsp;User&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">where</span>&nbsp;id&nbsp;=&nbsp;724</span><br>User.objects.get(id=123)<br></code></pre><h1 style="line-height: inherit;margin-top: 1.5em;font-weight: bold;font-size: 1.6em;margin-bottom: 2em;margin-right: 5px;padding: 8px 15px;letter-spacing: 2px;background-image: linear-gradient(to right bottom, rgb(0, 188, 212), rgb(63, 81, 181));background-color: rgb(63, 81, 181);color: rgb(255, 255, 255);border-left: 10px solid rgb(51, 51, 51);border-radius: 5px;text-shadow: rgb(102, 102, 102) 1px 1px 1px;box-shadow: rgb(102, 102, 102) 1px 1px 2px;"><span style="font-size: inherit;color: inherit;line-height: inherit;">常用操作</span></h1><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">#&nbsp;获取总数，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;count(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>)&nbsp;from&nbsp;User<br>User.objects.count()<br><br>#&nbsp;获取总数，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;count(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>)&nbsp;from&nbsp;User&nbsp;where&nbsp;name&nbsp;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;).count()</span><br><br>#&nbsp;大于，&gt;，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;id&nbsp;&gt;&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">724</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(id__gt=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">724</span>)<br><br>#&nbsp;大于等于，&gt;=，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;id&nbsp;&gt;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">724</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(id__gte=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">724</span>)<br><br>#&nbsp;小于，&lt;，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;id&nbsp;&lt;&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">724</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(id__lt=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">724</span>)<br><br>#&nbsp;小于等于，&lt;=，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;id&nbsp;&lt;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">724</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(id__lte=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">724</span>)<br><br>#&nbsp;同时大于和小于，&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>&nbsp;&lt;&nbsp;id&nbsp;&lt;&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">10</span>，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;id&nbsp;&gt;&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">and</span>&nbsp;id&nbsp;&lt;&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">10</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(id__gt=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>,&nbsp;id__lt=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">10</span>)<br><br>#&nbsp;包含，<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">in</span>，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;id&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">in</span>&nbsp;(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">11</span>,<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">22</span>,<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">33</span>)<br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(id__in=[<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">11</span>,&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">22</span>,&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">33</span>])<br><br>#&nbsp;不包含，<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">not</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">in</span>，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;id&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">not</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">in</span>&nbsp;(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">11</span>,<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">22</span>,<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">33</span>)<br>User.objects.exclude(id__in=[<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">11</span>,&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">22</span>,&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">33</span>])<br><br>#&nbsp;为空：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">isnull</span>=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">True</span>，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;pub_date&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">is</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">null</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(pub_date__isnull=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">True</span>)<br><br>#&nbsp;不为空：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">isnull</span>=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">False</span>，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;pub_date&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">is</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">not</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">null</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(pub_date__isnull=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">True</span>)<br><br>#&nbsp;匹配，like，大小写敏感，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;name&nbsp;like&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;%sre%&#39;，SQL中大小写不敏感</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(name__contains=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&quot;sre&quot;</span>)<br><br>#&nbsp;匹配，like，大小写不敏感，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;name&nbsp;like&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;%sre%&#39;，SQL中大小写不敏感</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(name__icontains=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&quot;sre&quot;</span>)<br><br>#&nbsp;不匹配，大小写敏感，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;name&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">not</span>&nbsp;like&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;%sre%&#39;，SQL中大小写不敏感</span><br>User.objects.exclude(name__contains=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&quot;sre&quot;</span>)<br><br>#&nbsp;不匹配，大小写不敏感，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;name&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">not</span>&nbsp;like&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;%sre%&#39;，SQL中大小写不敏感</span><br>User.objects.exclude(name__icontains=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&quot;sre&quot;</span>)<br><br>#&nbsp;范围，between&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">and</span>，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;id&nbsp;between&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">3</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">and</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">8</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(id__range=[<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">3</span>,&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">8</span>])<br><br>#&nbsp;以什么开头，大小写敏感，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;name&nbsp;like&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;sh%&#39;，SQL中大小写不敏感</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(name__startswith=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;sre&#39;)</span><br><br>#&nbsp;以什么开头，大小写不敏感，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;name&nbsp;like&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;sh%&#39;，SQL中大小写不敏感</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(name__istartswith=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;sre&#39;)</span><br><br>#&nbsp;以什么结尾，大小写敏感，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;name&nbsp;like&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;%sre&#39;，SQL中大小写不敏感</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(name__endswith=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;sre&#39;)</span><br><br>#&nbsp;以什么结尾，大小写不敏感，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;name&nbsp;like&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;%sre&#39;，SQL中大小写不敏感</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(name__iendswith=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;sre&#39;)</span><br><br>#&nbsp;排序，order&nbsp;by，正序，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;name&nbsp;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;&nbsp;order&nbsp;by&nbsp;id</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;).order_by(&#39;id&#39;)</span><br><br>#&nbsp;多级排序，order&nbsp;by，先按name进行正序排列，如果name一致则再按照id倒叙排列<br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;).order_by(&#39;name&#39;,&#39;-id&#39;)</span><br><br>#&nbsp;排序，order&nbsp;by，倒序，对应SQL：<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;from&nbsp;User&nbsp;where&nbsp;name&nbsp;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;&nbsp;order&nbsp;by&nbsp;id&nbsp;desc</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;).order_by(&#39;-id&#39;)</span><br></code></pre><h1 style="line-height: inherit;margin-top: 1.5em;font-weight: bold;font-size: 1.6em;margin-bottom: 2em;margin-right: 5px;padding: 8px 15px;letter-spacing: 2px;background-image: linear-gradient(to right bottom, rgb(0, 188, 212), rgb(63, 81, 181));background-color: rgb(63, 81, 181);color: rgb(255, 255, 255);border-left: 10px solid rgb(51, 51, 51);border-radius: 5px;text-shadow: rgb(102, 102, 102) 1px 1px 1px;box-shadow: rgb(102, 102, 102) 1px 1px 2px;"><span style="font-size: inherit;color: inherit;line-height: inherit;">进阶操作</span></h1><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;limit，对应SQL：select&nbsp;*&nbsp;from&nbsp;User&nbsp;limit&nbsp;3;</span><br>User.objects.all()[:<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">3</span>]<br><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;limit，取第三条以后的数据，没有对应的SQL，类似的如：select&nbsp;*&nbsp;from&nbsp;User&nbsp;limit&nbsp;3,10000000，从第3条开始取数据，取10000000条（10000000大于表中数据条数）</span><br>User.objects.all()[<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">3</span>:]<br><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;offset，取出结果的第10-20条数据（不包含10，包含20）,也没有对应SQL，参考上边的SQL写法</span><br>User.objects.all()[<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">10</span>:<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">20</span>]<br><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;分组，group&nbsp;by，对应SQL：select&nbsp;username,count(1)&nbsp;from&nbsp;User&nbsp;group&nbsp;by&nbsp;username;</span><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">from</span>&nbsp;django.db.models&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">import</span>&nbsp;Count<br>User.objects.values_list(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;username&#39;</span>).annotate(Count(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;id&#39;</span>))<br><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;去重distinct，对应SQL：select&nbsp;distinct(username)&nbsp;from&nbsp;User</span><br>User.objects.values(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;username&#39;</span>).distinct().count()<br><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;filter多列、查询多列，对应SQL：select&nbsp;username,fullname&nbsp;from&nbsp;accounts_user</span><br>User.objects.values_list(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;username&#39;</span>,&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;fullname&#39;</span>)<br><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;filter单列、查询单列，正常values_list给出的结果是个列表，里边里边的每条数据对应一个元组，当只查询一列时，可以使用flat标签去掉元组，将每条数据的结果以字符串的形式存储在列表中，从而避免解析元组的麻烦</span><br>User.objects.values_list(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;username&#39;</span>,&nbsp;flat=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>)<br><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;int字段取最大值、最小值、综合、平均数</span><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">from</span>&nbsp;django.db.models&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">import</span>&nbsp;Sum,Count,Max,Min,Avg<br><br>User.objects.aggregate(Count(‘id’))<br>User.objects.aggregate(Sum(‘age’))<br></code></pre><h1 style="line-height: inherit;margin-top: 1.5em;font-weight: bold;font-size: 1.6em;margin-bottom: 2em;margin-right: 5px;padding: 8px 15px;letter-spacing: 2px;background-image: linear-gradient(to right bottom, rgb(0, 188, 212), rgb(63, 81, 181));background-color: rgb(63, 81, 181);color: rgb(255, 255, 255);border-left: 10px solid rgb(51, 51, 51);border-radius: 5px;text-shadow: rgb(102, 102, 102) 1px 1px 1px;box-shadow: rgb(102, 102, 102) 1px 1px 2px;"><span style="font-size: inherit;color: inherit;line-height: inherit;">时间字段</span></h1><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">#&nbsp;匹配日期，<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">date</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__date=datetime.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">date</span>(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">2018</span>,&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">8</span>,&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">1</span>))<br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__date__gt=datetime.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">date</span>(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">2018</span>,&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">8</span>,&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">2</span>))<br><br>#&nbsp;匹配年，<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">year</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__year=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">2018</span>)<br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__year__gte=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">2018</span>)<br><br>#&nbsp;匹配月，<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">month</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__month__gt=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">7</span>)<br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__month__gte=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">7</span>)<br><br>#&nbsp;匹配日，<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">day</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__day=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">8</span>)<br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__day__gte=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">8</span>)<br><br>#&nbsp;匹配周，week_day<br>&nbsp;User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__week_day=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">2</span>)<br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__week_day__gte=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">2</span>)<br><br>#&nbsp;匹配时，<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">hour</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__hour=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">9</span>)<br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__hour__gte=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">9</span>)<br><br>#&nbsp;匹配分，<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">minute</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__minute=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">15</span>)<br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__minute_gt=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">15</span>)<br><br>#&nbsp;匹配秒，<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">second</span><br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__second=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">15</span>)<br>User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(create_time__second__gte=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">15</span>)<br><br><br>#&nbsp;按天统计归档<br>today&nbsp;=&nbsp;datetime.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">date</span>.today()<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;=&nbsp;{<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;day&#39;:&nbsp;connection.ops.date_trunc_sql(&#39;day&#39;,&nbsp;&#39;create_time&#39;)}</span><br>deploy_date_count&nbsp;=&nbsp;Task.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">filter</span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;create_time__range=(today&nbsp;-&nbsp;datetime.timedelta(days=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">7</span>),&nbsp;today)<br>).extra(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>).values(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;day&#39;).annotate(number=Count(&#39;id&#39;))</span><br></code></pre><h1 style="line-height: inherit;margin-top: 1.5em;font-weight: bold;font-size: 1.6em;margin-bottom: 2em;margin-right: 5px;padding: 8px 15px;letter-spacing: 2px;background-image: linear-gradient(to right bottom, rgb(0, 188, 212), rgb(63, 81, 181));background-color: rgb(63, 81, 181);color: rgb(255, 255, 255);border-left: 10px solid rgb(51, 51, 51);border-radius: 5px;text-shadow: rgb(102, 102, 102) 1px 1px 1px;box-shadow: rgb(102, 102, 102) 1px 1px 2px;"><span style="font-size: inherit;color: inherit;line-height: inherit;">Q 的使用</span></h1><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">Q对象可以对关键字参数进行封装，从而更好的应用多个查询，可以组合&amp;(and)、|(or)、~(not)操作符。</p><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">例如下边的语句</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">from</span>&nbsp;django.db.models&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">import</span>&nbsp;Q<br><br>User.objects.filter(<br>&nbsp;&nbsp;&nbsp;&nbsp;Q(role__startswith=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;sre_&#39;</span>),<br>&nbsp;&nbsp;&nbsp;&nbsp;Q(name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;公众号&#39;</span>)&nbsp;|&nbsp;Q(name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;</span>)<br>)<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">转换成SQL语句如下：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">select</span>&nbsp;*&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">from</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">User</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">where</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">role</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">like</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;sre_%&#39;</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">and</span>&nbsp;(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">name</span>=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;公众号&#39;</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">or</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">name</span>=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;</span>)<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">通常更多的时候我们用Q来做搜索逻辑，比如前台搜索框输入一个字符，后台去数据库中检索标题或内容中是否包含</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">_s&nbsp;=&nbsp;request.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">GET</span>.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;search&#39;)</span><br><br>_t&nbsp;=&nbsp;Blog.objects.all()<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">if</span>&nbsp;_s:<br>&nbsp;&nbsp;&nbsp;&nbsp;_t&nbsp;=&nbsp;_t.filter(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q(title__icontains=_s)&nbsp;|<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q(content__icontains=_s)<br>&nbsp;&nbsp;&nbsp;&nbsp;)<br><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">return</span>&nbsp;_t<br></code></pre><h1 style="line-height: inherit;margin-top: 1.5em;font-weight: bold;font-size: 1.6em;margin-bottom: 2em;margin-right: 5px;padding: 8px 15px;letter-spacing: 2px;background-image: linear-gradient(to right bottom, rgb(0, 188, 212), rgb(63, 81, 181));background-color: rgb(63, 81, 181);color: rgb(255, 255, 255);border-left: 10px solid rgb(51, 51, 51);border-radius: 5px;text-shadow: rgb(102, 102, 102) 1px 1px 1px;box-shadow: rgb(102, 102, 102) 1px 1px 2px;"><span style="font-size: inherit;color: inherit;line-height: inherit;">外键：ForeignKey</span></h1><ul style="" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">表结构：</span></p></li></ul><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">class</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(165, 218, 45);word-wrap: inherit !important;word-break: inherit !important;">Role</span><span class="" style="font-size: inherit;line-height: inherit;color: rgb(255, 152, 35);word-wrap: inherit !important;word-break: inherit !important;">(models.Model)</span>:</span><br>&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;models.CharField(max_length=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">16</span>,&nbsp;unique=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>)<br><br><br><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">class</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(165, 218, 45);word-wrap: inherit !important;word-break: inherit !important;">User</span><span class="" style="font-size: inherit;line-height: inherit;color: rgb(255, 152, 35);word-wrap: inherit !important;word-break: inherit !important;">(models.Model)</span>:</span><br>&nbsp;&nbsp;&nbsp;&nbsp;username&nbsp;=&nbsp;models.EmailField(max_length=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">255</span>,&nbsp;unique=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;role&nbsp;=&nbsp;models.ForeignKey(Role,&nbsp;on_delete=models.CASCADE)<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">正向查询:</span></p></li></ul><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(91, 218, 237);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;查询用户的角色名</span><br>_t&nbsp;=&nbsp;User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(username=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;</span>)<br>_t.role.name<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">反向查询：</span></p></li></ul><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(91, 218, 237);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;查询角色下包含的所有用户</span><br>_t&nbsp;=&nbsp;Role.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;Role03&#39;</span>)<br>_t.user_set.all()<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">另一种反向查询的方法：</span></p></li></ul><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">_t&nbsp;=&nbsp;Role.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;Role03&#39;</span>)<br><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(91, 218, 237);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;这种方法比上一种_set的方法查询速度要快</span><br>User.objects.filter(role=_t)<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">第三种反向查询的方法：</span></p></li></ul><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">如果外键字段有<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">related_name</code>属性，例如models如下：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">class</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(165, 218, 45);word-wrap: inherit !important;word-break: inherit !important;">User</span><span class="" style="font-size: inherit;line-height: inherit;color: rgb(255, 152, 35);word-wrap: inherit !important;word-break: inherit !important;">(models.Model)</span>:</span><br>&nbsp;&nbsp;&nbsp;&nbsp;username&nbsp;=&nbsp;models.EmailField(max_length=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">255</span>,&nbsp;unique=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;role&nbsp;=&nbsp;models.ForeignKey(Role,&nbsp;on_delete=models.CASCADE,related_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;roleUsers&#39;</span>)<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">那么可以直接用<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">related_name</code>属性取到某角色的所有用户</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">_t&nbsp;=&nbsp;Role.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(name&nbsp;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;Role03&#39;</span>)<br>_t.roleUsers.all()<br></code></pre><h1 style="line-height: inherit;margin-top: 1.5em;font-weight: bold;font-size: 1.6em;margin-bottom: 2em;margin-right: 5px;padding: 8px 15px;letter-spacing: 2px;background-image: linear-gradient(to right bottom, rgb(0, 188, 212), rgb(63, 81, 181));background-color: rgb(63, 81, 181);color: rgb(255, 255, 255);border-left: 10px solid rgb(51, 51, 51);border-radius: 5px;text-shadow: rgb(102, 102, 102) 1px 1px 1px;box-shadow: rgb(102, 102, 102) 1px 1px 2px;"><span style="font-size: inherit;color: inherit;line-height: inherit;">M2M：ManyToManyField</span></h1><ul style="" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">表结构：</span></p></li></ul><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">class</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(165, 218, 45);word-wrap: inherit !important;word-break: inherit !important;">Group</span><span class="" style="font-size: inherit;line-height: inherit;color: rgb(255, 152, 35);word-wrap: inherit !important;word-break: inherit !important;">(models.Model)</span>:</span><br>&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;models.CharField(max_length=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">16</span>,&nbsp;unique=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>)<br><br><span class="" style="font-size: inherit;color: inherit;line-height: inherit;word-wrap: inherit !important;word-break: inherit !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">class</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(165, 218, 45);word-wrap: inherit !important;word-break: inherit !important;">User</span><span class="" style="font-size: inherit;line-height: inherit;color: rgb(255, 152, 35);word-wrap: inherit !important;word-break: inherit !important;">(models.Model)</span>:</span><br>&nbsp;&nbsp;&nbsp;&nbsp;username&nbsp;=&nbsp;models.CharField(max_length=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">255</span>,&nbsp;unique=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">True</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;groups&nbsp;=&nbsp;models.ManyToManyField(Group,&nbsp;related_name=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;groupUsers&#39;</span>)<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">正向查询:</span></p></li></ul><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(91, 218, 237);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;查询用户隶属组</span><br>_t&nbsp;=&nbsp;User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(username&nbsp;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;</span>)<br>_t.groups.all()<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p><span style="font-size: inherit;color: inherit;line-height: inherit;">反向查询：</span></p></li></ul><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(91, 218, 237);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;查询组包含用户</span><br>_t&nbsp;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">Group</span>.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(name&nbsp;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;groupC&#39;)</span><br>_t.user_set.all()<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">同样M2M字段如果有<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">related_name</code>属性，那么可以直接用下边的方式反查</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;">_t&nbsp;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">Group</span>.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(name&nbsp;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;groupC&#39;)</span><br>_t.groupUsers.all()<br></code></pre><h1 style="line-height: inherit;margin-top: 1.5em;font-weight: bold;font-size: 1.6em;margin-bottom: 2em;margin-right: 5px;padding: 8px 15px;letter-spacing: 2px;background-image: linear-gradient(to right bottom, rgb(0, 188, 212), rgb(63, 81, 181));background-color: rgb(63, 81, 181);color: rgb(255, 255, 255);border-left: 10px solid rgb(51, 51, 51);border-radius: 5px;text-shadow: rgb(102, 102, 102) 1px 1px 1px;box-shadow: rgb(102, 102, 102) 1px 1px 2px;"><span style="font-size: inherit;color: inherit;line-height: inherit;">get_object_or_404</span></h1><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">正常如果我们要去数据库里搜索某一条数据时，通常使用下边的方法：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(165, 218, 45);word-wrap: inherit !important;word-break: inherit !important;">_t</span>&nbsp;=&nbsp;User.objects.get(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">734</span>)<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">但当<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">id=724</code>的数据不存在时，程序将会抛出一个错误</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">abcer</span><span class="" style="font-size: inherit;line-height: inherit;color: rgb(165, 218, 45);word-wrap: inherit !important;word-break: inherit !important;">.models</span><span class="" style="font-size: inherit;line-height: inherit;color: rgb(165, 218, 45);word-wrap: inherit !important;word-break: inherit !important;">.DoesNotExist</span>:&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">User</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">matching</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">query</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">does</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">not</span>&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">exist</span>.<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">为了程序兼容和异常判断，我们可以使用下边两种方式:</p><ul style="" class=" list-paddingleft-2"><li><p>方式一：<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">get</code>改为<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">filter</code></p></li></ul><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>&nbsp;=&nbsp;User.objects.filter(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">724</span>)<br>#&nbsp;取出<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>之后再去判断<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">_t</span>是否存在<br></code></pre><ul style="" class=" list-paddingleft-2"><li><p>方式二：使用<code style="font-size: inherit;line-height: inherit;word-wrap: break-word;padding: 2px 4px;border-radius: 4px;margin-right: 2px;margin-left: 2px;color: rgb(233, 105, 0);background: rgb(248, 248, 248);">get_object_or_404</code></p></li></ul><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">from</span>&nbsp;django.shortcuts&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">import</span>&nbsp;get_object_or_404<br><br>_t&nbsp;=&nbsp;get_object_or_404(User,&nbsp;id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">724</span>)<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">#&nbsp;get_object_or_404方法，它会先调用django的get方法，如果查询的对象不存在的话，则抛出一个Http404的异常</span><br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">实现方法类似于下边这样：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">from</span>&nbsp;django.http&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">import</span>&nbsp;Http404<br><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">try</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;_t&nbsp;=&nbsp;User.objects.get(id=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">724</span>)<br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">except</span>&nbsp;User.DoesNotExist:<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">raise</span>&nbsp;Http404<br></code></pre><h1 style="line-height: inherit;margin-top: 1.5em;font-weight: bold;font-size: 1.6em;margin-bottom: 2em;margin-right: 5px;padding: 8px 15px;letter-spacing: 2px;background-image: linear-gradient(to right bottom, rgb(0, 188, 212), rgb(63, 81, 181));background-color: rgb(63, 81, 181);color: rgb(255, 255, 255);border-left: 10px solid rgb(51, 51, 51);border-radius: 5px;text-shadow: rgb(102, 102, 102) 1px 1px 1px;box-shadow: rgb(102, 102, 102) 1px 1px 2px;"><span style="font-size: inherit;color: inherit;line-height: inherit;">get_or_create</span></h1><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">顾名思义，查找一个对象如果不存在则创建，如下：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">object</span>,&nbsp;created&nbsp;=&nbsp;User.objects.get_or_create(username=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;</span>)<br></code></pre><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">返回一个由object和created组成的元组，其中object就是一个查询到的或者是被创建的对象，created是一个表示是否创建了新对象的布尔值</p><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">实现方式类似于下边这样：</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">try</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">object</span>&nbsp;=&nbsp;User.objects.<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">get</span>(username=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;)</span><br><br>&nbsp;&nbsp;&nbsp;&nbsp;created&nbsp;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">False</span><br>exception&nbsp;User.DoesNoExist:<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">object</span>&nbsp;=&nbsp;User(username=<span class="" style="font-size: inherit;line-height: inherit;color: rgb(128, 128, 128);word-wrap: inherit !important;word-break: inherit !important;">&#39;运维咖啡吧&#39;)</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">object</span>.save()<br><br>&nbsp;&nbsp;&nbsp;&nbsp;created&nbsp;=&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(174, 135, 250);word-wrap: inherit !important;word-break: inherit !important;">True</span><br><br>returen&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">object</span>,&nbsp;created<br></code></pre><h1 style="line-height: inherit;margin-top: 1.5em;font-weight: bold;font-size: 1.6em;margin-bottom: 2em;margin-right: 5px;padding: 8px 15px;letter-spacing: 2px;background-image: linear-gradient(to right bottom, rgb(0, 188, 212), rgb(63, 81, 181));background-color: rgb(63, 81, 181);color: rgb(255, 255, 255);border-left: 10px solid rgb(51, 51, 51);border-radius: 5px;text-shadow: rgb(102, 102, 102) 1px 1px 1px;box-shadow: rgb(102, 102, 102) 1px 1px 2px;"><span style="font-size: inherit;color: inherit;line-height: inherit;">执行原生SQL</span></h1><p style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 1.5em;margin-bottom: 1.5em;">Django中能用ORM的就用它ORM吧，不建议执行原生SQL，可能会有一些安全问题，如果实在是SQL太复杂ORM实现不了，那就看看下边执行原生SQL的方法，跟直接使用pymysql基本一致了</p><pre style="font-size: inherit;color: inherit;line-height: inherit;margin-top: 0px;margin-bottom: 0px;padding: 0px;"><code class="" style="margin-right: 2px;margin-left: 2px;line-height: 18px;font-size: 14px;letter-spacing: 0px;font-family: Consolas, Inconsolata, Courier, monospace;border-radius: 0px;color: rgb(169, 183, 198);background: rgb(40, 43, 46);padding: 0.5em;display: block !important;word-wrap: normal !important;word-break: normal !important;overflow: auto !important;"><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">from</span>&nbsp;django.db&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">import</span>&nbsp;connection<br><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">with</span>&nbsp;connection.cursor()&nbsp;<span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">as</span>&nbsp;cursor:<br>&nbsp;&nbsp;&nbsp;&nbsp;cursor.execute(<span class="" style="font-size: inherit;line-height: inherit;color: rgb(238, 220, 112);word-wrap: inherit !important;word-break: inherit !important;">&#39;select&nbsp;*&nbsp;from&nbsp;accounts_User&#39;</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;row&nbsp;=&nbsp;cursor.fetchall()<br><br><span class="" style="font-size: inherit;line-height: inherit;color: rgb(248, 35, 117);word-wrap: inherit !important;word-break: inherit !important;">return</span>&nbsp;row</code></pre><p style="color: inherit; line-height: inherit; margin-top: 1.5em; margin-bottom: 1.5em; text-align: left;">注意这里表名字要用<strong style="color: inherit; line-height: inherit;">app名+下划线+model名</strong>的方式</p><p>本文内容来自群友的公众号：<span style="color: rgb(192, 0, 0);"><strong>运维咖啡吧</strong></span> <br></p><p><img src="static/picture/222_20180816170857_148.jpg" title="" alt="222.jpg" style="width: 210px; height: 189px;" width="210" height="189"></p>
+                                    
+                                </div>
+
+                                <div class="container">
+                                    <button type="button" class="btn btn-primary" title="加微信与站长交流" data-container="body" data-toggle="popover" data-placement="top" data-content="站长微信：VIPdjango">
+                                        联系站长
+                                    </button>
+
+                                </div>
+                                <script>
+                                    $(function () {
+                                        $("[data-toggle='popover']").popover();
+                                    });
+                                </script>
+
+                                <div class="article__footer">
+                                    <div class="tags"><b>上一篇：</b>
+                                        
+                                            <a href="show-14.html" class="article-tag">Django2.1发布，Django2.1新特性</a>
+                                        
+
+                                    </div>
+                                    <div class="tags"><b>下一篇：</b>
+                                        
+                                            <a href="show-18.html" class="article-tag">Django身份认证系统auth模块详解</a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <!--  广告位置 -->
+                        <section id="comments">
+                            <div class="comments__container">
+                                <h3>文章评论 <span class="comment__count">6</span></h3>
+                                
+                                    <div class="comment__add">
+                                        <div class="login-card">
+                                            <a href="login1.html" class="btn btn-primary btn-login"><span>登录评论</span></a>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                                
+<div class="comments__list-wrapper">
+<div id="comment__preview" style="display: none"></div>
+<ul class="comments__list">
+    
+<li class="comment__list-item">
+<article id="comment-73" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/Narwhal/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/576a608a5610a.jpg)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/Narwhal" class="neon">
+            Narwhal
+        </a>
+    </div>
+    <time datetime="2018-08-19">
+        <a class="neon">
+            2018-08-19
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>&lt;p&gt;111&lt;/p&gt;</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+<li class="comment__list-item">
+<article id="comment-757" class="comment__container ">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/929453535@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/929453535@qq.com" class="neon">
+            929453535@qq.com
+        </a>
+    </div>
+    <time datetime="2020-12-09">
+        <a class="neon">
+            2020-12-09
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>我还 alert(&quot;123&quot;)呢</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-98" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/1049759078@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/1049759078@qq.com" class="neon">
+            1049759078@qq.com
+        </a>
+    </div>
+    <time datetime="2018-10-02">
+        <a class="neon">
+            2018-10-02
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>1</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-148" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/2639358455@qq.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/arduino_101.jpg)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/2639358455@qq.com" class="neon">
+            2639358455@qq.com
+        </a>
+    </div>
+    <time datetime="2018-11-21">
+        <a class="neon">
+            2018-11-21
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>不错，很详细</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-158" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/飞奔的五花肉/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/QQ20161212-02x.png)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/飞奔的五花肉" class="neon">
+            飞奔的五花肉
+        </a>
+    </div>
+    <time datetime="2018-11-28">
+        <a class="neon">
+            2018-11-28
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>json/dict类型数据更新字段</p>
+<p>方法三，代码错误了！</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-732" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/福建微码信息科技有限公司/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/10241.png)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/福建微码信息科技有限公司" class="neon">
+            福建微码信息科技有限公司
+        </a>
+    </div>
+    <time datetime="2020-09-07">
+        <a class="neon">
+            2020-09-07
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>挺好的，我要认真看！！！</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+</ul>
+</div>
+
+
+                                <div class="comments--legacy"></div>
+                        </section>
+                    </div>
+                    <aside class="col-md-3 hidden-sm hidden-xs">
+                        <div class="article__author">
+                            <div class="user">
+                                <div class="profile__user-avatar" style="background-image: url('static/image/timg.jpg')"></div>
+                                <div class="profile__info">
+                                    <div class="profile__name">吴秀峰</div>
+                                    <div class="badges"><span class="badge admin-badge" data-type="admin"></span></div>
+                                    <!-- <div class="profile__karma" title="Karma: 113">113</div> -->
+                                </div>
+                                <div class="profile__description">
+                                    <p>当你的才华和能力还不足以支撑你的野心的时候，静下心来，学习！</p>
+                                </div>
+                                <!--'data-hide=meta data-default=#default-links'-->
+                                <ul class="profile__links" style="">
+                                    <li class="profile__link-item change-github" data-change="github" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Github URL"> <span class="link__icon link__icon--github"></span>
+                                        <div class="change-github" data-change="github"></div>
+                                    </a></li>
+                                    <li class="profile__link-item change-twitter" data-change="twitter" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Twitter URL"> <span class="link__icon link__icon--twitter"></span>
+                                        <div class="change-twitter" data-change="twitter"></div>
+                                    </a></li>
+                                    <li class="profile__link-item change-website" data-change="website" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Website URL"> <span class="link__icon link__icon--website"></span>
+                                        <div class="change-website" data-change="website"></div>
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="section sticky-content">
+                                <div>
+                                    <div class="sidebar-articles-group">
+                                        <div class="group-title"><strong>最新文章</strong> <a href="article.html">更多</a></div>
+                                        <ul class="list-group">
+                                            
+                                                <li>
+
+                                                    <a href="show-39.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/12653.png')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django5.0正式发布，是你期待的吗？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-38.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/chatgpt.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>新手如何用Python玩转ChatGPT API,详细讲解</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-37.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/drf.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>几个例子让新手快速了解Django REST Framework (DRF)</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-36.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/python232323.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>提升效率,python的多线程详细使用方法</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-35.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/djangoQ_Z4PNibz.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django-Q，轻量级消息队列Django-Q初体验</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-34.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/Paginator.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>简单讲解Django分页Paginator和Page的用法</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-33.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('https://www.django.cn/static/images/article_default.png')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>django4.0版本到底有哪些新功能和特性？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-32.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/bushu.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django+uWSGI+nginx部署原理及工作流程</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-31.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/django-blog.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django入门视频教程之Blog开发详解</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-30.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/bt_django.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>使用宝塔面板快速部署Django项目</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+
+                                        </ul>
+                                    </div>
+                                    <div class="sidebar-articles-group">
+                                        <div class="group-title"><strong>论坛新帖</strong> <a href="forum.html">更多</a></div>
+                                        <ul class="list-group">
+                                            
+                                                <li>
+                                                    <a href="forum-69779.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>123</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69749.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>为什么每次只能导入一行数据呢？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69325.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>请教下django查询问题，开始时间2023-7-15 00:00:00 结束时间2023-7-20 23:59:59，查询统计出每天的数据总和，并输出这几天每天的总和</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69324.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>请教：Invalid block tag on line 51: &#x27;empty&#x27;. Did you forget to register or load this tag?</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69323.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django如何实现视图函数被调用之后异步回调</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68919.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>我在用Django过程中碰到一个棘手的问题，关于SESSION_COOKIE_AGE</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68918.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/avatar_-_副本.jpg')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>求教Python小版本更新升级</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68846.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>在pycharm中运行Django如何解决呢？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68845.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>项目启动失败</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68844.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>json解析错误</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            <div class="sidebar-articles-group sidebar-videos">
+                                    <div class="group-title">
+                                        <strong>视频教程</strong>
+                                        <a class="subscribe-link" target="_blank" href="video.html">更多</a>
+                                    </div>
+                                    <ul class="sidebar-video-thumbnails">
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-3.html">
+                                                <img class="video-thumb" src="static/picture/api.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-3.html">
+                                                <h4 class="video-title">Django+DRF+Vue打造专业的API自动化测试平台</h4>
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-2.html">
+                                                <img class="video-thumb" src="static/picture/djangovue_H3w7CBm.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-2.html">
+                                                <h4 class="video-title">django+vue前后端分离仿美团外卖电商项目</h4>
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-1.html">
+                                                <img class="video-thumb" src="static/picture/qiyekaifa.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-1.html">
+                                                <h4 class="video-title">django企业项目开发实战案例视频教程</h4>
+                                            </a>
+                                        </li>
+                                        
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+	 <h3>加入Django中文交流社区，分享交流，携手同行</h3>
+
+	  <ul class="list-inline">
+				<li><a href="index.html" class="neon">首 页</a></li>
+				<li><a href="article.html" class="neon">文 章</a></li>
+                <li><a href="course.html" class="neon">教 程</a></li>
+                <li><a href="video.html" class="neon">视 频</a></li>
+				<li><a href="forum.html" class="neon">社 区</a></li>
+				<li><a href="about.html" class="neon">关于我们</a></li>
+				<li><a href="contact.html" class="neon">联系我们</a></li>
+
+	  </ul>
+
+		<p class="copyright">Copyright © 2018 <a href="index1.html" target="_blank">django.cn</a>
+			<span class="second-line">All Rights Reserved.</span><br>
+            Powered by <a href="index.html">Django3</a><br>
+           <a href="https://beian.miit.gov.cn" target="_blank">备案号：湘ICP备17023990号-1</a>
+		</p>
+</footer>
+
+</div>
+
+    <!-- JavaScripts -->
+
+    <script type="text/javascript">
+
+  $('#confirm-delete').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  // var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var aid = button.data('aid')
+  var id = button.data('id')
+  var tag = button.data('tag')
+  var modal = $(this)
+  // modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('input[name="aid"]').val(aid)
+  modal.find('input[name="id"]').val(id)
+  modal.find('input[name="tag"]').val(tag)
+
+  // console.log('ok')
+})
+
+  // btn_delete_comment
+  $('#btn_delete_comment').click(function(event){
+    // var form = new FormData(document.getElementById("delete_comment"))
+    // var pwd1 = $('#change-pwd [name="password1"]').val()
+    console.log('in comment delete')
+    var aid = $('#delete_comment [name="aid"]').val()
+    var id = $('#delete_comment [name="id"]').val()
+    var tag = $('#delete_comment [name="tag"]').val()
+    var token = $('#delete_comment [name="csrfmiddlewaretoken"]').val()
+    if(!tag){
+        return
+    }
+
+    var form = new FormData();
+    form.append("id", 'id');
+    form.append("csrfmiddlewaretoken", token);
+    form.append('method','delete')
+
+        $.ajax({
+            type: 'POST',
+            url: '/comment/'+id+'/',
+            // data:'json',
+            processData: false,
+            contentType: false,
+            data: form,
+            success: function(response) {
+                if(tag == 'forum'){
+                    window.location.href = '/forum/forum-'+aid+'.html';
+                }
+                if(tag == 'article'){
+                    window.location.href = '/article/show-'+aid+'.html';
+                }
+                if(tag == 'course'){
+                    window.location.href = '/course/show-'+aid+'.html';
+                }
+            }
+        })
+  })
+</script>
+ <script src="static/js/bundle.js"></script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>

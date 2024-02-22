@@ -1,0 +1,861 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baidu-site-verification" content="TcPgCnDcOJ">
+    <link rel="apple-touch-icon" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="icon" sizes="192x192" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="shortcut icon" href="https://www.django.cn/static/images/favicon.ico">
+    
+    <title>pycharm常用快捷键介绍及十大实用技巧-Django社区,Django中文网,django教程,Django！</title>
+    <meta name="keywords" content="pycharm,pycharm快捷键,pycharm常用快捷键介绍,pycharm十大实用技巧">
+    <meta name="description" content="毫无疑问Pycharm是一个具有强大快捷键系统的IDE，这就意味着你在Pycharm中的任何操作，例如打开一个文件、切换编辑区域等，都可以通过快捷键来实现。使用快捷键不仅能提高操作速度，看起来也会非常酷。然和，如果你已经习惯使用一些快捷键方案，你的手指就会习以为常，改变起来就比较困难。这部分教程即是介绍如何根据你的习惯来量身定制Pycharm快捷键设置，使你用起来得心应手。">
+
+    <meta name="theme-color" content="#ffffff">
+    <link href="static/css/fonts.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/toastr.min.css" rel="stylesheet">
+    <link href="static/css/app.css" rel="stylesheet">
+    <link href="static/css/font-awesome.min.css" rel="stylesheet">
+     
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/highlight.min.js"></script>
+    <script src="static/js/toastr.min.js"></script>
+
+   <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?9b0ccd50ff8935f331889174a8280dc2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div style='text-align: center;font-size: 20px'>确定删除?</div>
+            </div>
+            <div class="modal-footer">
+                <form action="/comment/" method="POST" id='delete_comment' style='float: left'>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="nIEQEygftnt6EB8a4yknlPxoa0DCJJtqP30wujTK2ZZOAAsHwJRAKBMJ3EGAiTy7">
+                    <input type="hidden" name="tag">
+                    <input type="hidden" name="aid">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="method" value='delete'>
+                    <input type='button' class="btn btn-danger btn-ok" id='btn_delete_comment' value='删除'>
+                </form>
+                <!-- <a class="btn btn-danger btn-ok"><span>删除</span></a> -->
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span>取消</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="page__wrapper page--landing">
+   
+    <header class="header--main animate-search">
+
+    
+    <div class="container-fluid">
+        <nav class="nav--main">
+            <div class="nav__logo">
+                <a href="index.html">
+                    <span>Django中文网</span>
+                </a>
+            </div>
+
+            
+                <ul class="nav__items nav__items--right">
+                    <li class="nav__item">
+                        <a href="search.html" class="search-trigger icon-magnifier"></a>
+                    </li>
+                    <li id="login" class="nav__item">
+                        <a href="login.html">
+                            登录
+                        </a>
+                    </li>
+                    <li id="register" class="nav__item">
+                        <a href="register.html">
+                            <span class="btn btn-success">注册</span>
+                        </a>
+                    </li>
+                </ul>
+
+            
+
+            <ul class="nav__items nav__items--left">
+                <li class="nav__item nav__item--main">
+                    <a href="article.html" class="articles ">
+                        文章
+                    </a>
+                </li>
+                 <li class="nav__item nav__item--main">
+                    <a href="course.html" class="posts ">
+                        教程
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                    <a href="video.html" class="posts ">
+                        视频
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                     <a href="forum.html" class="posts ">
+                        社区
+                    </a>
+                </li>
+            </ul>
+
+
+        </nav> <!-- .nav--main -->
+    </div>
+
+
+    <a href="#0" class="nav-trigger icon-menu"></a>
+
+    <div id="search" class="main-search">
+    <div class="container-fluid">
+        <form id="search-form-top" class="form__search" action="/search/" method="GET">
+        <input type="search" name="search" placeholder="Search..." value="" autocomplete="off" required="">
+
+</form>
+
+        <div class="search-suggestions">
+
+        </div>
+        <a href="#0" class="close text-replace">Close Form</a>
+    </div>
+</div> <!-- .main-search -->
+</header>
+
+<div class="cover-layer"></div> <!-- cover main content when search form is open -->
+
+
+    
+    <div class="cover-layer"></div>
+    <!-- cover main content when search form is open -->
+    <main class="main-content" style=" margin-top:40px;">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9 article-content">
+                        <article class="article--big">
+                            <!--<a href="https://jq.qq.com/?_wv=1027&k=0kNpqlZH" target="_blank"><img src="/static/img/web2.jpg"> </a>-->
+                            
+                                <div class="article__image" style="background-image: url(static/image/kuaijie.jpg)"></div>
+                            
+                            <div class="article__content">
+                                <h1 class="article__title">
+                                    pycharm常用快捷键介绍及十大实用技巧
+
+                                </h1>
+                                <div class="article__header">
+                                    <div class="article__date">
+                                        <time>2020年04月14日</time>
+                                    </div>
+                                    <div class="article__date">点击次数：18407 </div>
+                                </div>
+                                <div class="article__body">
+                                    
+                                    <p><span style="font-size: 20px;"><strong>一、前言</strong></span><br></p><p>毫无疑问Pycharm是一个具有强大快捷键系统的IDE，这就意味着你在Pycharm中的任何操作，例如打开一个文件、切换编辑区域等，都可以通过快捷键来实现。使用快捷键不仅能提高操作速度，看起来也会非常酷。然和，如果你已经习惯使用一些快捷键方案，你的手指就会习以为常，改变起来就比较困难。</p><p>如果你对快捷键有超高要求的话，你可以根据你自己的习惯来量身定制Pycharm快捷键设置，使你用起来得心应手。对于基本的快捷键的组合、用法这里不再赘述，详情可参考<a class="external-link" href="http://www.jetbrains.com/pycharm/webhelp/configuring-keyboard-shortcuts.html" target="_blank">Configuring keyboard shortcuts</a>或者&nbsp;<a class="external-link" href="http://www.jetbrains.com/pycharm/webhelp/keymap.html" target="_blank">Keymap</a>。</p><p>当然如果你之前有其他同类软件的经验的话，你也可以选择一个pycharm内置的其它软件快捷键的配置方案</p><p>这一步非常简单，在主工具栏中单击设置按钮，在设置对话框中单击&nbsp;<a class="external-link" href="http://www.jetbrains.com/pycharm/webhelp/keymap.html" target="_blank">Keymap</a>。</p><p><img src="static/picture/kjj_20200414162429_201.jpg" title="" alt="kjj.jpg"></p><p><span style="font-size: 20px;"><strong>二、pycharm常用快捷键</strong></span></p><h2><span style="font-size: 18px;">1、编辑（Editing）</span></h2><pre class="brush:bash;toolbar:false">Ctrl&nbsp;+&nbsp;Space&nbsp;&nbsp;&nbsp;&nbsp;基本的代码完成（类、方法、属性）
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;Space&nbsp;&nbsp;快速导入任意类
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;Enter&nbsp;&nbsp;&nbsp;&nbsp;语句完成
+Ctrl&nbsp;+&nbsp;P&nbsp;&nbsp;&nbsp;&nbsp;参数信息（在方法中调用参数）
+Ctrl&nbsp;+&nbsp;Q&nbsp;&nbsp;&nbsp;&nbsp;快速查看文档
+F1&nbsp;&nbsp;&nbsp;外部文档
+Shift&nbsp;+&nbsp;F1&nbsp;&nbsp;&nbsp;&nbsp;外部文档，进入web文档主页
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;Z&nbsp;--&gt;&nbsp;Redo&nbsp;重做
+Ctrl&nbsp;+&nbsp;鼠标&nbsp;&nbsp;&nbsp;&nbsp;简介/进入代码定义
+Ctrl&nbsp;+&nbsp;F1&nbsp;&nbsp;&nbsp;&nbsp;显示错误描述或警告信息
+Alt&nbsp;+&nbsp;Insert&nbsp;&nbsp;&nbsp;&nbsp;自动生成代码
+Ctrl&nbsp;+&nbsp;O&nbsp;&nbsp;&nbsp;&nbsp;重新方法
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;T&nbsp;&nbsp;&nbsp;&nbsp;选中
+Ctrl&nbsp;+&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;行注释/取消行注释
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;块注释
+Ctrl&nbsp;+&nbsp;W&nbsp;&nbsp;&nbsp;&nbsp;选中增加的代码块
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;W&nbsp;&nbsp;&nbsp;&nbsp;回到之前状态
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;]/[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选定代码块结束、开始
+Alt&nbsp;+&nbsp;Enter&nbsp;&nbsp;&nbsp;&nbsp;快速修正
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;L&nbsp;&nbsp;&nbsp;&nbsp;代码格式化
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;O&nbsp;&nbsp;&nbsp;&nbsp;优化导入
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;I&nbsp;&nbsp;&nbsp;&nbsp;自动缩进
+Tab&nbsp;/&nbsp;Shift&nbsp;+&nbsp;Tab&nbsp;&nbsp;缩进、不缩进当前行
+Ctrl+X/Shift+Delete&nbsp;&nbsp;&nbsp;&nbsp;剪切当前行或选定的代码块到剪贴板
+Ctrl+C/Ctrl+Insert&nbsp;&nbsp;&nbsp;&nbsp;复制当前行或选定的代码块到剪贴板
+Ctrl+V/Shift+Insert&nbsp;&nbsp;&nbsp;&nbsp;从剪贴板粘贴
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;V&nbsp;&nbsp;&nbsp;&nbsp;从最近的缓冲区粘贴
+Ctrl&nbsp;+&nbsp;D&nbsp;&nbsp;复制选定的区域或行
+Ctrl&nbsp;+&nbsp;Y&nbsp;&nbsp;&nbsp;&nbsp;删除选定的行
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;J&nbsp;&nbsp;添加智能线
+Ctrl&nbsp;+&nbsp;Enter&nbsp;&nbsp;&nbsp;智能线切割
+Shift&nbsp;+&nbsp;Enter&nbsp;&nbsp;&nbsp;&nbsp;另起一行
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;U&nbsp;&nbsp;在选定的区域或代码块间切换
+Ctrl&nbsp;+&nbsp;Delete&nbsp;&nbsp;&nbsp;删除到字符结束
+Ctrl&nbsp;+&nbsp;Backspace&nbsp;&nbsp;&nbsp;删除到字符开始
+Ctrl&nbsp;+&nbsp;Numpad+/-&nbsp;&nbsp;&nbsp;展开/折叠代码块（当前位置的：函数，注释等）
+Ctrl&nbsp;+&nbsp;shift&nbsp;+&nbsp;Numpad+/-&nbsp;&nbsp;&nbsp;展开/折叠所有代码块
+Ctrl&nbsp;+&nbsp;F4&nbsp;&nbsp;&nbsp;关闭运行的选项卡</pre><h2><span style="font-size: 16px;">&nbsp;2、查找/替换(Search/Replace)</span></h2><pre class="brush:bash;toolbar:false">F3&nbsp;&nbsp;&nbsp;下一个
+Shift&nbsp;+&nbsp;F3&nbsp;&nbsp;&nbsp;前一个
+Ctrl&nbsp;+&nbsp;R&nbsp;&nbsp;&nbsp;替换
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;F&nbsp;&nbsp;或者连续2次敲击shift&nbsp;&nbsp;
+#全局查找{可以在整个项目中查找某个字符串什么的，如查找某个函数名字符串看之前是怎么使用这个函数的}
+
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;R&nbsp;&nbsp;&nbsp;全局替换</pre><h2><span style="font-size: 16px;">3、运行(Running)</span></h2><pre class="brush:bash;toolbar:false">Alt&nbsp;+&nbsp;Shift&nbsp;+&nbsp;F10&nbsp;&nbsp;&nbsp;运行模式配置
+Alt&nbsp;+&nbsp;Shift&nbsp;+&nbsp;F9&nbsp;&nbsp;&nbsp;&nbsp;调试模式配置
+Shift&nbsp;+&nbsp;F10&nbsp;&nbsp;&nbsp;&nbsp;运行
+Shift&nbsp;+&nbsp;F9&nbsp;&nbsp;&nbsp;调试
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;F10&nbsp;&nbsp;&nbsp;运行编辑器配置
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;R&nbsp;&nbsp;&nbsp;运行manage.py任务</pre><h2><span style="font-size: 16px;">4、调试(Debugging)</span></h2><pre class="brush:bash;toolbar:false">F8&nbsp;&nbsp;&nbsp;跳过
+F7&nbsp;&nbsp;&nbsp;进入
+Shift&nbsp;+&nbsp;F8&nbsp;&nbsp;&nbsp;退出
+Alt&nbsp;+&nbsp;F9&nbsp;&nbsp;&nbsp;&nbsp;运行游标
+Alt&nbsp;+&nbsp;F8&nbsp;&nbsp;&nbsp;&nbsp;验证表达式
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;F8&nbsp;&nbsp;&nbsp;快速验证表达式
+F9&nbsp;&nbsp;&nbsp;&nbsp;恢复程序
+Ctrl&nbsp;+&nbsp;F8&nbsp;&nbsp;&nbsp;断点开关
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;F8&nbsp;&nbsp;&nbsp;查看断点</pre><h2><span style="font-size: 16px;">&nbsp;5、导航(Navigation)</span></h2><pre class="brush:bash;toolbar:false">Ctrl&nbsp;+&nbsp;N&nbsp;&nbsp;&nbsp;&nbsp;跳转到类
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;N&nbsp;&nbsp;&nbsp;&nbsp;跳转到符号
+Alt&nbsp;+&nbsp;Right/Left&nbsp;&nbsp;&nbsp;&nbsp;跳转到下一个、前一个编辑的选项卡
+F12&nbsp;&nbsp;&nbsp;&nbsp;回到先前的工具窗口
+Esc&nbsp;&nbsp;&nbsp;&nbsp;从工具窗口回到编辑窗口
+Shift&nbsp;+&nbsp;Esc&nbsp;&nbsp;&nbsp;隐藏运行的、最近运行的窗口
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;F4&nbsp;&nbsp;&nbsp;关闭主动运行的选项卡
+Ctrl&nbsp;+&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;查看当前行号、字符号
+Ctrl&nbsp;+&nbsp;E&nbsp;&nbsp;&nbsp;当前文件弹出，打开最近使用的文件列表
+Ctrl+Alt+Left/Right&nbsp;&nbsp;&nbsp;后退、前进
+Ctrl+Shift+Backspace&nbsp;&nbsp;&nbsp;&nbsp;导航到最近编辑区域
+Alt&nbsp;+&nbsp;F1&nbsp;&nbsp;&nbsp;查找当前文件或标识
+Ctrl+B&nbsp;/&nbsp;Ctrl+Click&nbsp;&nbsp;&nbsp;&nbsp;跳转到声明
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;B&nbsp;&nbsp;&nbsp;&nbsp;跳转到实现
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;I查看快速定义
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;B跳转到类型声明
+Ctrl&nbsp;+&nbsp;U跳转到父方法、父类
+Alt&nbsp;+&nbsp;Up/Down跳转到上一个、下一个方法
+Ctrl&nbsp;+&nbsp;]/[跳转到代码块结束、开始
+Ctrl&nbsp;+&nbsp;F12弹出文件结构
+Ctrl&nbsp;+&nbsp;H类型层次结构
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;H方法层次结构
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;H调用层次结构
+F2&nbsp;/&nbsp;Shift&nbsp;+&nbsp;F2下一条、前一条高亮的错误
+F4&nbsp;/&nbsp;Ctrl&nbsp;+&nbsp;Enter编辑资源、查看资源
+Alt&nbsp;+&nbsp;Home显示导航条F11书签开关
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;F11书签助记开关
+Ctrl&nbsp;+&nbsp;#[0-9]跳转到标识的书签
+Shift&nbsp;+&nbsp;F11显示书签</pre><h2><span style="font-size: 16px;">&nbsp;6、搜索相关(Usage Search)</span></h2><pre class="brush:bash;toolbar:false">Alt&nbsp;+&nbsp;F7/Ctrl&nbsp;+&nbsp;F7文件中查询用法
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;F7文件中用法高亮显示
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;F7显示用法</pre><h2><span style="font-size: 16px;">&nbsp;7、重构(Refactoring)</span></h2><pre class="brush:bash;toolbar:false">F5复制F6剪切
+Alt&nbsp;+&nbsp;Delete安全删除
+Shift&nbsp;+&nbsp;F6重命名
+Ctrl&nbsp;+&nbsp;F6更改签名
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;N内联
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;M提取方法
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;V提取属性
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;F提取字段
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;C提取常量
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;P提取参数</pre><h2><span style="font-size: 16px;">&nbsp;8、控制VCS/Local History</span></h2><pre class="brush:bash;toolbar:false">Ctrl&nbsp;+&nbsp;K提交项目
+Ctrl&nbsp;+&nbsp;T更新项目
+Alt&nbsp;+&nbsp;Shift&nbsp;+&nbsp;C查看最近的变化
+Alt&nbsp;+&nbsp;BackQuote(’)VCS快速弹出</pre><h2><span style="font-size: 16px;">&nbsp;9、模版(Live Templates)</span></h2><pre class="brush:bash;toolbar:false">Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;J当前行使用模版
+Ctrl&nbsp;+Ｊ插入模版</pre><h2><span style="font-size: 16px;">&nbsp;10、基本(General)</span></h2><pre class="brush:bash;toolbar:false">Alt&nbsp;+&nbsp;#[0-9]打开相应的工具窗口
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;Y同步
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;F12最大化编辑开关
+Alt&nbsp;+&nbsp;Shift&nbsp;+&nbsp;F添加到最喜欢
+Alt&nbsp;+&nbsp;Shift&nbsp;+&nbsp;I根据配置检查当前文件
+Ctrl&nbsp;+&nbsp;BackQuote(’)快速切换当前计划
+Ctrl&nbsp;+&nbsp;Alt&nbsp;+&nbsp;S　打开设置页
+Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;A查找编辑器里所有的动作
+Ctrl&nbsp;+&nbsp;Tab在窗口间进行切换</pre><p><br></p><p>以上文章转自:https://www.cnblogs.com/Pythonzrq/p/11346578.html<br></p><p><br></p><p><span style="font-size: 20px;"><strong>三、十大实用技巧</strong></span></p><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(255, 41, 65);"><strong style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;"></span></strong></span></h4><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(255, 41, 65);"><strong style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;">1.自动生成导入</span></strong></span></h4><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;">您正在编写代码，想导入一个包，只记得包名，但是忘了它在那个py文件了，可以通过 pycharm 自动导入。当你写了一个包名，pycharm会有提示是否需要导入，选择后将根据您的项目样式以正确的方式生成导入。</span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><img class="rich_pages  __bg_gif" data-ratio="0.625" data-type="gif" data-w="640" data-src="https://mmbiz.qpic.cn/mmbiz_gif/iayNn6wbFBlBkpB61iaCS11fgwPmB6CV5WEVD2TZX8A5CEFY6x8nf4v57Dia3DKbI7sq5znuHDMhg3JGEXGpOTMiaw/640?wx_fmt=gif" _width="592px" src="static/picture/1.gif" data-order="0" data-fail="0" style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; height: auto !important; width: 592px !important; visibility: visible !important;" title="" alt="" width="592" vspace="0" height="370" border="0"></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px;">（动画加载需要8秒，耐心等待）</span><br style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"></p><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><br style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"></h4><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: rgb(255, 41, 65);">2.批量移动类和方法</span></h4><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;">当你重构代码时，需要把一些类或者函数移动到其他的文件时，如果你是通过对类进行剪切粘贴到其他文件，这样做的话你真是个小可爱。pycharm 提供了 move 的功能，它可以帮你批量移动类或者方法，连类的依赖都帮你处理了。</span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><img class="rich_pages  __bg_gif" data-ratio="0.625" data-type="gif" data-w="640" data-src="https://mmbiz.qpic.cn/mmbiz_gif/iayNn6wbFBlBkpB61iaCS11fgwPmB6CV5Wn4jHib60yy7QDGRVCs3P6icjxWab5NLoEzk3KhN9yww7yianQwfpVznicA/640?wx_fmt=gif" _width="592px" src="static/picture/2.gif" data-order="1" data-fail="0" style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; height: auto !important; width: 592px !important; visibility: visible !important;" title="" alt="" width="592" vspace="0" height="370" border="0"></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">（</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">动画加载需要8秒，耐心等待</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">）</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;"></span></span></p><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><br style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"></h4><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: rgb(255, 41, 65);">3.快速跳转到最近编辑的文件</span></h4><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;">如果你的项目文件很多，想要在文件之间跳转要怎么做呢？使用“最近的文件”操作可以在正在处理的文件之间快速跳转。您会得到一个低中断弹出式窗口，该弹出式窗口是键盘友好的，可让您在正在查看的文件之间跳转。快捷键是 Ctrl-E on Windows/Linux and Cmd-E on the Mac。按两次会有惊喜呦！</span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><img class="rich_pages  __bg_gif" data-ratio="0.625" data-type="gif" data-w="640" data-src="https://mmbiz.qpic.cn/mmbiz_gif/iayNn6wbFBlBkpB61iaCS11fgwPmB6CV5WoDoQXM0Et67fAj9rKHGDObYfA1nNA3nNzsvYbcV7vCjnrxwibBLD7pQ/640?wx_fmt=gif" _width="592px" src="static/picture/3.gif" data-order="2" data-fail="0" style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; height: auto !important; width: 592px !important; visibility: visible !important;" title="" alt="" width="592" vspace="0" height="370" border="0"></p><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: center; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">（</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">动画加载需要8秒，耐心等待</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">）</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;"></span></span></p><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: center; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;"><br style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"></span></p><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: rgb(255, 41, 65);">4.快速返回上次操作的地方</span></h4><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;">比如你查看某个库的源代码后，想快速返回去，除了用鼠标点击返回，还可以使用键盘快捷键 Ctrl-Alt-左/右 Win / Linux，Option-Cmd-左/右 macOS 。</span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><img class="rich_pages  __bg_gif" data-ratio="0.625" data-type="gif" data-w="640" data-src="https://mmbiz.qpic.cn/mmbiz_gif/iayNn6wbFBlBkpB61iaCS11fgwPmB6CV5W8YOfKaojbpkz9ROibAKfkayppkJUVfTC5cjIGd0Ju8U5qxCR5qLp8Iw/640?wx_fmt=gif" _width="592px" src="static/picture/4.gif" data-order="3" data-fail="0" style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; height: auto !important; width: 592px !important; visibility: visible !important;" title="" alt="" width="592" vspace="0" height="370" border="0"></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">（</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">动画加载需要8秒，耐心等待</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">）</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;"></span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><br style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"></p><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: rgb(255, 41, 65);">5.快速添加新的一行</span></h4><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;">我们经常在另一行中间添加一行代码。也许我们正在修复某些问题，并希望继续进行下一行。一般需要两个步骤， 转到该行的末尾，按回车在上面添加一行，或者转到行的开头按 Enter 键在上方留出空间，按向上键转到该新的空行，也许按几次Tab键以使缩进正确，而是使用Start New Line功能（Shift-Enter Win / Linux / macOS）。</span></p><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;">将光标放在当前行中的任何位置（刚刚完成编辑），然后可以使用正确的缩进获得空的下一行。对于上面的行，请使用“在当前位置之前开始新行”（Ctrl-Alt-Enter Win / Linux，Option-Cmd-Enter macOS。），您会得到一条新行，并根据语言和上下文进行了缩进。</span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><img class="rich_pages  __bg_gif" data-ratio="0.625" data-type="gif" data-w="640" data-src="https://mmbiz.qpic.cn/mmbiz_gif/iayNn6wbFBlBkpB61iaCS11fgwPmB6CV5WVU3p5dRRssCWC78q4YX4hSVa22lLQniblyfZzmKTFAsj1DYO3TiaEXibw/640?wx_fmt=gif" _width="592px" src="https://www.django.cn/media/article_img/2020/04/14/5.gif" data-order="4" data-fail="0" style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; height: auto !important; width: 592px !important; visibility: visible !important;" title="" alt="" width="592" vspace="0" height="370" border="0"></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">（</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">动画加载需要8秒，耐心等待</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">）</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;"></span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><br style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"></p><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: rgb(255, 41, 65);">6.使用键盘快速的选择代码</span></h4><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;">在编码中，我们选择代码并对其进行操作。例如，将其移至另一行，更改其缩进等。您可以使用鼠标进行选择。或者，使用键盘。例如，使用将插入符移动到带有选择的上一个单词（Shift-Ctrl-左/右Win / Linux，option-Shift-左/右macOS）来将光标向前或向后移动一个单词，如果要选择三个词呢？做三遍？。</span></p><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;">在 Python 代码中，你经常希望从光标所在的位置逐步扩展选择范围：符号，子语句，完整语句，行，块等。扩展选择范围（Ctrl-W或Shift-Ctrl -W Win / Linux，Option-Up / Down macOS）是理想的选择。它在语义上起作用。持续按下它，直到获得所需的选择。</span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><img class="rich_pages  __bg_gif" data-ratio="0.625" data-type="gif" data-w="640" data-src="https://mmbiz.qpic.cn/mmbiz_gif/iayNn6wbFBlBkpB61iaCS11fgwPmB6CV5WicC5qiaoWx81mJjS9KTbQW8bxwuKeFUIIuSDqahx2mbb4A90mEwqcjpg/640?wx_fmt=gif" _width="592px" src="static/picture/6.gif" data-order="5" data-fail="0" style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; height: auto !important; width: 592px !important; visibility: visible !important;" title="" alt="" width="592" vspace="0" height="370" border="0"></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">（</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">动画加载需要8秒，耐心等待</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">）</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;"></span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><br style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"></p><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: rgb(255, 41, 65);">7.使用键盘向上/向下移动代码块</span></h4><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;">我们希望在编辑器中快速处理代码。使用剪切粘贴是一种快速的方法，但是有一种更好的方法可以暂时不从文件中删除代码。进行选择（不使用鼠标），然后使用（Shift-Alt-Up / Down Win / Linux，Option-Shift-Up / Down macOS）将该选择移至目标行。在视图中，所选内容会一直拖动。</span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><img class="rich_pages  __bg_gif" data-ratio="0.625" data-type="gif" data-w="640" data-src="https://mmbiz.qpic.cn/mmbiz_gif/iayNn6wbFBlBkpB61iaCS11fgwPmB6CV5Wszb5WibxgthcfvTKDzbhjnXwPL4g4icxSPd2EdBwsas78xAV2icC0wRIg/640?wx_fmt=gif" _width="592px" src="https://www.django.cn/media/article_img/2020/04/14/7.gif" data-order="6" data-fail="0" style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; height: auto !important; width: 592px !important; visibility: visible !important;" title="" alt="" width="592" vspace="0" height="370" border="0"></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">（</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">动画加载需要8秒，耐心等待</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">）</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;"></span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><br style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"></p><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: rgb(255, 41, 65);">8.重命名文件及其引用</span></h4><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;">你为一个变量起了一个名字。但是后来你又想换成另外一个名称。你不想费心找到所有使用它的地方。搜索和替换可能会发现大量误报。可以通过重命名（Shift-Ctrl-Alt-T， Win / Linux，Ctrl-T，macOS）以更改文件名和名称。最重要的是，如果您改变主意，则撤消会将其作为一项编辑器事务恢复到原处。</span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><img class="rich_pages  __bg_gif" data-ratio="0.625" data-type="gif" data-w="640" data-src="https://mmbiz.qpic.cn/mmbiz_gif/iayNn6wbFBlBkpB61iaCS11fgwPmB6CV5Wvic8eN7wLQkg7nHG7uCf3iagekLX9lM8RJy3ZBKhz1tpI9g1jhBN1FMA/640?wx_fmt=gif" _width="592px" src="https://www.django.cn/media/article_img/2020/04/14/8.gif" data-order="7" data-fail="0" style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; height: auto !important; width: 592px !important; visibility: visible !important;" title="" alt="" width="592" vspace="0" height="370" border="0"></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">（</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">动画加载需要8秒，耐心等待</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">）</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;"></span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><br style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"></p><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: rgb(255, 41, 65);">9.快速查看函数文档</span></h4><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; orphans: 4; text-align: start; white-space: pre-wrap; text-size-adjust: auto; background-color: rgb(255, 255, 255); font-size: 15px;">我们经常遇到不确定的代码。别人的代码。甚至我们的代码。有时我们只想要函数的参数。我们想知道位置参数与关键字参数。或参数的类型。或其默认值。PyCharm具有多种功能，可向您显示有关符号的文档。</span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; orphans: 4; text-align: start; white-space: pre-wrap; text-size-adjust: auto; background-color: rgb(255, 255, 255); font-size: 15px;">首先，快速文档（Ctrl-P Win / Linux，F1 macOS）带来了显示所有信息的非干扰性内联弹出窗口，并带有一个超链接，您可以在其中导航到定义。</span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; orphans: 4; text-align: start; white-space: pre-wrap; text-size-adjust: auto; background-color: rgb(255, 255, 255); font-size: 15px;"><br style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"></span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; orphans: 4; text-align: start; white-space: pre-wrap; text-size-adjust: auto; background-color: rgb(255, 255, 255); font-size: 15px;">接着再按一次，弹出窗口将变成一个工具窗口，该窗口会针对您所登陆的每个符号进行更新。一直存在，一直在帮助...直到您要隐藏它，就像其他任何IDE工具窗口一样。</span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><img class="rich_pages " data-ratio="0.3110367892976589" data-s="300,640" data-type="png" data-w="2392" data-src="https://mmbiz.qpic.cn/mmbiz_png/iayNn6wbFBlBkpB61iaCS11fgwPmB6CV5WUCJbCQzwGS8XmImgNdRibJ4f1ibutMKkicTf1TprhF6tK8oQdfPtwkxag/640?wx_fmt=png" _width="592px" src="static/picture/9.png" crossorigin="anonymous" data-fail="0" style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; height: auto !important; width: 592px !important; visibility: visible !important;" title="" alt="" width="592" vspace="0" height="592" border="0"></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">（</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">动画加载需要8秒，耐心等待</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">）</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;"></span></span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;"><br style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important;"></span></p><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px; color: rgb(255, 41, 65);">10.批量删除没有被使用的包</span></h4><p style="margin: 0.8em 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; line-height: inherit; orphans: 4; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;">当你某个代码文件引入了很多包，但是有些包没有别使用，你无需手动一个一个的删除未被引用的包，可以使用 Optimize Imports 功能，快捷键是Alt-Ctrl-字母0 Win / Linux，Control-Option-字母O macOS，pycharm 会批量帮你清除未被使用的包。</span></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><img class="rich_pages  __bg_gif" data-ratio="0.625" data-type="gif" data-w="640" data-src="https://mmbiz.qpic.cn/mmbiz_gif/iayNn6wbFBlBkpB61iaCS11fgwPmB6CV5WMOwZToibxz30hbx6AarAI3iapiabibdYKzGTOFuq79Cn658pbqXBGh5ODg/640?wx_fmt=gif" _width="592px" src="static/picture/10.gif" data-order="8" data-fail="0" style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; height: auto !important; width: 592px !important; visibility: visible !important;" title="" alt="" width="592" vspace="0" height="370" border="0"></p><p style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; clear: both; min-height: 1em; color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-align: center;"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">（</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">动画加载需要8秒，耐心等待</span><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(136, 136, 136); font-size: 14px; text-align: center;">）</span></p><h4 style="margin: 1rem 0px; padding: 0px; font-weight: bold; font-size: 1.25em; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: 0.544px; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; break-after: avoid-page; break-inside: avoid; line-height: 1.4; cursor: text; white-space: pre-wrap; font-family: &quot;Open Sans&quot;, &quot;Clear Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);"><span style="margin: 0px; padding: 0px; max-width: 100%; box-sizing: border-box !important; word-wrap: break-word !important; font-size: 15px;"></span><br></h4><p>十大技巧文章来源于程序猿Leo ，作者菜鸟哥</p>
+                                    
+                                </div>
+
+                                <div class="container">
+                                    <button type="button" class="btn btn-primary" title="加微信与站长交流" data-container="body" data-toggle="popover" data-placement="top" data-content="站长微信：VIPdjango">
+                                        联系站长
+                                    </button>
+
+                                </div>
+                                <script>
+                                    $(function () {
+                                        $("[data-toggle='popover']").popover();
+                                    });
+                                </script>
+
+                                <div class="article__footer">
+                                    <div class="tags"><b>上一篇：</b>
+                                        
+                                            <a href="show-28.html" class="article-tag">支持异步？django3新特性ASGI初体验</a>
+                                        
+
+                                    </div>
+                                    <div class="tags"><b>下一篇：</b>
+                                        
+                                            <a href="show-31.html" class="article-tag">Django入门视频教程之Blog开发详解</a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <!--  广告位置 -->
+                        <section id="comments">
+                            <div class="comments__container">
+                                <h3>文章评论 <span class="comment__count">2</span></h3>
+                                
+                                    <div class="comment__add">
+                                        <div class="login-card">
+                                            <a href="login1.html" class="btn btn-primary btn-login"><span>登录评论</span></a>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                                
+<div class="comments__list-wrapper">
+<div id="comment__preview" style="display: none"></div>
+<ul class="comments__list">
+    
+<li class="comment__list-item">
+<article id="comment-569" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/zaixuewang@163.com/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(https://www.django.cn/media/avatar/2020/04/%E5%9C%A8%E5%AD%A6-2%E5%AF%B8.jpg)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/zaixuewang@163.com" class="neon">
+            zaixuewang@163.com
+        </a>
+    </div>
+    <time datetime="2020-04-28">
+        <a class="neon">
+            2020-04-28
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>赞！</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+
+<li class="comment__list-item">
+<article id="comment-899" class="comment__container first">
+<div class="comment__user collapse-comment">
+
+<a href="/user/comment/xing_young/" class="image-wrapper">
+    <!-- 跳转到用户主页 -->
+    <div class="comment__user-avatar" style="background-image: url(static/image/default.gif)">
+    </div>
+</a>
+<div class="user-name--left">
+    <div class="comment__user-badge">
+        <a href="/user/comment/xing_young" class="neon">
+            xing_young
+        </a>
+    </div>
+    <time datetime="2022-02-27">
+        <a class="neon">
+            2022-02-27
+        </a>
+    </time>
+</div>
+
+
+</div>
+<div>
+
+<div class="comment__wrapper">
+    <div class="comment__right">
+        <div class="comment__text">
+            <p><p>顶一个</p>
+        </div>
+        
+        
+    </div>
+    <div class="comment__children">
+    
+    </div>
+</div>
+
+</div>
+</article>
+</li>
+
+</ul>
+</div>
+
+
+                                <div class="comments--legacy"></div>
+                        </section>
+                    </div>
+                    <aside class="col-md-3 hidden-sm hidden-xs">
+                        <div class="article__author">
+                            <div class="user">
+                                <div class="profile__user-avatar" style="background-image: url('static/image/timg.jpg')"></div>
+                                <div class="profile__info">
+                                    <div class="profile__name">吴秀峰</div>
+                                    <div class="badges"><span class="badge admin-badge" data-type="admin"></span></div>
+                                    <!-- <div class="profile__karma" title="Karma: 113">113</div> -->
+                                </div>
+                                <div class="profile__description">
+                                    <p>当你的才华和能力还不足以支撑你的野心的时候，静下心来，学习！</p>
+                                </div>
+                                <!--'data-hide=meta data-default=#default-links'-->
+                                <ul class="profile__links" style="">
+                                    <li class="profile__link-item change-github" data-change="github" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Github URL"> <span class="link__icon link__icon--github"></span>
+                                        <div class="change-github" data-change="github"></div>
+                                    </a></li>
+                                    <li class="profile__link-item change-twitter" data-change="twitter" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Twitter URL"> <span class="link__icon link__icon--twitter"></span>
+                                        <div class="change-twitter" data-change="twitter"></div>
+                                    </a></li>
+                                    <li class="profile__link-item change-website" data-change="website" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Website URL"> <span class="link__icon link__icon--website"></span>
+                                        <div class="change-website" data-change="website"></div>
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="section sticky-content">
+                                <div>
+                                    <div class="sidebar-articles-group">
+                                        <div class="group-title"><strong>最新文章</strong> <a href="article.html">更多</a></div>
+                                        <ul class="list-group">
+                                            
+                                                <li>
+
+                                                    <a href="show-39.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/12653.png')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django5.0正式发布，是你期待的吗？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-38.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/chatgpt.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>新手如何用Python玩转ChatGPT API,详细讲解</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-37.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/drf.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>几个例子让新手快速了解Django REST Framework (DRF)</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-36.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/python232323.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>提升效率,python的多线程详细使用方法</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-35.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/djangoQ_Z4PNibz.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django-Q，轻量级消息队列Django-Q初体验</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-34.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/Paginator.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>简单讲解Django分页Paginator和Page的用法</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-33.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('https://www.django.cn/static/images/article_default.png')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>django4.0版本到底有哪些新功能和特性？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-32.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/bushu.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django+uWSGI+nginx部署原理及工作流程</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-31.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/django-blog.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django入门视频教程之Blog开发详解</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-30.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/bt_django.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>使用宝塔面板快速部署Django项目</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+
+                                        </ul>
+                                    </div>
+                                    <div class="sidebar-articles-group">
+                                        <div class="group-title"><strong>论坛新帖</strong> <a href="forum.html">更多</a></div>
+                                        <ul class="list-group">
+                                            
+                                                <li>
+                                                    <a href="forum-69779.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>123</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69749.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>为什么每次只能导入一行数据呢？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69325.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>请教下django查询问题，开始时间2023-7-15 00:00:00 结束时间2023-7-20 23:59:59，查询统计出每天的数据总和，并输出这几天每天的总和</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69324.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>请教：Invalid block tag on line 51: &#x27;empty&#x27;. Did you forget to register or load this tag?</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-69323.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django如何实现视图函数被调用之后异步回调</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68919.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>我在用Django过程中碰到一个棘手的问题，关于SESSION_COOKIE_AGE</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68918.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/avatar_-_副本.jpg')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>求教Python小版本更新升级</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68846.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>在pycharm中运行Django如何解决呢？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68845.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>项目启动失败</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="forum-68844.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>json解析错误</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            <div class="sidebar-articles-group sidebar-videos">
+                                    <div class="group-title">
+                                        <strong>视频教程</strong>
+                                        <a class="subscribe-link" target="_blank" href="video.html">更多</a>
+                                    </div>
+                                    <ul class="sidebar-video-thumbnails">
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-3.html">
+                                                <img class="video-thumb" src="static/picture/api.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-3.html">
+                                                <h4 class="video-title">Django+DRF+Vue打造专业的API自动化测试平台</h4>
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-2.html">
+                                                <img class="video-thumb" src="static/picture/djangovue_H3w7CBm.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-2.html">
+                                                <h4 class="video-title">django+vue前后端分离仿美团外卖电商项目</h4>
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-1.html">
+                                                <img class="video-thumb" src="static/picture/qiyekaifa.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-1.html">
+                                                <h4 class="video-title">django企业项目开发实战案例视频教程</h4>
+                                            </a>
+                                        </li>
+                                        
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+	 <h3>加入Django中文交流社区，分享交流，携手同行</h3>
+
+	  <ul class="list-inline">
+				<li><a href="index.html" class="neon">首 页</a></li>
+				<li><a href="article.html" class="neon">文 章</a></li>
+                <li><a href="course.html" class="neon">教 程</a></li>
+                <li><a href="video.html" class="neon">视 频</a></li>
+				<li><a href="forum.html" class="neon">社 区</a></li>
+				<li><a href="about.html" class="neon">关于我们</a></li>
+				<li><a href="contact.html" class="neon">联系我们</a></li>
+
+	  </ul>
+
+		<p class="copyright">Copyright © 2018 <a href="index1.html" target="_blank">django.cn</a>
+			<span class="second-line">All Rights Reserved.</span><br>
+            Powered by <a href="index.html">Django3</a><br>
+           <a href="https://beian.miit.gov.cn" target="_blank">备案号：湘ICP备17023990号-1</a>
+		</p>
+</footer>
+
+</div>
+
+    <!-- JavaScripts -->
+
+    <script type="text/javascript">
+
+  $('#confirm-delete').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  // var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var aid = button.data('aid')
+  var id = button.data('id')
+  var tag = button.data('tag')
+  var modal = $(this)
+  // modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('input[name="aid"]').val(aid)
+  modal.find('input[name="id"]').val(id)
+  modal.find('input[name="tag"]').val(tag)
+
+  // console.log('ok')
+})
+
+  // btn_delete_comment
+  $('#btn_delete_comment').click(function(event){
+    // var form = new FormData(document.getElementById("delete_comment"))
+    // var pwd1 = $('#change-pwd [name="password1"]').val()
+    console.log('in comment delete')
+    var aid = $('#delete_comment [name="aid"]').val()
+    var id = $('#delete_comment [name="id"]').val()
+    var tag = $('#delete_comment [name="tag"]').val()
+    var token = $('#delete_comment [name="csrfmiddlewaretoken"]').val()
+    if(!tag){
+        return
+    }
+
+    var form = new FormData();
+    form.append("id", 'id');
+    form.append("csrfmiddlewaretoken", token);
+    form.append('method','delete')
+
+        $.ajax({
+            type: 'POST',
+            url: '/comment/'+id+'/',
+            // data:'json',
+            processData: false,
+            contentType: false,
+            data: form,
+            success: function(response) {
+                if(tag == 'forum'){
+                    window.location.href = '/forum/forum-'+aid+'.html';
+                }
+                if(tag == 'article'){
+                    window.location.href = '/article/show-'+aid+'.html';
+                }
+                if(tag == 'course'){
+                    window.location.href = '/course/show-'+aid+'.html';
+                }
+            }
+        })
+  })
+</script>
+ <script src="static/js/bundle.js"></script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>

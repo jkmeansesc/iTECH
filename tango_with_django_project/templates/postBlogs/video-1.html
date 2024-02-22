@@ -1,0 +1,764 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baidu-site-verification" content="TcPgCnDcOJ">
+    <link rel="apple-touch-icon" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="icon" sizes="192x192" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="shortcut icon" href="https://www.django.cn/static/images/favicon.ico">
+    
+    <title>django企业项目开发实战案例视频教程-django视频教程,Django</title>
+    <meta name="keywords" content="django企业项目,django案例,django项目案例">
+    <meta name="description" content="这是一个超详细、超完整的django企业项目开发实战案例。视频详细解说，从入门到进阶，从前端到后端，项目从无到有，再到上线部署。讲师手把手从零开始带你完整体验django企业项目开发流程。">
+
+    <meta name="theme-color" content="#ffffff">
+    <link href="static/css/fonts.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/toastr.min.css" rel="stylesheet">
+    <link href="static/css/app.css" rel="stylesheet">
+    <link href="static/css/font-awesome.min.css" rel="stylesheet">
+     
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/highlight.min.js"></script>
+    <script src="static/js/toastr.min.js"></script>
+
+   <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?9b0ccd50ff8935f331889174a8280dc2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div style='text-align: center;font-size: 20px'>确定删除?</div>
+            </div>
+            <div class="modal-footer">
+                <form action="/comment/" method="POST" id='delete_comment' style='float: left'>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="F2EXFDQwruM32Ih1CG09z1p0tKdnNYeA7n0Dvot106iLYHBy4RxmYNElmoglm8jh">
+                    <input type="hidden" name="tag">
+                    <input type="hidden" name="aid">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="method" value='delete'>
+                    <input type='button' class="btn btn-danger btn-ok" id='btn_delete_comment' value='删除'>
+                </form>
+                <!-- <a class="btn btn-danger btn-ok"><span>删除</span></a> -->
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span>取消</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="page__wrapper page--landing">
+   
+    <header class="header--main animate-search">
+
+    
+    <div class="container-fluid">
+        <nav class="nav--main">
+            <div class="nav__logo">
+                <a href="index.html">
+                    <span>Django中文网</span>
+                </a>
+            </div>
+
+            
+                <ul class="nav__items nav__items--right">
+                    <li class="nav__item">
+                        <a href="search.html" class="search-trigger icon-magnifier"></a>
+                    </li>
+                    <li id="login" class="nav__item">
+                        <a href="login.html">
+                            登录
+                        </a>
+                    </li>
+                    <li id="register" class="nav__item">
+                        <a href="register.html">
+                            <span class="btn btn-success">注册</span>
+                        </a>
+                    </li>
+                </ul>
+
+            
+
+            <ul class="nav__items nav__items--left">
+                <li class="nav__item nav__item--main">
+                    <a href="article.html" class="articles ">
+                        文章
+                    </a>
+                </li>
+                 <li class="nav__item nav__item--main">
+                    <a href="course.html" class="posts ">
+                        教程
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                    <a href="video.html" class="posts ">
+                        视频
+                    </a>
+                </li>
+                <li class="nav__item nav__item--main">
+                     <a href="forum.html" class="posts ">
+                        社区
+                    </a>
+                </li>
+            </ul>
+
+
+        </nav> <!-- .nav--main -->
+    </div>
+
+
+    <a href="#0" class="nav-trigger icon-menu"></a>
+
+    <div id="search" class="main-search">
+    <div class="container-fluid">
+        <form id="search-form-top" class="form__search" action="/search/" method="GET">
+        <input type="search" name="search" placeholder="Search..." value="" autocomplete="off" required="">
+
+</form>
+
+        <div class="search-suggestions">
+
+        </div>
+        <a href="#0" class="close text-replace">Close Form</a>
+    </div>
+</div> <!-- .main-search -->
+</header>
+
+<div class="cover-layer"></div> <!-- cover main content when search form is open -->
+
+
+    
+    <div class="cover-layer"></div>
+    <!-- cover main content when search form is open -->
+    <main class="main-content" style=" margin-top:40px;">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9 article-content">
+                        <article class="article--big">
+                            <!--<a href="https://jq.qq.com/?_wv=1027&k=0kNpqlZH" target="_blank"><img src="/static/img/web2.jpg"> </a>-->
+                            
+                                <div class="article__image" style="background-image: url(static/image/qiyekaifa.jpg)"></div>
+                            
+                            <div class="article__content">
+                                <h1 class="article__title">
+                                    django企业项目开发实战案例视频教程
+
+                                </h1>
+                                <div class="article__header">
+                                    <div class="article__date">
+                                        <time>2022年02月15日</time>
+                                    </div>
+                                    <div class="article__date">点击次数：10918 </div>
+
+                                </div>
+                                <div class="article__body">
+                                    <p>这是一个超详细、超完整的django企业项目开发实战案例。视频详细解说，从入门到进阶，从前端到后端，项目从无到有，再到上线部署。讲师手把手从零开始带你完整体验django企业项目开发流程。</p><p><strong><span style="color: rgb(192, 80, 77);">项目涉及技术要点介绍：</span></strong>1、前端环境配置&nbsp; 2、gulp安装与使用 3、前端各种功能模块UI效果CSS、JS详细实现方法。4、继承与扩展Django用户模型&nbsp; 5、<span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602">使用adminlte框架实现注册与登陆&nbsp; 6、<span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602">用户注册</span>集成手机短信+图形验证功能 7、邮件发送&nbsp; 8、<span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605">在Django中使用<span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602" style="">memcached(分布式内存对象缓存系统)&nbsp; 9、CMS框架搭建&nbsp; 10、<span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606">上传图片到七牛云实现图片加速&nbsp; 11、使用Django REST Framework实现数据调用 12、celery异步加载数据&nbsp; 13、使用django-debug-toolbar对Django查询效率进行优化 14、视频云存储与视频加密播放 15、(购物功能)使用支付宝和微信实现付费购买和下载&nbsp; 16、<span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609">使用haystack实现全文搜索 17、Django权限应用。18、微信登陆 19、Reides提速 20、百度云点播服务 等。<br></span></span></span></span></span></p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602" style="">课程知识点非常详细，Django基础知识全面覆盖，项目实战贴近企业需求，里面的所有技术点都是针对企业需求定制的。一套教程就可以让你从入门到进阶，<span style="color: rgb(0, 176, 80);">强烈建议Django初学者购买这份教程。</span></span></p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609"></span></span></span></span></span></span><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609"><br></span></span></span></span></span></span></p><p><strong><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609">课程售价:<span style="color: rgb(192, 0, 0);">469</span>元</span></span></span></span></span></span></strong></p><p><strong><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602" style="">购买联系微信:<span style="color: rgb(192, 80, 77);">VIPdjango</span></span></strong><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602" style=""><br></span></p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609"><img src="static/picture/dddd_20220215181015_581.jpg" title="" alt="dddd.jpg" style="width: 273px; height: 280px;" width="273" height="280"></span></span></span></span></span></span></p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602" style=""></span><span style="color: rgb(192, 80, 77);"><strong>关于课程收看方法：</strong></span></p><p>购买后，可以通过手机、电脑在线播放，永久观看。</p><p><span style="color: rgb(192, 80, 77);"><strong>相关素材与文档:</strong></span></p><p>购买后统一加售后群分发，群内有老师在线解惑。<br></p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609">============================================================================</span></span></span></span></span></span></p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609">教程章节目录详细介绍：</span></span></span></span></span></span></p><p><span style="color: rgb(0, 176, 80);"><strong>章节1: 开发前的准备</strong></span><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602" style=""><br>课时1 【虛拟环境】为什么需要虚拟环境<br>课时2 【虚拟环境】 virtualenv 创建虚拟环境<br>课时3 【虛拟环境】 virtualenvwrapper 使用<br>课时4 【虛拟环境】 Pycharm 虚拟环境注意事项<br>课时5&nbsp; URL 组成部分详解<br>课时6&nbsp; 课程准备工作<br>课时7&nbsp; Django 介绍<br><span style="color: rgb(0, 176, 80);"><strong>章节2: Django 控制器与路由(URL )</strong></span><br>课时8 【 Django URL 】第一个 Django 项目剖析(1)<br>课时9 【 Django URL 】第一个 Django 项目剖析(2)<br>课时1이 【 Django URL 】 Django 的项目规范<br>课时11 【 Django URL 】 DEBUG 模式详解<br>课时12 【 Django URL 】视图函数介绍<br>课时13 [ Django URL 】 URL 映射补充<br>课时14 【 Django URL 】 ur 中传递参数给视图函数<br>课时15 [ Django URL 】 Django 内置的 URL 转换器<br>课时16 [ Django URL 】 urls 分层模块化<br>课时17 [ Django URL 】 url 命名与反转 url <br>课时18 [ Django URL 】应用命名空间和实例命名空间<br>课时19 [ Django URL 】 include 函数详解<br>课时20 [ Django URL 】 re _ path 函数详解<br>课时21 [ Django URL 】 reverse 函数补充<br>课时22 【 Django URL 】自定义 path 转换器<br>课时23 [ Django URL URL 映射时指定默认参数<br><span style="color: rgb(0, 176, 80);"><strong>章节3: Django 模版</strong></span><br>课时24 【 Django 模】模版介绍<br>课时25 [ Django 模版】模版查找路径配置<br>课时26 【 Django 模版】模版变量使用详解<br>课时27 [ Django 模版】 i 布签使用详解<br>课时28 【 Django 模板】 for 标签使用详解<br>课时29 【 Django 模块】 with 标签使用详解<br>课时30 【 Django 模板】 ur 标签使用详解<br>课时31 [ Django 模板】 autoescape 标签使用详解<br>课时32 【 Django 模板】 verbatim 标签使用详解<br>课时33 [ Django 模板】 DTL 常用过滤器： (1<br>课时34 【 Django 模版】 DTL 常用过滤器（2)<br>课时35 【 Django 模板】 DTL 常用过滤器（3)<br>课时36 【 Django 模板】 DTL 常用过滤器（4)<br>课时37 [ Django 模板】 DTL 常用过滤器（5)<br>课时38 【 Django 模板】自定义过滤器步骤详解<br>课时39 [ Django 模板】自定义过滤器实战<br>课时40 【 Django 模版】模版结构优化之 include 标签详解<br>课时41 【 Django 模版】模版结构优化之继承详解<br>课时42 【 Django 模版】模版中加载静态文件详解<br><strong><span style="color: rgb(0, 176, 80);">章节4: Django 数据库</span></strong><br>课时43 【 Django 数据库】数据库操作相关软件和包介绍<br>课时44 [ Django 数据库】 Django 使用原生 SQL 语句操作数据库<br>课时45 【 Django 数据库】图书管理系统案例（1)<br>课时46 [ Django 数据库】图书管理系统案例（2)<br>课时47 【 Django 数据库】 ORM 模型介绍<br>课时48 [ Django 数据库】创建和映射 ORM 模型<br>课时49 【 Django 数据库】 ORM 模型基本的增删改査操作<br>课时50 【 Django 数据库】 ORM 常用 Field 详解（1)<br>课时51 [ Django 数据库】 navie 时间和 aware 时间详解<br>课时52 【 Django 数据库】 ORM 常用 Field 详解（2)<br>课时53 【 Django 数据库】 ORM 常用 Field 详解（3)<br>课时54 【 Django 数据库】 Field 中常用参数详解<br>课时55 【 Django 数据库】 Meta 类中常见配置<br>课时56 【 Django 数据库】 ORM 外键使用详解<br>课时57 [ Django 数据库】 ORM 外键删除操作详解<br>课时58 [ Django 数据库】表关系之一对多<br>课时59 [ Django 数据库】表关系之一对一<br>课时60 [ Django 数据库】表关系之多对多<br>课时61 [ Django 数据库】 ORM 查询条件详解﹣准备工作<br>课时62 【 Django 数据库】 pycharm 连接数据库<br>课时63 【 Django 数据库】 ORM 查询条件详解 exact 和 iexact <br>课时64 【 Django 数据库】 ORM 查询条件详解﹣ contains 和 Icontains <br>课时65 [ Django 数据库】 ORM 查询条件详解﹣ in 和关联模型查询<br>课时66 【 Django 数据库】 ORM 查询条件详解 gt 、 gte 、 l 和 lte <br>课时67 【 Django 数据库】 ORM 查询条件详解﹣ startswith 和 endswith <br>课时68 [ Django 数据库】 ORM 查询条件详解﹣ range <br>课时69 【 Django 数据库】 ORM 查询条件详解﹣ date 、 time 、 year 、 week _ day 等<br>课时70 【 Django 数据库】 ORM 查询条件详解﹣ isnul 和 regex <br>课时71 【 Django 数据库】 ORM 聚合函数详解﹣准备工作<br>课时72 【 Django 数据库】 ORM 聚合函数详解﹣ Avg <br>课时73 【 Django 数据库】 ORM 聚合函数详解﹣ aggregate 和 annotate <br>课时74 【 Django 数据库】 ORM 聚合函数详解﹣ Count <br>课时75 [ Django 数据库】 ORM 聚合函数详解﹣ Max 和 Min <br>课时76 【 Django 数据库】 ORM 聚合函数详解﹣ Sum <br>课时77 [ Django 数据库】 F 表达式详解<br>课时78 【 Django 数据库】 Q 表达式详解<br>课时79 【 Django 数据库】 objects 对象所属类原理剖析<br>课时80 【 Django 数据库】 QuerySet APl 详解﹣ filter 、 exclude 、 annotate <br>课时81 【 Django 数据库】 QuerySet AP 详解﹣ order _ by <br>课时82 【 Django 数据库】 QuerySet AP 详解﹣ values 和 values _ list <br>课时83 【 Django 数据库】 QuerySet AP 详解﹣ al 方法<br>课时84 【 Django 数据库】 QuerySet APl 详解 select _ related <br>课时85 【 Django 数据库】 QuerySet AP 详解﹣ prefetch _ related <br>课时86 [ Django 数据库】 QuerySet APl 详解 defer 和 only <br>课时87 【 Django 数据库】 QuerySet AP 详解 get 方法<br>课时88 【 Django 数据库】 QuerySet AP 详解﹣ create 方法<br>课时89 【 Django 数据库】 QuerySet AP 详解 get _ or _ create 和 bulk _ create <br>课时90 【 Django 数据库】 QuerySet AP 详解﹣ coun 和 exists <br>课时91 【 Django 数据库】 QuerySet APl 详解﹣ distinct <br>课时92 [ Django 数据库】 QuerySet APl 详解﹣ update 和 delete <br>课时93 [ Django 数据库】 QuerySet API 详解﹣切片操作<br>课时94 【 Django 数据库】 QuerySet AP 详解﹣ QuerySet 啭换为 SQL 的条件<br>课时95 【 Django 数据库】 ORM 作业讲解﹣准备工作<br>课时96 【 Django 数据库】 ORM 作业讲解（1)<br>课时97 【 Django 数据库】 ORM 作业讲解（2)<br>课时98 【 Django 数据库】 ORM 作业讲解（3)<br>课时99 【 Django 数据库】 ORM 迁移详解﹣ migrations 命令补充<br>课时100 【 Django 数据库】 ORM 迁移详解﹣ migrate 命令报错解决方案<br>课时101 【 Django 数据库】根据已有的表生成 ORM 模型详解<br>课时102 Django 数据库练习题<br><span style="color: rgb(0, 176, 80);"><strong>章节5: Django 视图高级</strong></span><br>课时103 [ Django 视图高级】限制请求 method 装饰器<br>课时104 【 Django 视图高级】重定向详解<br>课时105 【 Django 视图高级】 HtpRequest 对象讲解<br>课时106 [ Django 视图高级】 QueryDict 的用法讲解<br>课时107 [ Django 视图高级】 HtpResponse 对象讲解．<br>课时108 [ Django 视图高级】 JsonResponse 用法详解<br>课时109 【 Django 视图高级】生成和下载 csv 文件<br>课时110 【 Django 视图高级】大型 CsV 文件的处理方式<br>课时111 Django 视图高级】类视图讲解<br>课时112 [ Django 视图高级】 TemplateView 讲解<br>课时113 [ Django 视图高级】 ListView 视图讲解<br>课时114 【 Django 视图高级】 Paginator 和 Page 类常用属性和方法<br>课时115 【 Django 视图高级】手动实现普通分页效果<br>课时116 【 Django 视图高级】手动实现通用分页算法<br>课时117 【 Django 视图高级】给类视图添加装饰器<br>课时118 【 Django 视图高级】状态码错误处理<br><strong><span style="color: rgb(0, 176, 80);">章节6: django 表单</span></strong><br>课时119 【 Django 表单】 Django 中表单的使用方式<br>课时120 【 Django 表单】用表单验证数据是否合法<br>课时121 【 Django 表单】表单中常用的验证器．<br>课时122 [ Django 表单】自定义验证字段的方法<br>课时123 【 Django 表单】简化表单错误信息的提取<br>课时124 [ Django 表单】 ModelForm 用法讲解（1)/<br>课时125 [ Django 表单】 ModelForm 用法讲解（2)<br>课时126 【 Django 文件上传】文件上传基本流程讲解<br>课时127 【 Django 文件上传】自动处理上传的文件和获取上传文件 url <br>课时128 【 Django 文件上传】限制上传的文件类型<br><span style="color: rgb(0, 176, 80);"><strong>章节7: Memcached 缓存系统</strong></span><br>课时129 [ memcached 】 memcached 介绍<br>课时130 【 memcached 】 memcached 的安装和参数详解<br>课时131 【 memcached 】 telnet 操作 memcached <br>课时132 【 memcached 】 Python 操作 memcached <br>课时133 [ memcached 】 memcached 的安全机制<br>课时134 【 memcached 】在 django 中使用 memcached <br><strong><span style="color: rgb(0, 176, 80);">章节8: Cookie 和 Session </span></strong><br>课时135 【 Cookie 和 Session 】 cookie 的工作机制<br>课时136 rCookie 和 Session 】在 django 中操作 cookie <br>课时137 【 Cookie 和 Session 】 Session 的概念和机制<br>课时138 【 Cookie 和 Session 】在 Django 中操作 session <br>课时139 [ Cookie 和 Session 】更改 Session 的存储机制<br><span style="color: rgb(0, 176, 80);"><strong>章节9: 上下文处理器和中间件</strong></span><br>课时140 ［上下文处理器】用户系统案例<br>课时141 【上下文处理器】用上下文处理器完善用户系统案例<br>课时142 【上下文处理器】内置上下文处理器讲解 debug 、 request 、 auth <br>课时143 ［上下文处理器】内置上下文处理器讲解﹣ messages <br>课时144 【上下文处理器】内置上下文处理器讲解﹣ media 、 static 、 csrf <br>课时145 【中间件】中间件原理和定义方式详解<br>课时146 【中间件】中间件第三种即将被遗弃的写法<br>课时147 【中间件】内置中间件详解﹣ commonMiddleware <br>课时148 【中间件】内置中间件详解﹣ GZip 、 Messages 、 Security 等<br><strong><span style="color: rgb(0, 176, 80);">章节10: django安全</span></strong><br>课时149 【 CSRF 攻击】 cSRF 攻击介绍和原理分析<br>课时150 [ CSRF 攻击】攻击案例﹣ ICBC 项目结构搭建<br>课时151 【 CSRF 攻击】攻击案例﹣ ICBC 网站登录、注册、转账功能实现<br>课时152 【 CSRF 攻击】攻击案例﹣装饰器和中间件优化 ICBC 网站<br>课时153 [ CSRF 攻击】攻击案例﹣病毒网站实现隐藏转账<br>课时154 【 CSRF 攻击】攻击案例﹣ CSRF 防御原理和解决方案<br>课时155 【 CSRF 攻击】 Ajax 处理 CSRF 防御<br>课时156 [ XSS 攻击】 XSS 攻击原理．<br>课时157 【 XSS 攻击】 XSS 攻击防御﹣普通字符串处理<br>课时158 【 XSS 攻击】 XSS 攻击防御﹣富文本字符串处理<br>课时159 【 ClickJacking 攻击】点击劫持攻击实现和防御措施<br>课时160 [ SQL 注入】 sQL 注入的实现和防御措施<br><strong><span style="color: rgb(0, 176, 80);">章节11: 验证和授权</span></strong><br>课时161 【验证和授权】验证和授权系统概述<br>课时162 【验证和授权】内置 User 模型的基本使用<br>课时163 【验证和授权】扩展 User 模型﹣使用 Proxy 模型<br>课时164 【验证和授权】扩展 User 模型一对一方式扩展<br>课时165 【验证和授权】扩展 User 模型﹣继承 AbstractUser <br>课时166 【验证和授权】扩展 User 模型﹣继承 AbstractBaseUser <br>课时167 【验证和授权】登录、退出登录以及登录限制案例<br>课时168 【验证和授权】权限﹣添加权限的两种方式<br>课时169 【验证和授权】权限﹣用户和权限相关操作<br>课时170 【验证和授权】权限﹣权限验证装饰器<br>课时171 【验证和授权】分组﹣ group 、 permission 、 user 的操作<br>课时172 【验证和授权】补充﹣在模板中添加权限控制<br><span style="color: rgb(0, 176, 80);"><strong>章节12: Redis 健值对数据库</strong></span><br>课时173 [ Redis 】 Redis 概述和使用场景介绍<br>课时174 【 Redis 】 Redis 的安装以及客户端连接<br>课时175 【 Redis 】 Redis 的字符串以及过期时间操作<br>课时176 【 Redis 】 Redis 列表操作<br>课时177 【 Redis 】 Redis 集合操作<br>课时178 【 Redis 】 Redis 的哈希操作<br>课时179 [ Redis 】 Redis 的事务操作<br>课时180 【 Redis 】 Redis 的发布和订阅操作<br>课时181 【 Redis 】 RDB 和 AOF 的两种数据持久化机制<br>课时182 【 Redis 】 Redis 设置连接密码<br>课时183 [ Redis 】其他机器连接本机 redis <br>课时184 [ Redis 】 Python 操作 redis <br><strong><span style="color: rgb(0, 176, 80);">章节13:项目实战</span></strong><br>课时185 【前端环境配置】项目实战演示和环境说明<br>课时186 【前端环境配置】 nvm 和 node js 环境配置<br>课时187 【前端环境配置】 npm 使用详解<br>课时188 【 gulp 配置】 gulp 介绍和安装 [ gulp 配置】 gulp 创建任务<br>课时19o 【 gulp 配置】gulp4.0版新写法<br>课时191 【 gulp 配置】 gulp 创建处理 css 文件任务<br>课时192 [ gulp 配置】 gulp 给文件重命名<br>课时193 【 gulp 配置】 gulp 处理 JavaScript 文件的任务<br>课时194 [ gulp 配置】合并多个文件<br>课时195 [ gulp 配置】创建压缩图片任务<br>课时196 【 gulp 配置】监听文件修改，自动执行任务</span><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609"><br></span></span></span></span></span></span></p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609">课时197 [gulp配置】修改代码实时刷新浏览器 <br>课时198 【gulp配置】gulp4.0版新写法 <br>课时199 [项目环境搭建】项目环境搭建和安装相应包 <br>课时200 【项目环境搭建】编写gulpfile.js文件 <br>课时201 [项目环境搭建】sass语法介绍和转换为css <br>课时202 【前端首页】导航条实现(1) <br>课时203 【前端首页】导航条实现(2) <br>课时204 【前端首页】导航条实现(3) <br>课时205 【前端首页】主题盒子布局和导航条吸顶效果 <br>课时206 前端首页】轮播图布局和样式 <br>课时207 【前端首页】JS面向对象和实现一次轮播 <br>课时208 【前端首页】实现自动轮播 <br>课时209 前端首页】鼠标hover事件控制轮播图暂停和继续 <br>课时210 【前端首页】切换轮播图的箭头样式及其显示和隐藏事件 <br>课时211 【前端首页】轮播图上下切换 <br>课时212 【前端首页】小圆点结构和样式 <br>课时213 【前端首页】根据轮播图的个数动态修改小圆点结构和样式 <br>课时214 【前端首页】小圆点点击事件和自动更新当前选中的小圆点 <br>课时215 【前端首页】实现自动无限循环轮播 <br>课时216 【前端首页】左右箭头切换实现循环轮播 <br>课时217 【前端首页】新闻列表ab栏布局完成 <br>课时218 【前端首页】新闻列表页布局完成 <br>课时219 【前端首页】加载更多按钮的布局和样式 <br>课时220 【前端首页】侧边栏标题和广告位布局完成 <br>课时221 【前端首页】侧边栏关注第三方平台盒子布局和样式</span></span></span></span></span></span></p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609">课时222 【前端首页】侧边栏-热门推荐完成 <br>课时223 【前端首页】footer布局和样式(1) <br>课时224 【前端首页】footer布局和样式2) <br>课时225 [新闻详情页】样式重构和模块化 <br>课时226 [新闻详情页】新闻详情标题和作者等信息布局完成 <br>课时227 [新闻详情页】新闻内容布局完成 <br>课时228 [新闻详情页】登录和未登录下评论输入框的布局 <br>课时229 【新闻详情页】评论列表布局完成 <br>课时230 [课堂首页】课程首页整体布局和样式抽取 <br>课时231 【课掌首页】课堂导航条完成 <br>课时232 【课掌首页】课程列表单个课程布局 <br>课时233 [课堂首页】使用flex实现多个课程自动布局 <br>课时234 [课堂首页】鼠标hover到课程上的县浮效果 <br>课时235 【课堂首页】scss文件重构 <br>课时236 课堂详情页】课程详情页整体布局 <br>课时237 【课程详情页】课程详情页布局(1) <br>课时238 [课程详情页】课程详情页布局(2) <br>课时239 课程详情页】课程详情页布局(3) <br>课时240 [其他页面】剩余页面代码解析 <br>课时241 [登录和注册】登录和注册的模态对话框实现 <br>课时242 [登录和注册】实现关闭和隐营模态对话框 <br>课时243 [登录和注册】登录和注册页面切换 <br>课时244 登录和注册】登录页面元素布局完成 <br>课时245 登录和注册】登录和注册页面完成 <br>课时246 【后端开发】后端开发准备工作 <br>课时247 【后端开发】adminlte框架集成和登录页面实现</span></span></span></span></span></span></p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609">课时248 【后端开发】User模型创建 <br>课时249 【后端开发】登录功能实现(1) <br>课时250 【后端开发】登录功能实现(2) <br>课时251 【后端开发】重构Restful API的实现 <br>课时252 【后端开发】将静态页面改造成Django模板(1) <br>课时253 【后端开发】将静态页面改造成Django模板(2 <br>课时254 【前端开发】登录模态对话框和网站的集成 <br>课时255 【前端开发】登录功能和模态对话框集成 <br>课时256 【前端开发】toast提示错误消息 <br>课时257 【后端开发】登录状态更改和退出登录 <br>课时258 【后端开发】图形验证码的制作和点击更换 <br>课时259 【后端开发】短信验证码的发送 <br>课时260 【后端开发】短信验证码的发送新版 <br>课时261 【后端开发】短信验证码与注册页面的集成 <br>课时262 【后端开发】memcached存诸验证码 <br>课时263 【后端开发】注册功能后台代码完成 <br>课时264 【后端开发】注册页面前端逻辑完成 <br>课时265 【后端开发】CMS管理系统访问和限制 <br>课时266 【后端开发】CMS管理页面主框架搭建 <br>课时267 【后端开发】新闻发布页面布局完成 <br>课时268 【后端开发】解决首页下拉菜单的小bug <br>课时269 【后端开发】新闻分类模板完成 <br>课时270 【后端开发】添加新闻分类前后台功能完成 <br>课时271 【后端开发】新闻分类的编辑和删除功能实现 <br>课时272 【后端开发】新闻分类细节补充(不能错过 <br>课时273 【后端开发】使用ajax上传缩略图到自己的服务器</span></span></span></span></span></span></p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609">课时274 [后端开发】使用ajax上传图片到七牛云 <br>课时275 【后端开发】ajax上传图片到七牛细节处理 <br>课时276 【后端开发】UEditor富文本编辑器的集成 <br>课时277 【后端开发】发布新闻功能完成 <br>课时278 【后端开发】将首页新闻列表改成活的数据 <br>课时279 【后端开发】djangorestframework实现新闻列表功能 <br>课时280 【后端开发】将JSON数据渲染成html页面 <br>课时281 【后端开发】给arttemplate添加时间处理过滤器 <br>课时282 【后端开发】切换分类异步加载文章 <br>课时283 【后端开发】新闻详情页完成 <br>课时284 【后端开发】新闻查询性能优化 <br>课时285 [后端开发】django-debug-toolbar使用详解 <br>课时286 【后端开发】新闻评论后端功能实现 <br>课时287 【后端开发】新闻评论前端功能实现 <br>课时288 【后端开发】新闻详情页ORM性能优化 <br>课时289 【后端开发】自定义loqinrequired限制访问 <br>课时290 【后端开发】轮播图管理轮播图页面样式实现 <br>课时291 【后端开发】轮播图管理-添加轮播图卡片事件 <br>课时292 【后端开发】轮播图管理-轮播图上传功能完成 <br>课时293 [后端开发】轮播图管理-轮播图卡片关闭事件 <br>课时294 【后端开发】轮播图管理-添加轮播图功能完成 <br>课时295 【后端开发】轮播图管理-异步加载轮播图列表 <br>课时296 【后端开发】轮播图管理-轮播图删除功能完成 <br>课时297 [后端开发】轮播图管理-修改轮播图和限制轮播图个数 <br>课时298 【后端开发】解决移除新增轮播图小bug <br>课时299 [后端开发】首页轮播图数据修改和bug解决 <br>课时300 (后端开发】新闻管理-新闻列表和查询条件布局完成</span></span></span></span></span></span></p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609">课时301 【后端开发】新闻管理-实现新闻分页功能 <br>课时302 【后端开发】时间选择器控件的集成 <br>课时303 【后端开发】根据时间、标题、分类查询新闻并分页显示 <br>课时304 【后端开发】将文章发布时间格式化为本地时间 <br>课时305 【后端开发】编辑新闻功能完成 <br>课时306 【后端开发】删除新闻功能完成 <br>课时307 【后端开发】课程管理-发布课程界面和模型完成 <br>课时308 【后端开发】课程管理视频云存储讲解 <br>课时309 【后端开发】课程管理-发布课程功能完成 <br>课时310 【后端开发】课程管理视频加密播放实现 <br>课时311 【后端开发】购买课程-课程订单页面完成 <br>课时312 【后端开发】购买课程-支付宝和微信支付功能准备工作 <br>课时313 【后端开发】购买课程-生成课程订单 <br>课时314 【后端开发】购买课程-配置pycharm同步代码到服务器 <br>课时315 【后端开发】购买课程-添加数据(选看) <br>课时316 【后端开发】购买课程-支付宝和微信支付功能完成 <br>课时317 【后端开发】购买课程-购买课程流程补充 <br>课时318 【后端开发】付费资讯模型创建 <br>课时319 【后端开发】付费资讯购买和下载(1 <br>课时320 【后端开发】付费资讯购买和下载(2) <br>课时321 【后端开发】搜索-普通方式实现搜索功能 <br>课时322 【后端开发】搜索-haystack实现全文搜索(1) <br>课时323 【后端开发】搜素-haystack实现全文搜索(2) <br>课时324 【后端开发】权限管理-自定义diango命令 <br>课时325 【后端开发】权限管理网站分组和权限创建完成 <br>课时326 【后端开发】权限管理员工管理界面完成</span></span></span></span></span></span></p><p><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】adminlte框架集成和登录页面实现" id="auto-id-1644908080602"><span class="f-fl f-thide ksname" title="【后端开发】memcached存储验证码" id="auto-id-1644908080605"><span class="f-fl f-thide ksname" title="【后端开发】使用ajax上传图片到七牛云" id="auto-id-1644908080606"><span class="f-fl f-thide ksname" title="【后端开发】搜索-haystack实现全文搜索（1）" id="auto-id-1644908080609">课时327 【后端开发】权限管理添加员工功能完成 <br>课时328 【后端开发】权限管理-页面访问限制 <br>课时329 【后端开发】导航栏选中状态切换实现 <br>课时330 403 csrftoken错误解决方案 <br><strong><span style="color: rgb(0, 176, 80);">章节14: Django项目部署 </span></strong><br>课时331 部署】在开发机上的准备工作 <br>课时332 部署】服务器上安装im、mysql、memcached等 <br>课时333 【部署】服务器上安装Python环境、git、虚拟环境等 <br>课时334 部署】生产环境Diango项目配置 <br>课时335 【部署】用uwsgi部署Django项目 <br>课时336 部署】用nginx+uwsgi部署项目 <br>课时337 【部署】用supervisor管理uwsgi进程</span></span></span></span></span></span></p>
+                                </div>
+
+                                    <div class="article__header tags" style="margin-top: 10px;">
+                                    <b>文章标签:</b>
+                                    
+                                    <a href="/video_tags-1.html" class="article-tag css">django案例</a>
+                                        <span>|</span>
+                                    
+                                    <a href="/video_tags-2.html" class="article-tag css">django企业项目</a>
+                                        <span>|</span>
+                                    
+                                    <a href="/video_tags-3.html" class="article-tag css">django项目案例</a>
+                                        <span>|</span>
+                                    
+                                    <a href="/video_tags-4.html" class="article-tag css">django入门教程</a>
+                                        <span>|</span>
+                                    
+                                    <a href="/video_tags-5.html" class="article-tag css">django视频教程</a>
+                                        
+                                    
+
+                                </div>
+
+                                <div class="container">
+                                    <button type="button" class="btn btn-primary" title="加站长微信与作者交流" data-container="body" data-toggle="popover" data-placement="top" data-content="站长微信：VIPdjango ">
+                                        与站长交流
+                                    </button>
+
+                                </div>
+                                <script>
+                                    $(function () {
+                                        $("[data-toggle='popover']").popover();
+                                    });
+                                </script>
+
+                            </div>
+                        </article>
+                        <!--  广告位置 -->
+
+                        <div id="article__related-articles">
+                            <h3>推荐阅读</h3>
+                            <div class="row no-margin">
+                            
+                                <div class="col-sm-4">
+                                    <article class="related-article">
+                                        <a href="show-5.html" class="article-related-link">
+                                            <div class="article__image" style="background-image: url('static/image/virtualenv.jpg')">
+                                                
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__description">
+                                                    <h3>virtualenv使用技巧大全,python新手必备知识</h3>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </article>
+                                </div>
+                            
+                                <div class="col-sm-4">
+                                    <article class="related-article">
+                                        <a href="show-14.html" class="article-related-link">
+                                            <div class="article__image" style="background-image: url('static/image/article_default.png')">
+                                                
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__description">
+                                                    <h3>Django2.1发布，Django2.1新特性</h3>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </article>
+                                </div>
+                            
+                                <div class="col-sm-4">
+                                    <article class="related-article">
+                                        <a href="show-30.html" class="article-related-link">
+                                            <div class="article__image" style="background-image: url('static/image/bt_django.jpg')">
+                                                
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__description">
+                                                    <h3>使用宝塔面板快速部署Django项目</h3>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </article>
+                                </div>
+                            
+                                <div class="col-sm-4">
+                                    <article class="related-article">
+                                        <a href="/article/show-9.html" class="article-related-link">
+                                            <div class="article__image" style="background-image: url('static/image/excel.jpg')">
+                                                
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__description">
+                                                    <h3>Django实用技巧:如何把数据导出到Excel</h3>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </article>
+                                </div>
+                            
+                                <div class="col-sm-4">
+                                    <article class="related-article">
+                                        <a href="show-31.html" class="article-related-link">
+                                            <div class="article__image" style="background-image: url('static/image/django-blog.jpg')">
+                                                
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__description">
+                                                    <h3>Django入门视频教程之Blog开发详解</h3>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </article>
+                                </div>
+                            
+                                <div class="col-sm-4">
+                                    <article class="related-article">
+                                        <a href="show-36.html" class="article-related-link">
+                                            <div class="article__image" style="background-image: url('static/image/python232323.jpg')">
+                                                
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__description">
+                                                    <h3>提升效率,python的多线程详细使用方法</h3>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </article>
+                                </div>
+                            
+
+
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <aside class="col-md-3 hidden-sm hidden-xs">
+                        <div class="article__author">
+                            <div class="user">
+                                <div class="profile__user-avatar" style="background-image: url('static/image/timg.jpg')"></div>
+                                <div class="profile__info">
+                                    <div class="profile__name">吴秀峰</div>
+                                    <div class="badges"><span class="badge admin-badge" data-type="admin"></span></div>
+                                    <!-- <div class="profile__karma" title="Karma: 113">113</div> -->
+                                </div>
+                                <div class="profile__description">
+                                    <p>当你的才华和能力还不足以支撑你的野心的时候，静下心来，学习！</p>
+                                </div>
+                                <!--'data-hide=meta data-default=#default-links'-->
+                                <ul class="profile__links" style="">
+                                    <li class="profile__link-item change-github" data-change="github" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Github URL"> <span class="link__icon link__icon--github"></span>
+                                        <div class="change-github" data-change="github"></div>
+                                    </a></li>
+                                    <li class="profile__link-item change-twitter" data-change="twitter" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Twitter URL"> <span class="link__icon link__icon--twitter"></span>
+                                        <div class="change-twitter" data-change="twitter"></div>
+                                    </a></li>
+                                    <li class="profile__link-item change-website" data-change="website" style="display: none;" data-modify="href"><a href="#" target="_blank" rel="nofollow noreferrer noopener" title="Website URL"> <span class="link__icon link__icon--website"></span>
+                                        <div class="change-website" data-change="website"></div>
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="section sticky-content">
+                                <div>
+                                    <div class="sidebar-articles-group">
+                                        <div class="group-title"><strong>最新文章</strong> <a href="article.html">更多</a></div>
+                                        <ul class="list-group">
+                                            
+                                                <li>
+
+                                                    <a href="show-39.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/12653.png')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django5.0正式发布，是你期待的吗？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-38.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/chatgpt.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>新手如何用Python玩转ChatGPT API,详细讲解</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-37.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/drf.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>几个例子让新手快速了解Django REST Framework (DRF)</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-36.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/python232323.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>提升效率,python的多线程详细使用方法</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-35.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/djangoQ_Z4PNibz.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django-Q，轻量级消息队列Django-Q初体验</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-34.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/Paginator.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>简单讲解Django分页Paginator和Page的用法</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-33.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/article_default.png')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>django4.0版本到底有哪些新功能和特性？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-32.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/bushu.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django+uWSGI+nginx部署原理及工作流程</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-31.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/django-blog.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django入门视频教程之Blog开发详解</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+
+                                                    <a href="show-30.html">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/bt_django.jpg')"></div>
+
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>使用宝塔面板快速部署Django项目</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+
+                                        </ul>
+                                    </div>
+                                    <div class="sidebar-articles-group">
+                                        <div class="group-title"><strong>论坛新帖</strong> <a href="forum.html">更多</a></div>
+                                        <ul class="list-group">
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-162.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>Django求救</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-45759.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/timg.jpg')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>chatgpt分销版哪里有卖？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-537.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>想找一个能独立完成项目的以及维护修改功能的长期合作</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-29.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/touxiang.JPG')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>新开发的blog。地址：  youmei.io</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-10.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/timg.jpg')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>项目搬迁，快捷导出环境依赖包到requirements.txt</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-478.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>如何设计这样的Model？</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-21296.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>pycharm新建django项目报错</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-21096.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>diango路由问题</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-61.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>ubuntu搭建django报错uwsgi+nginx!</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/forum/forum-26.html" class="list-group-item article-sidebar-link">
+                                                        <div class="list__left image-wrapper">
+                                                            <div class="article__image" style="background-image: url('static/image/default.gif')"></div>
+                                                            <!-- <img src="picture/add-input-mask-200_3.png" alt="" /> -->
+                                                        </div>
+                                                        <div class="list__right">
+                                                            <h4>学习Django弄个笔记吧，老是记不住</h4>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            
+
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+                                <div class="sidebar-articles-group sidebar-videos">
+                                    <div class="group-title">
+                                        <strong>视频教程</strong>
+                                        <a class="subscribe-link" target="_blank" href="video.html">更多</a>
+                                    </div>
+                                    <ul class="sidebar-video-thumbnails">
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-3.html">
+                                                <img class="video-thumb" src="static/picture/api.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-3.html">
+                                                <h4 class="video-title">Django+DRF+Vue打造专业的API自动化测试平台</h4>
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a target="_blank" href="video-2.html">
+                                                <img class="video-thumb" src="static/picture/djangovue_H3w7CBm.jpg">
+                                            </a>
+                                            <a target="_blank" href="video-2.html">
+                                                <h4 class="video-title">django+vue前后端分离仿美团外卖电商项目</h4>
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a target="_blank" href="">
+                                                <img class="video-thumb" src="static/picture/qiyekaifa.jpg">
+                                            </a>
+                                            <a target="_blank" href="">
+                                                <h4 class="video-title">django企业项目开发实战案例视频教程</h4>
+                                            </a>
+                                        </li>
+                                        
+
+                                    </ul>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <footer>
+	 <h3>加入Django中文交流社区，分享交流，携手同行</h3>
+
+	  <ul class="list-inline">
+				<li><a href="index.html" class="neon">首 页</a></li>
+				<li><a href="article.html" class="neon">文 章</a></li>
+                <li><a href="course.html" class="neon">教 程</a></li>
+                <li><a href="video.html" class="neon">视 频</a></li>
+				<li><a href="forum.html" class="neon">社 区</a></li>
+				<li><a href="about.html" class="neon">关于我们</a></li>
+				<li><a href="contact.html" class="neon">联系我们</a></li>
+
+	  </ul>
+
+		<p class="copyright">Copyright © 2018 <a href="index1.html" target="_blank">django.cn</a>
+			<span class="second-line">All Rights Reserved.</span><br>
+            Powered by <a href="index.html">Django3</a><br>
+           <a href="https://beian.miit.gov.cn" target="_blank">备案号：湘ICP备17023990号-1</a>
+		</p>
+</footer>
+
+</div>
+
+    <!-- JavaScripts -->
+
+    <script type="text/javascript">
+
+  $('#confirm-delete').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  // var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var aid = button.data('aid')
+  var id = button.data('id')
+  var tag = button.data('tag')
+  var modal = $(this)
+  // modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('input[name="aid"]').val(aid)
+  modal.find('input[name="id"]').val(id)
+  modal.find('input[name="tag"]').val(tag)
+
+  // console.log('ok')
+})
+
+  // btn_delete_comment
+  $('#btn_delete_comment').click(function(event){
+    // var form = new FormData(document.getElementById("delete_comment"))
+    // var pwd1 = $('#change-pwd [name="password1"]').val()
+    console.log('in comment delete')
+    var aid = $('#delete_comment [name="aid"]').val()
+    var id = $('#delete_comment [name="id"]').val()
+    var tag = $('#delete_comment [name="tag"]').val()
+    var token = $('#delete_comment [name="csrfmiddlewaretoken"]').val()
+    if(!tag){
+        return
+    }
+
+    var form = new FormData();
+    form.append("id", 'id');
+    form.append("csrfmiddlewaretoken", token);
+    form.append('method','delete')
+
+        $.ajax({
+            type: 'POST',
+            url: '/comment/'+id+'/',
+            // data:'json',
+            processData: false,
+            contentType: false,
+            data: form,
+            success: function(response) {
+                if(tag == 'forum'){
+                    window.location.href = '/forum/forum-'+aid+'.html';
+                }
+                if(tag == 'article'){
+                    window.location.href = '/article/show-'+aid+'.html';
+                }
+                if(tag == 'course'){
+                    window.location.href = '/course/show-'+aid+'.html';
+                }
+            }
+        })
+  })
+</script>
+ <script src="static/js/bundle.js"></script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>个人资料信息-Django中文网,django社区！</title>
+    <link rel="apple-touch-icon" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="icon" sizes="192x192" href="https://www.django.cn/static/images/icon-touch.png">
+    <link rel="shortcut icon" href="https://www.django.cn/static/images/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Django">
+    <meta name="application-name" content="Django">
+    <meta name="theme-color" content="#ffffff">
+    <link href="static/css/bootstrap.min1.css" rel="stylesheet">
+    <link href="static/css/app-4b73176c84.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/toastr.min1.css">
+    <script type="text/javascript" async="" src="static/js/dc.js"></script>
+
+
+    <script src="static/js/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
+    <script src="static/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?9b0ccd50ff8935f331889174a8280dc2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+ 
+</head>
+
+<body>
+    <div id='gender_msg_model' class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content" style='height: 100px'>
+      更改成功
+    </div>
+  </div>
+</div>
+    <div class="page__wrapper page--profile">
+        <header class="header--main animate-search no-background-xs">
+            <div class="container-fluid">
+                <!-- .nav--main -->
+                <nav class="nav--main">
+                    <div class="nav__logo">
+                        <a href="index.html">
+                            Django<span>中文网</span>
+                        </a>
+                    </div>
+                    <ul class="nav__items nav__items--right">
+                        <li class="nav__item">
+                            <a href="search.html" class="search-trigger icon-magnifier"></a>
+                        </li>
+                        
+                           <li id="login" class="nav__item">
+                                <a href="login.html">
+                                    登录
+                                </a>
+                            </li>
+                            <li id="register" class="nav__item">
+                                <a href="register.html">
+                                    <span class="btn btn-success">注册</span>
+                                </a>
+                            </li>
+                        
+                    </ul>
+                    <ul class="nav__items nav__items--left">
+                        <li class="nav__item nav__item--main">
+                            <a href="article.html" class="articles ">
+                                文章
+                            </a>
+                        </li>
+                        <li class="nav__item nav__item--main">
+                            <a href="article.html" class="articles ">
+                                教程
+                            </a>
+                        </li>
+                        <li class="nav__item nav__item--main">
+                            <a href="forum.html" class="posts ">
+                                社区
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <a href="login2.html" class="nav-trigger icon-menu"></a>
+            <div id="search" class="main-search">
+                <div class="container-fluid">
+                    <form id="search-form-top" class="form__search" action="/search/" method="GET">
+                        <input type="search" name="search" placeholder="Search..." value="" autocomplete="off" required="">
+                    </form>
+                    <div class="search-suggestions">
+                    </div>
+                    <a href="login2.html" class="close text-replace">Close Form</a>
+                </div>
+            </div>
+            <!-- .main-search -->
+        </header>
+        <div class="cover-layer"></div>
+        <!-- cover main content when search form is open -->
+        <main class="main-content">
+            <div class="hero hero--profile">
+            </div>
+            <div class="container-fluid">
+                <div class="profile row">
+                    <div class="col-md-3">
+                        <div class="profile__header">
+                            <div class="profile__user-avatar" style="background-image: url('static/image/avatar_-_副本.jpg')"></div>
+                            <div class="profile__info">
+                                <div class="profile__name">
+                                    <h4 class="change-name" data-change="name">
+                                        红色石头
+                                    </h4>
+                                    <span>
+                            
+                                    </span>
+                                    <h5></h5>
+                                </div>
+
+                                <blockquote class="profile__description change-description" data-change="description" style="display:none">
+                                </blockquote>
+                                <!--'data-hide=meta data-default=#default-links'-->
+                                <ul class="profile__links" style="">
+                                    <li class="profile__link-item change-github" data-change="github" style="display: none;" data-modify="href">
+                                        <a href="login2.html" target="_blank" rel="nofollow noreferrer noopener" title="Github URL">
+                                            <span class="link__icon link__icon--github"></span>
+                                            <div class="change-github" data-change="github">
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="profile__link-item change-twitter" data-change="twitter" style="display: none;" data-modify="href">
+                                        <a href="login2.html" target="_blank" rel="nofollow noreferrer noopener" title="Twitter URL">
+                                            <span class="link__icon link__icon--twitter"></span>
+                                            <div class="change-twitter" data-change="twitter">
+    
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="profile__link-item change-website" data-change="website" style="display: none;" data-modify="href">
+                                        <a href="login2.html" target="_blank" rel="nofollow noreferrer noopener" title="Website URL">
+                                            <span class="link__icon link__icon--website"></span>
+                                            <div class="change-website" data-change="website">
+
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 profile__content">
+                        <div class="tabs">
+                            <div class="tabs-profile">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="" aria-controls="home" role="tab">
+                                            
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            评论 (0)
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="红色石头.html" aria-controls="home" role="tab">
+                                           
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                         
+                                            帖子  (2)
+                                        </a>
+                                    </li>
+                                    
+                                    
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+                            
+                                    
+<div class="section">
+    <div role="tabpanel" class="tab-pane active" id="comments">
+        <ul class="comments__container list-group">
+        
+        </ul>
+
+        <div class="pagination__container">
+            
+        </div>
+    </div>
+</div>
+<style>
+    .profile .comments__container{
+        border:0;
+    }
+</style>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    <footer>
+	  <h3>加入Django中文交流社区，分享交流，携手同行</h3>
+
+	  <ul class="list-inline">
+				<li><a href="index.html" class="neon">首 页</a></li>
+				<li><a href="article.html" class="neon">文 章</a></li>
+				<li><a href="forum.html" class="neon">社 区</a></li>
+				<li><a href="about.html" class="neon">关于我们</a></li>
+				<li><a href="contact.html" class="neon">联系我们</a></li>
+	  </ul>
+
+		<p class="copyright">Copyright © 2018 <a href="index1.html" target="_blank">django.cn</a>
+			<span class="second-line">All Rights Reserved.</span><br>
+            Powered by Django<br>
+            湘ICP备17023990号-1
+		</p>
+</footer>
+
+    <!-- JavaScripts -->
+    
+    <script src="static/js/highlight.min.js"></script>
+    <script src="static/js/toastr.min.js"></script>
+    <script src="static/js/bundle-66d4e33989.js"></script>
+</div></body>
+
+</html>
