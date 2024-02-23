@@ -19,11 +19,14 @@ from django.conf.urls.static import static
 from django.contrib import admin 
 from django.urls import path 
 from django.urls import include 
-from rango import views
+from postBlogs import views
+from userAuthentication import views
+
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('rango/', include('rango.urls')),
-    # The above maps any URLs starting with rango/ to be handled by rango. 
     path('admin/', admin.site.urls),
+    path('postBlogs/', include('postBlogs.urls')),  # Maps URLs for the postBlogs app
+    path('userAuthentication/', include('userAuthentication.urls')),  # Maps URLs for the userAuthentication app
+    path('', views.index, name='index'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
