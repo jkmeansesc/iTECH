@@ -18,6 +18,8 @@ from django.urls import path
 
 from blog import views
 from django.urls import include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +27,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('blog/', include('blog.urls')),
     path('authentication/', include('authentication.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# 这样就可以直接在浏览器中访问media中的资源了，默认是static，所以static中的资源也可以直接访问。
 
 
