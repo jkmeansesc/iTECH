@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!-- 需要加载静态文件 -->
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- 也可以加载其他静态文件 -->
+    <!-- <script src="{% static 'js/jquery.js' %}"></script> -->
+</head>
+<body>
+    hello hello
+    <h1>{{message}}</h1>
+    <img src="{% static 'images/rango.jpg' %}">
+    <!-- 添加一个图片 -->
+    <img src="{% static 'images/1.jpg' %}">
+
+    <!-- 添加一个css文件 -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</body>
+</html>
