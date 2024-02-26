@@ -1,0 +1,42 @@
+<div class="page__wrapper page--landing">
+  <header class="header--main animate-search no-background no-background-xs">
+    <div class="container-fluid">
+      <nav class="nav--main">
+        <div class="nav__logo">
+          <a href="">
+            <span>4 angry men</span>
+          </a>
+        </div>
+
+        <ul class="nav__items nav__items--right">
+          <li class="nav__item nav__item--main">
+            <a href="{% url 'index' %}" class="articles"> home </a>
+          </li>
+          <li class="nav__item nav__item--main">
+            <a href="{% url 'index' %}" class="posts"> blogs </a>
+          </li>
+          <li class="nav__item nav__item--main">
+            <a href="{% url 'blog:index' %}" class="posts"> about </a>
+          </li>
+          <li id="login" class="nav__item">
+            <a href="{% url 'authentication:login' %}" class="posts">
+              log in
+            </a>
+          </li>
+
+          <li id="register" class="nav__item">
+            <a href="{% url 'authentication:register' %}" class="posts">
+              sign up
+            </a>
+          </li>
+          <li class="nav__item">
+            <a href="search.html" class="search-trigger icon-magnifier"></a>
+          </li>
+        </ul>
+
+        <ul class="nav__items nav__items--left"></ul>
+      </nav>
+      <!-- .nav--main -->
+    </div>
+  </header>
+</div>
