@@ -19,7 +19,7 @@ blockquote, q {
 
 blockquote:after, blockquote:before, q:after, q:before {
     content: "";
-    content: none
+    content:none;
 }
 
 table {
