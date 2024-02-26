@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="zh">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -11,7 +11,7 @@
     <link rel="icon" sizes="192x192" href="https://www.django.cn/static/images/icon-touch.png">
     <link rel="shortcut icon" href="https://www.django.cn/static/images/favicon.ico">
 
-    <title>用户登录-Django,Django中文网！</title>
+    <title>4AM Login</title>
 
 
     <meta name="theme-color" content="#ffffff">
@@ -44,7 +44,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <div style='text-align: center;font-size: 20px'>确定删除?</div>
+                    <div style='text-align: center;font-size: 20px'>Confirm ?</div>
                 </div>
                 <div class="modal-footer">
                     <form action="/comment/" method="POST" id='delete_comment' style='float: left'>
@@ -57,7 +57,7 @@
                         <input type='button' class="btn btn-danger btn-ok" id='btn_delete_comment' value='删除'>
                     </form>
                     <!-- <a class="btn btn-danger btn-ok"><span>删除</span></a> -->
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><span>取消</span></button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span>Cancel</span></button>
                 </div>
             </div>
         </div>
@@ -73,29 +73,24 @@
                 <nav class="nav--main">
                     <div class="nav__logo">
                         <a href="index.html">
-                            <span>Django中文网</span>
+                            <span>4AM Team Blog</span>
                         </a>
                     </div>
-
-
                     <ul class="nav__items nav__items--right">
                         <li class="nav__item">
                             <a href="search.html" class="search-trigger icon-magnifier"></a>
                         </li>
                         <li id="login" class="nav__item">
                             <a href="">
-                                登录
+                                Login
                             </a>
                         </li>
                         <li id="register" class="nav__item">
                             <a href="register.html">
-                                <span class="btn btn-success">注册</span>
+                                <span class="btn btn-success">Sign up</span>
                             </a>
                         </li>
                     </ul>
-
-
-
                     <ul class="nav__items nav__items--left">
                         <li class="nav__item nav__item--main">
                             <a href="article.html" class="articles ">
@@ -118,8 +113,6 @@
                             </a>
                         </li>
                     </ul>
-
-
                 </nav> <!-- .nav--main -->
             </div>
 
@@ -144,12 +137,9 @@
 
         <div class="cover-layer"></div> <!-- cover main content when search form is open -->
 
+        <title>User Login: 4AM Team Blog</title>
 
-
-
-        <title>用户登录-Django,Django中文网！</title>
-
-        <main class="main-content" style="background-color:#1da7da">
+        <main class="main-content" style="background-color:#1e1e2e	">
             <div style="height:150px; width: 100%"></div>
             <div class="content-wrapper">
                 <div class="container-fluid">
@@ -161,7 +151,7 @@
                                 style="-moz-border-radius: 10px;-webkit-border-radius: 10px;border-radius: 15px;">
                                 <div class="panel-heading">
                                     <i class="icon-user icon-form"></i>
-                                    <h2>登录</h2>
+                                    <h2>Sign in</h2>
                                 </div>
 
                                 <div class="alert" hidden="">
@@ -200,11 +190,6 @@
                                                     name="password" required="">
                                                 <label for="password" data-content="Password">Password</label>
                                             </div>
-
-
-
-
-
                                         </div>
 
                                         <div class="form-group">
@@ -212,7 +197,7 @@
                                                 <label>
                                                     <input type="checkbox" name="remember" checked="checked">
                                                     <span class="checkbox__custom checkbox__tick"></span>
-                                                    <span>记住用户名</span>
+                                                    <span>Remember user name</span>
                                                 </label>
                                             </div>
                                         </div>
@@ -220,11 +205,11 @@
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary animated sign-in">
                                                 <span>
-                                                    登录
+                                                    Sign in
                                                 </span>
                                             </button>
 
-                                            <a class="btn-link" href="forget.html">忘记密码?</a>
+                                            <a class="btn-link" href="forget.html">Forget password?</a>
 
                                         </div>
                                     </form>
@@ -238,23 +223,10 @@
 
 
         <footer>
-            <h3>加入Django中文交流社区，分享交流，携手同行</h3>
-
-            <ul class="list-inline">
-                <li><a href="index.html" class="neon">首 页</a></li>
-                <li><a href="article.html" class="neon">文 章</a></li>
-                <li><a href="course.html" class="neon">教 程</a></li>
-                <li><a href="video.html" class="neon">视 频</a></li>
-                <li><a href="forum.html" class="neon">社 区</a></li>
-                <li><a href="about.html" class="neon">关于我们</a></li>
-                <li><a href="contact.html" class="neon">联系我们</a></li>
-
-            </ul>
-
-            <p class="copyright">Copyright © 2018 <a href="index1.html" target="_blank">django.cn</a>
+            <!--TODO: add site URL to copyright  -->
+            <p class="copyright">Copyright © 2024 <a href="index1.html" target="_blank">django.cn</a>
                 <span class="second-line">All Rights Reserved.</span><br>
-                Powered by <a href="index.html">Django3</a><br>
-                <a href="https://beian.miit.gov.cn" target="_blank">备案号：湘ICP备17023990号-1</a>
+                Powered by <a href="index.html">Django</a><br>
             </p>
         </footer>
 
