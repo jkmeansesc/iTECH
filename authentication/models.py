@@ -1,15 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
-class User(models.Model):
-    # 用户名不能重复，不能为null
-    username = models.CharField(max_length=100, unique=True, null=False)
-    password = models.CharField(max_length=100, null=False)
-    # 邮箱不能重复，不能为null
-    email = models.EmailField(max_length=100, unique=True, null=False)
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    website = models.URLField(blank=True)
+    picture = models.ImageField(upload_to='profile_images', blank=True)
     
     def __str__(self):
-        return  "user-" + self.username
-
-
+        return  self.user.username
 
