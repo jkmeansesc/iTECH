@@ -1,245 +1,85 @@
 <!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
 <html lang="zh">
 <head>
-    <title>4 Angry Men homepage</title>
-    <meta name="theme-color" content="#ffffff">
-    <link href="{% static 'css/fonts.css' %}" rel="stylesheet">
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/app.css' %}" rel="stylesheet">
-    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
-
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/highlight.min.js' %}"></script>
-    <script src="{% static 'js/toastr.min.js' %}"></script>
+    <title>{% block title_block %}
+        Home
+    {% endblock %}
+    </title>
 </head>
-<body>
-    <div class="page__wrapper page--landing">
-
-        <header class="header--main animate-search no-background no-background-xs">
-
-
-            <div class="container-fluid">
-                <nav class="nav--main">
-                    <div class="nav__logo">
-                        <a href="">
-                            <span>4 Angry Men</span>
+<body>{% block body_block %}
+    <section id="hero" class="s-hero">
+        <div class="s-hero__slider">
+            <div class="s-hero__slide">
+                <div class="s-hero__slide-bg" style="background-image: url('static/image/12653.jpg');"></div>
+                <div class="row s-hero__slide-content animate-this">
+                    <div class="column">
+                    <div class="s-hero__slide-meta">
+                        <a href="#0">Lifestyle</a>
+                        <a href="#0">Design</a>
+                        <span class="byline"> 
+                                Posted by 
+                                <span class="author">
+                                    <a href="#0">Jonathan Doe</a>
+                                </span>
+                            </span>
+                    </div>
+                    <h1 class="s-hero__slide-text">
+                        <a href="#0">
+                            Tips and Ideas to Help You Start Freelancing.
                         </a>
+                    </h1>
+                </div>
+            </div>
+        </div>
+        </div> <!-- end s-hero__slide -->
+    </section>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-header">
+                        <h2>Latest Blogs</h2>
                     </div>
 
-
-                    <ul class="nav__items nav__items--right">
-                        <li class="nav__item nav__item--main">
-                            <a href="" class="articles ">
-                                Home
+                    <div class="col-md-4 col-sm-6  clear-sm ">
+                        <article class="article--small">
+                            <a href="show-39.html" title="What is the level of our team?">
+                                <div class="article__image"
+                                     style="background-image: url(static/image/12653.jpg )">
+                                </div>
                             </a>
-                        </li>
-                        <li class="nav__item nav__item--main">
-                            <a href="{% url 'blog:blogs' %}" class="posts">
-                                Blogs
-                            </a>
-                        </li>
-                        <li class="nav__item nav__item--main">
-                            <a href="" class="posts ">
-                                About
-                            </a>
-                        </li>
-                        <li id="login" class="nav__item">
-                            <a href="{% url 'authentication:login' %}" class="posts ">
-                                Log in
-                            </a>
-                        </li>
-                       
-                        <li id="register" class="nav__item">
-                            <a href="{% url 'authentication:register' %}" class="posts">
-                               Register
-                            </a>
-                        </li>
-                         <li class="nav__item">
-                            <a href="search.html" class="search-trigger icon-magnifier"></a>
-                        </li>
-                    </ul>
-                    
-                    <ul class="nav__items nav__items--left">
-                    </ul>
-
-                </nav> <!-- .nav--main -->
-            </div>
-
-
-            <a href="#0" class="nav-trigger icon-menu"></a>
-
-            <div id="search" class="main-search">
-                <div class="container-fluid">
-                    <form id="search-form-top" class="form__search" action="/search/" method="GET">
-                        <input type="search" name="search" placeholder="Search..." value="" autocomplete="off"
-                            required="">
-
-                    </form>
-
-                    <!-- <div class="search-suggestions">
-
-                    </div> -->
-                    <a href="#0" class="close text-replace">Close Form</a>
-                </div>
-            </div> <!-- .main-search -->
-        </header>
-
-        <div class="cover-layer"></div> <!-- cover main content when search form is open -->
-        
-        <main class="main-content">
-            <section>
-                <div class="hero hero--articles">
-                    <div class="container-fluid">
-                        <div class="hero-content">
-                            <div class="row no-margin">
-                                <div class="col-md-5">
-                                    <h2>Welcome to <strong>4 Angry Men !</strong></h2>
-                                    <p style="font-size: medium">
-                                        Hello Players!
+                            <div class="article__content">
+                                <div class="article__description">
+                                    <a href="show-39.html" title="What is the level of our team?">
+                                        <h3>What is the level of 4 Angry Men ?</h3>
+                                    </a>
+                                    <p>
+                                        Recently they had competition with 3 Sad Bird...
                                     </p>
-                                    <div class="stack-sm">
-                                        <a href="forum.html" class="btn btn-success">
-                                            <span>pinned blog</span>
-                                        </a>
-                                        <span>or</span>
-                                        <a href="{% url 'blog:blogs' %}" class="white" style="
-                              text-transform: capitalize;
-                              border-bottom: 1px solid white;
-                            ">
-                                            view blogs
+                                </div>
+                                <div class="article__footer">
+                                    <a class="btn-more" href="show-39.html" title="comments">
+                                        <span>1</span>
+                                    </a>
+                                    <div class="tags">
+                                        <a href="article-Django.html" class="article-tag">
+                                            Team
                                         </a>
                                     </div>
-                                </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="content-wrapper">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="section-header">
-                                    <h2>Latest Blogs</h2>
-                                </div>
-
-                                <div class="col-md-4 col-sm-6  clear-sm ">
-                                    <article class="article--small">
-                                        <a href="show-39.html" title="What is the level of our team?">
-                                            <div class="article__image"
-                                                style="background-image: url(static/image/12653.jpg )">
-                                            </div>
-                                        </a>
-                                        <div class="article__content">
-                                            <div class="article__description">
-                                                <a href="show-39.html" title="What is the level of our team?">
-                                                    <h3>What is the level of 4 Angry Men ?</h3>
-                                                </a>
-                                                <p>
-                                                    Recently they had competition with 3 Sad Bird... 
-                                                </p>
-                                            </div>
-                                            <div class="article__footer">
-                                                <a class="btn-more" href="show-39.html" title="comments">
-                                                    <span>1</span>
-                                                </a>
-                                                <div class="tags">
-                                                    <a href="article-Django.html" class="article-tag">
-                                                        Team
-                                                    </a>
-                                                </div>
-                                                <time class="article__date" datetime="2023年12月8日 14:39">
-                                                   25/2/2023
-                                                </time>
-                                            </div>
-                                        </div>
-                                    </article>
+                                    <time class="article__date" datetime="2023年12月8日 14:39">
+                                        25/2/2023
+                                    </time>
                                 </div>
                             </div>
-                        </div>
+                        </article>
                     </div>
                 </div>
-            </section>
-        </main>
+            </div>
+        </div>
     </div>
-    <script type="text/javascript">
-
-        $('#confirm-delete').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) // Button that triggered the modal
-            // var recipient = button.data('whatever') // Extract info from data-* attributes
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            var aid = button.data('aid')
-            var id = button.data('id')
-            var tag = button.data('tag')
-            var modal = $(this)
-            // modal.find('.modal-title').text('New message to ' + recipient)
-            modal.find('input[name="aid"]').val(aid)
-            modal.find('input[name="id"]').val(id)
-            modal.find('input[name="tag"]').val(tag)
-
-            // console.log('ok')
-        })
-
-        // btn_delete_comment
-        $('#btn_delete_comment').click(function (event) {
-            // var form = new FormData(document.getElementById("delete_comment"))
-            // var pwd1 = $('#change-pwd [name="password1"]').val()
-            console.log('in comment delete')
-            var aid = $('#delete_comment [name="aid"]').val()
-            var id = $('#delete_comment [name="id"]').val()
-            var tag = $('#delete_comment [name="tag"]').val()
-            var token = $('#delete_comment [name="csrfmiddlewaretoken"]').val()
-            if (!tag) {
-                return
-            }
-
-            var form = new FormData();
-            form.append("id", 'id');
-            form.append("csrfmiddlewaretoken", token);
-            form.append('method', 'delete')
-
-            $.ajax({
-                type: 'POST',
-                url: '/comment/' + id + '/',
-                // data:'json',
-                processData: false,
-                contentType: false,
-                data: form,
-                success: function (response) {
-                    if (tag == 'forum') {
-                        window.location.href = '/forum/forum-' + aid + '.html';
-                    }
-                    if (tag == 'article') {
-                        window.location.href = '/article/show-' + aid + '.html';
-                    }
-                    if (tag == 'course') {
-                        window.location.href = '/course/show-' + aid + '.html';
-                    }
-                }
-            })
-        })
-    </script>
-    <!-- <script src="static/js/bundle.js"></script> -->
-    <script src="static/js/bundle.js"></script>
-    
-    <script>
-            (function () {
-                var bp = document.createElement('script');
-                var curProtocol = window.location.protocol.split(':')[0];
-                if (curProtocol === 'https') {
-                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-                }
-                else {
-                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-                }
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(bp, s);
-            })();
-    </script>
-    <div style="display:none;"><a href="https://smalltool.github.io/">仿站工具</a></div>
+{% endblock %}
 </body>
 
 </html>

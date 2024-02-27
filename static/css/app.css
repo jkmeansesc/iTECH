@@ -35,6 +35,7 @@ a:active, a:focus, a:hover, a:visited {
     text-decoration: none
 }
 
+
 @font-face {
     font-family: simple-line-icons;
     src: url(../font/Simple-Line-Icons-2.4.01.eot);
@@ -53,6 +54,16 @@ a:active, a:focus, a:hover, a:visited {
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale
+}
+
+:root {
+    --font-1: "Inter", sans-serif;
+    --font-2: "DM Serif Text", serif;
+    --font-3: "DM Serif Display", serif;
+
+    /* monospace
+     */
+    --font-mono: Consolas, "Andale Mono", Courier, "Courier New", monospace;
 }
 
 .icon-user:before {
@@ -831,7 +842,7 @@ body, html {
 }
 
 body {
-    background-color: #fff;
+    background-color: #2c333b;
     font-family: Nunito, sans-serif;
     color: #3e454c
 }
@@ -854,7 +865,7 @@ body.nav--visible, body.notifications-visible, body.search--visible {
 
 @media only screen and (min-width: 768px) {
     body {
-        background-color: #fafafa
+        background-color: #ffffff
     }
 }
 
@@ -867,7 +878,7 @@ body.nav--visible, body.notifications-visible, body.search--visible {
 }
 
 main {
-    background-color: #fff
+    background-color: #ffffff
 }
 
 @media only screen and (min-width: 768px) {
@@ -963,10 +974,8 @@ pre, pre.hljs {
 pre.hljs {
     padding-left: 15px;
     border-left: 1px solid #aec8da;
-    font-family: monospace;
     font-size: 12px;
     line-height: 1.45;
-    font-family: inconsolata, monospace;
     letter-spacing: .3px;
     word-spacing: 1px;
     color: #191919;
@@ -2127,13 +2136,11 @@ label {
 }
 
 .search-bar {
-    display: inline-block;
     width: 78%;
     height: 20px;
     background: #fff;
     border-radius: 3px;
     margin: 10px 20px;
-    display: none
 }
 
 #article-animation {
@@ -3235,7 +3242,7 @@ footer .share-buttons li:hover {
     padding: 10px;
     line-height: 1;
     background-color: #e6e6e6;
-    background-image: linear-gradient(to top,#ebebeb,#e3e3e3);
+    background-image: linear-gradient(to top, #ebebeb, #e3e3e3);
     border-bottom: 1px solid #d5d5d5;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
     z-index: 10;
@@ -6577,13 +6584,13 @@ aside .sponsors .wix {
     left: 0;
     width: 100%;
     height: 50px;
-    background: #fff;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+    background: #252d2f;
+    box-shadow: 0 1px 1px rgba(148, 146, 146, 0.15);
     transform: translateZ(0);
     will-change: transform;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: background-color .3s, transform .3s
+    transition: background-color .3s, transform .3s;
 }
 
 .header--main.is-hidden {
@@ -6591,7 +6598,7 @@ aside .sponsors .wix {
 }
 
 .header--main.search-form-visible .nav__logo a {
-    color: #fff
+    color: #0c274b
 }
 
 .header--main.nav--visible {
@@ -6622,7 +6629,7 @@ aside .sponsors .wix {
     }
 
     .header--main.no-background-xs .letters {
-        color: #1da7da
+        color: #262e31
     }
 
     .header--main.no-background-xs .squircle {
@@ -6652,7 +6659,7 @@ aside .sponsors .wix {
 }
 
 .header--main.no-background:not(.white) .letters {
-    color: #1da7da
+    color: #2aa2c2
 }
 
 .header--main.no-background:not(.white) .squircle {
@@ -6697,7 +6704,7 @@ aside .sponsors .wix {
     z-index: 1;
     top: 0;
     left: 0;
-    border-right: 1px solid #ededed;
+    border-right: 1px solid #000000;
     width: 260px;
     height: 100vh;
     overflow: auto;
@@ -6780,7 +6787,7 @@ aside .sponsors .wix {
 }
 
 .nav__logo a > span {
-    color: #1da7da
+    color: #ffffff
 }
 
 @media only screen and (min-width: 768px) {
@@ -6804,7 +6811,7 @@ aside .sponsors .wix {
 }
 
 .nav__items--left li > a:before, .nav__items .dropdown.account li > a:before {
-    font-family: Simple-Line-Icons;
+    font-family: Simple-Line-Icons, serif;
     margin-right: .5em;
     color: #1da7da;
     font-weight: 400
@@ -6841,7 +6848,7 @@ aside .sponsors .wix {
 }
 
 .nav__items--left .nav__item > a:hover {
-    color: #343434
+    color: #0c274b
 }
 
 @media only screen and (min-width: 768px) {
@@ -6889,7 +6896,7 @@ aside .sponsors .wix {
 .nav__items--right .nav__item > a {
     font-size: 16px;
     font-weight: 700;
-    color: #747474;
+    color: #ffffff;
     line-height: 30px;
     height: 30px
 }
@@ -6929,7 +6936,7 @@ aside .sponsors .wix {
     left: 0;
     width: 50px;
     height: 100%;
-    color: #747474;
+    color: #838383;
     font-size: 18px;
     text-align: center;
     line-height: 50px
@@ -7846,13 +7853,13 @@ select {
     position: relative;
     color: #fff;
     height: auto;
-    background-color: #0c274b;
+    background-color: #30343a;
     z-index: 2
 }
 
 @media only screen and (min-width: 768px) {
     .hero--articles {
-        padding-top: 80px
+        padding-top: 100px
     }
 }
 
@@ -7876,6 +7883,176 @@ select {
     }
 }
 
+.s-hero__slide {
+    position: relative;
+    height: 100vh;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.s-hero__slider .slick-dots {
+    display: block;
+    list-style: none;
+    width: 92%;
+    max-width: var(--width-wide);
+    padding: 0 3.2rem;
+    margin-top: -15vh;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.s-hero__slider .slick-dots li {
+    display: inline;
+    padding-left: 0;
+    margin-right: .8rem;
+}
+
+.s-hero__slider .slick-dots li::after {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.5);
+    -webkit-transform: translateY(-4px);
+    transform: translateY(-4px);
+    -webkit-transition: width 0.3s cubic-bezier(0.21, 0.97, 0.75, 0.85);
+    transition: width 0.3s cubic-bezier(0.21, 0.97, 0.75, 0.85);
+}
+
+.s-hero__slider .slick-dots li button {
+    display: inline-block;
+    background: transparent;
+    border: none;
+    margin: 0;
+    padding: .4rem;
+    line-height: var(--vspace-1);
+    height: auto;
+    color: white;
+    position: relative;
+}
+
+.s-hero__slider .slick-dots li button::before {
+    content: "0";
+}
+
+.s-hero__slider .slick-dots li:nth-child(n+10) button::before {
+    content: none;
+}
+
+.s-hero__slider .slick-dots li.slick-active::after {
+    width: 32px;
+    margin: 0 10px 0 4px;
+}
+
+.s-hero__slider .s-hero__slide {
+    height: 100vh;
+    min-height: calc(25.5 * var(--space));
+    position: relative;
+}
+
+.s-hero__slide-bg {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.s-hero__slide-bg::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.s-hero__slide-bg::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.78) 100%);
+    opacity: 0.2;
+}
+
+.s-hero__slide-content {
+   position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.s-hero__slide-content .column {
+    -webkit-align-self: flex-end;
+    -ms-flex-item-align: end;
+    align-self: flex-end;
+    -ms-flex: 0 0 55%;
+    -webkit-box-flex: 0;
+    flex: 0 0 55%;
+    max-width: 100%;
+}
+
+.s-hero__slide-meta {
+    font-weight: 400;
+    font-size: var(--text-sm);
+    line-height: var(--vspace-0_75);
+    color: white;
+    margin-bottom: var(--vspace-0_5);
+}
+
+.s-hero__slide-meta .cat-links, .s-hero__slide-meta .byline {
+    display: inline-block;
+    margin: 0 .8rem;
+}
+
+.s-hero__slide-meta .cat-links a::after {
+    content: ", ";
+}
+
+.s-hero__slide-meta .cat-links a:last-child::after {
+    display: none;
+}
+
+.s-hero__slide-meta a, .s-hero__slide-meta .author {
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.s-hero__slide-text {
+    font-family: var(--font-3);
+    font-size: 6rem;
+    font-weight: 400;
+    line-height: 1.091;
+    letter-spacing: -.01em;
+    color: white;
+    margin-top: 0;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.s-hero__slide-text a {
+    color: white;
+}
+
 .cover-layer {
     display: block;
     position: fixed;
@@ -7884,7 +8061,7 @@ select {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgb(0, 0, 0);
+    background: transparent;
     opacity: 0;
     visibility: hidden;
     transition: opacity .3s, visibility .3s
@@ -10483,4 +10660,94 @@ span.CodeMirror-selectedtext {
 
 .hljs-strong {
     font-weight: 700
+}
+
+:root {
+
+    /* widths for rows and containers
+     */
+    --width-full: 100%;
+    --width-max: 1200px;
+    --width-wide: 1400px;
+    --width-wider: 1600px;
+    --width-widest: 1800px;
+    --width-narrow: 1000px;
+    --width-narrower: 800px;
+    --width-grid-max: var(--width-max);
+
+    /* gutters
+     */
+    --gutter-lg: 2.4rem;
+    --gutter-md: 2rem;
+    --gutter-mob: 1rem;
+
+}
+
+/* -------------------------------------------------------------------
+ * ## vertical spacing and typescale
+ * ------------------------------------------------------------------- */
+:root {
+
+    /* spacing
+     * base font size: 18px
+     * vertical space unit : 32px
+     */
+    --base-size: 62.5%;
+    --base-font-size: 1.8rem;
+    --space: 3.2rem;
+
+    /* vertical spacing
+     */
+    --vspace-0_125: calc(0.125 * var(--space));
+    --vspace-0_25: calc(0.25 * var(--space));
+    --vspace-0_5: calc(0.5 * var(--space));
+    --vspace-0_75: calc(0.75 * var(--space));
+    --vspace-0_875: calc(0.875 * var(--space));
+    --vspace-1: calc(var(--space));
+    --vspace-1_25: calc(1.25 * var(--space));
+    --vspace-1_5: calc(1.5 * var(--space));
+    --vspace-1_75: calc(1.75 * var(--space));
+    --vspace-2: calc(2 * var(--space));
+    --vspace-2_5: calc(2.5 * var(--space));
+    --vspace-3: calc(3 * var(--space));
+    --vspace-3_5: calc(3.5 * var(--space));
+    --vspace-4: calc(4 * var(--space));
+    --vspace-4_5: calc(4.5 * var(--space));
+    --vspace-5: calc(5 * var(--space));
+
+    /* type scale
+     * ratio 1:2 | base: 18px
+     * -------------------------------------------------------
+     *
+     * --text-display-3 = (77.40px)
+     * --text-display-2 = (64.50px)
+     * --text-display-1 = (53.75px)
+     * --text-xxxl      = (44.79px)
+     * --text-xxl       = (37.32px)
+     * --text-xl        = (31.10px)
+     * --text-lg        = (25.92px)
+     * --text-md        = (21.60px)
+     * --text-size      = (18.00px) BASE
+     * --text-sm        = (15.00px)
+     * --text-xs        = (12.50px)
+     *
+     * -------------------------------------------------------
+     */
+    --text-scale-ratio: 1.2;
+    --text-size: var(--base-font-size);
+    --text-xs: calc((var(--text-size) / var(--text-scale-ratio)) / var(--text-scale-ratio));
+    --text-sm: calc(var(--text-xs) * var(--text-scale-ratio));
+    --text-md: calc(var(--text-sm) * var(--text-scale-ratio) * var(--text-scale-ratio));
+    --text-lg: calc(var(--text-md) * var(--text-scale-ratio));
+    --text-xl: calc(var(--text-lg) * var(--text-scale-ratio));
+    --text-xxl: calc(var(--text-xl) * var(--text-scale-ratio));
+    --text-xxxl: calc(var(--text-xxl) * var(--text-scale-ratio));
+    --text-display-1: calc(var(--text-xxxl) * var(--text-scale-ratio));
+    --text-display-2: calc(var(--text-display-1) * var(--text-scale-ratio));
+    --text-display-3: calc(var(--text-display-2) * var(--text-scale-ratio));
+
+    /* default button height
+     */
+    --vspace-btn: var(--vspace-2);
+
 }
