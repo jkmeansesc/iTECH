@@ -23,13 +23,16 @@
 
     <form action="/blog/" method="post">
         {% csrf_token %}
+        {{ form.title.label_tag}}
+        {{ form.title }}
+        {{ form.tag.label_tag}}
+        {{ form.tag }}
+
         {{form.media}}
         {{ form.content}}
 
-
-
         
-        <input type="submit" value="提交">
+        <input type="submit" value="Submit">
 
 
         

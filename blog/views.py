@@ -19,6 +19,9 @@ def index(request):
         form = BlogForm()
         context_dict['form'] = form
 
+        if 'picture' in request.FILES:
+            context_dict['picture'] = request.FILES['picture']
+
         return render(request, 'blog/index.html', context=context_dict)
 
 
@@ -31,6 +34,5 @@ def index(request):
         # 将表单传递给模板
         form = BlogForm()
         context_dict['form'] = form
-
 
         return render(request, 'blog/index.html', context=context_dict)

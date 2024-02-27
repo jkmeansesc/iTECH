@@ -3,8 +3,6 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-
-
 from .forms import UserForm, UserProfileForm
 
 def register(request):
