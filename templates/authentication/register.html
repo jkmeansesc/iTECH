@@ -1,28 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>register</title>
-</head>
-<body>
-    {% if registered %}
-        <p>注册成功</p>
-    {% else %}
-        <form method="post" action="{% url 'authentication:register' %}">
-            <!-- 防止跨站请求伪造 -->
-            {% csrf_token %}
-
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-            <input type="submit" value="Register">
-        </form>
-    {% endif %}
-
-    <a href="{% url 'authentication:login' %}">登录</a>
-    <a href="{% url 'authentication:password_reset' %}">忘记密码</a>
-    <a href="{% url 'blog:index' %}">返回首页</a>
-
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title_block %}
+    Register - 4 Angry Men
+{% endblock title_block %}
+{% block body_block %}
+    <div style="height: 150px; width: 100%"></div>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 col-centered">
+                    <div class="section"
+                         style="-moz-border-radius: 10px;
+                                -webkit-border-radius: 10px;
+                                border-radius: 15px">
+                        <div class="panel-heading">
+                            <i class="icon-user icon-form"></i>
+                            <h2>Register</h2>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal form--flex"
+                                  role="form"
+                                  method="POST"
+                                  action="{% url 'authentication:register' %}">
+                                {% csrf_token %} {{ user_form.as_p }} {{ profile_form.as_p }}
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary animated sign-in">
+                                        <span>Register</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body_block %}
+{% block sidebar_block %}{% endblock %}
