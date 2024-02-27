@@ -19,7 +19,6 @@ def index(request):
         # 将表单传递给模板
         form = BlogForm()
         context_dict["form"] = form
-
         return render(request, "blog/index.html", context=context_dict)
 
     else:
@@ -44,7 +43,6 @@ def blogs(request):
 
 
 def blog_detail(request):
-
     return render(request, "blog/blog_detail.html")
 
 
