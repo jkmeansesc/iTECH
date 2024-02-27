@@ -842,9 +842,8 @@ body, html {
 }
 
 body {
-    background-color: #2c333b;
-    font-family: Nunito, sans-serif;
-    color: #3e454c
+    background-color: #24273a; /* 黑色背景色 */
+    color: #fff; /* 页面文字颜色为白色，以提高对比度 */
 }
 
 body:after {
@@ -865,7 +864,7 @@ body.nav--visible, body.notifications-visible, body.search--visible {
 
 @media only screen and (min-width: 768px) {
     body {
-        background-color: #ffffff
+        background-color: #24273a
     }
 }
 
@@ -878,12 +877,12 @@ body.nav--visible, body.notifications-visible, body.search--visible {
 }
 
 main {
-    background-color: #ffffff
+    background-color: #24273a
 }
 
 @media only screen and (min-width: 768px) {
     main {
-        background-color: #fafafa
+        background-color: #24273a
     }
 }
 
@@ -1444,7 +1443,7 @@ label {
     left: 50%;
     width: 70px;
     height: 2px;
-    background: #3dd07d;
+    background: #cad3f5;
     transform: translateX(-50%)
 }
 
@@ -1455,7 +1454,7 @@ label {
 
 .section-header .underline {
     margin: 0 auto 6em;
-    background-color: #3dd07d;
+    background-color: #cad3f5;
     width: 100px;
     height: 2px
 }
@@ -3131,12 +3130,12 @@ textarea.newsletter-textarea {
 }
 
 footer {
-    background-color: #fff;
+    background-color: #24273a;
     border-top: 1px solid #ededed;
     padding: 50px;
     z-index: 2;
     position: relative;
-    color: #484848;
+    color: #939ab7;
     text-align: center
 }
 
@@ -6584,7 +6583,7 @@ aside .sponsors .wix {
     left: 0;
     width: 100%;
     height: 50px;
-    background: #252d2f;
+    background: transparent;
     box-shadow: 0 1px 1px rgba(148, 146, 146, 0.15);
     transform: translateZ(0);
     will-change: transform;
@@ -6689,13 +6688,13 @@ aside .sponsors .wix {
 }
 
 .header--main.white {
-    background: #fff;
+    background: transparent;
     color: #747474;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .2)
 }
 
 .header--main.white .nav-trigger, .header--main.white .nav__item > a {
-    color: #747474;
+    color: #ffffff;
     text-shadow: none
 }
 
@@ -6778,7 +6777,6 @@ aside .sponsors .wix {
 }
 
 .nav__logo a {
-    text-transform: lowercase;
     font-weight: 700;
     font-size: 26px;
     color: #343434;
