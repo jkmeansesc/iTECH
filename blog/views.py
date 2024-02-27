@@ -32,4 +32,5 @@ def index(request):
         form = BlogForm()
         context_dict['form'] = form
 
+
         return render(request, 'blog/index.html', context=context_dict)
