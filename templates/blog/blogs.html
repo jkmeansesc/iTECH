@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
+    <title>blogs</title>
 </head>
-
 <body>
-
     <a href="{% url 'blog:index' %}">返回首页</a>
 
     <a href="{% url 'blog:blogs' %}">
@@ -22,7 +19,7 @@
     <a href="{% url 'blog:search_results' %}">
         search_results
     </a>
-
+    
     <a href="{% url 'authentication:login' %}">
         登录
     </a>
@@ -30,31 +27,12 @@
         注册
     </a>
 
+    <br><br>
+
+
+    <a href="{% url 'blog:blog_detail' %}">
+        blog_detail
+    </a>
     
-
-
-
-
-    
-
-    {% for blog in blogs %}
-    <div>{{ blog.content|safe }}</div>
-    {% endfor %}
-
-    <form action="/blog/" method="post">
-        {% csrf_token %}
-        {{form.media}}
-        {{ form.content}}
-        
-        <input type="submit" value="提交">
-
-
-        
-
-    </form>
-
 </body>
-
-
 </html>
-

@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>login</title>
 </head>
 <body>
-    <form method="post" action="/authentication/login/">
+    <form method="post" action="{% url 'authentication:login' %}">
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
         <!-- 防止跨站请求伪造 -->
         {% csrf_token %}
         <input type="text" name="username" placeholder="用户名">
         <input type="password" name="password" placeholder="密码">
         <input type="submit" value="登录">
     </form>
+    <a href="{% url 'authentication:register' %}">注册</a>
+    <a href="{% url 'authentication:password_reset' %}">忘记密码</a>
+    <a href="{% url 'blog:index' %}">返回首页</a>
 </body>
 </html>
 

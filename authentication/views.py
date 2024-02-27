@@ -37,8 +37,6 @@ def register(request):
 
     return render(request, 'authentication/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
-
-
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -61,4 +59,8 @@ def user_login(request):
     else:
         return render(request, 'authentication/login.html')
 
+
+def password_reset(request):
+    return render(request, 'authentication/password_reset.html')
+    
         

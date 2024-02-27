@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>register</title>
 </head>
 <body>
     {% if registered %}
         <p>注册成功</p>
     {% else %}
-        <form method="post" action="/authentication/register/">
+        <form method="post" action="{% url 'authentication:register' %}">
             <!-- 防止跨站请求伪造 -->
             {% csrf_token %}
 
@@ -19,6 +19,10 @@
         </form>
     {% endif %}
 
-    
+    <a href="{% url 'authentication:login' %}">登录</a>
+    <a href="{% url 'authentication:password_reset' %}">忘记密码</a>
+    <a href="{% url 'blog:index' %}">返回首页</a>
+
+
 </body>
 </html>
