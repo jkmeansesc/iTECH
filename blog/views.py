@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Blog
 from .forms import BlogForm
+# from django.core.mail import send_mail
+# from .utils import send_mails
 
 
 def index(request):
@@ -50,3 +52,5 @@ def blog_detail(request):
 
 def search_results(request):
     return render(request, 'blog/search_results.html')
+
+
