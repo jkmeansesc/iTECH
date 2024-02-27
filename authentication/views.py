@@ -46,7 +46,7 @@ def user_login(request):
 
         user = authenticate(username=username, password=password)
 
-        
+
 
         if user:
             # is the account active? It could have been disabled.
@@ -61,5 +61,4 @@ def user_login(request):
     else:
         return render(request, 'authentication/login.html')
 
-
-
+        

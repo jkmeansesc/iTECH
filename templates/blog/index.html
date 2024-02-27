@@ -1,13 +1,12 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <a href="/authentication/login/">
         登录
@@ -17,5 +16,34 @@
     <a href="/authentication/register/">
         注册
     </a>
+
+    {% for blog in blogs %}
+    <div>{{ blog.content|safe }}</div>
+    {% endfor %}
+
+    <form action="/blog/" method="post">
+        {% csrf_token %}
+        {{form.media}}
+        {{ form.content}}
+
+    
+        
+
+
+
+        
+        <input type="submit" value="提交">
+
+
+        
+
+    </form>
+
+
 </body>
+
+
+
+
+
 </html>
