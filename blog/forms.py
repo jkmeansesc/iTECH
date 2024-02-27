@@ -1,11 +1,16 @@
 from django import forms
+from .models import Blog
 from ckeditor.widgets import CKEditorWidget
-from .models import Article
 
 
-class ArticleForm(forms.ModelForm):
+
+class BlogForm(forms.ModelForm):
+    title = forms.CharField(max_length=200)
+    
     content = forms.CharField(widget=CKEditorWidget())
-
     class Meta:
-        model = Article
-        fields = '__all__'
+        model = Blog
+        fields = ['content']
+
+
+

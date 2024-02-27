@@ -1,19 +1,40 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from .forms import ArticleForm
-from .models import Article
+from .models import Blog
+from .forms import BlogForm
+
 
 def index(request):
-    context_dict = {'message': "have a good day"}
-    return render(request, 'blog/index.html', context=context_dict)
-
-
-def article_upload(request):
     if request.method == 'POST':
-        form = ArticleForm(request.POST, request.FILES)
+        form = BlogForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/success/url/')  # Edit to the true URL 
+            form.save(commit=True)
+        else:
+            print(form.errors)
+
+        context_dict = {'message': "have a good day"}
+        # 得到所有的blogs
+        blogs = Blog.objects.all()
+        context_dict['blogs'] = blogs
+        # 将表单传递给模板
+        form = BlogForm()
+        context_dict['form'] = form
+
+
+
+        return render(request, 'blog/index.html', context=context_dict )
+
+
     else:
-        form = ArticleForm()
-    return render(request, 'upload.html', {'form': form})
+
+        context_dict = {'message': "have a good day"}
+        # 得到所有的blogs
+        blogs = Blog.objects.all()
+        context_dict['blogs'] = blogs
+        # 将表单传递给模板
+        form = BlogForm()
+        context_dict['form'] = form
+
+
+
+        return render(request, 'blog/index.html', context=context_dict )
+
