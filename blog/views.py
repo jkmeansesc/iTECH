@@ -7,42 +7,37 @@ from .forms import BlogForm
 # from .utils import send_mails
 
 
-def index(request):
-    if request.method == 'POST':
+def publish(request):
+    if request.method == "POST":
         form = BlogForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+
+            form.save(commit=False)
+            context_dict = {"message": "have a good day"}
+            blogs = Blog.objects.all()
+            context_dict["blogs"] = blogs
+            form = BlogForm()
+            context_dict["form"] = form
+
+            # update the images
+            if 'image' in request.FILES:
+                form.image = request.FILES['image']
+
+            form.save()
+
+            return render(request, "blog/publish.html", context=context_dict)
         else:
             print(form.errors)
-
-        context_dict = {'message': "have a good day"}
-        # 得到所有的blogs
-        blogs = Blog.objects.all()
-        context_dict['blogs'] = blogs
-        # 将表单传递给模板
-        form = BlogForm()
-        context_dict['form'] = form
-
-        if 'picture' in request.FILES:
-            context_dict['picture'] = request.FILES['picture']
-
-        return render(request, 'blog/index.html', context=context_dict)
-
 
     else:
 
         context_dict = {"message": "have a good day"}
-        # 得到所有的blogs
         blogs = Blog.objects.all()
         context_dict["blogs"] = blogs
-        # 将表单传递给模板
         form = BlogForm()
         context_dict["form"] = form
 
-        return render(request, "blog/index.html", context=context_dict)
-
-
-        return render(request, 'blog/index.html', context=context_dict )
+        return render(request, "blog/publish.html", context=context_dict)
 
 def about(request):
     return render(request, 'blog/about.html')

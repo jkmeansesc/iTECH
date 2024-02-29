@@ -39,12 +39,7 @@
         注册
     </a>
 
-    
 
-
-
-
-    
 
     {% for blog in blogs %}
     <div>{{ blog.content|safe }}</div>
@@ -56,9 +51,11 @@
         {{ form.title }}
         {{ form.tag.label_tag}}
         {{ form.tag }}
+        {{ form.image.label_tag}}
+        {{ form.image }}
 
         {{form.media}}
-        {{ form.content}}
+        {{form.content}}
 
 
         <input type="submit" value="Submit">
@@ -68,7 +65,7 @@
 
     </form>
 
-=======
+{% block content %}
                     <div class="col-md-4 col-sm-6  clear-sm ">
                         <article class="article--small">
                             <a href="show-39.html" title="What is the level of our team?">
@@ -100,13 +97,14 @@
                                 </div>
                             </div>
                         </article>
-{#                        {% get_blogs_list %}#}
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
+
 </body>
 
 

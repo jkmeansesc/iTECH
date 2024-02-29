@@ -8,10 +8,11 @@ class BlogForm(forms.ModelForm):
     tag = forms.CharField(max_length=200, label='Tag')
     content = forms.CharField(widget=CKEditorWidget())
     comment_num = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    image = forms.ImageField(label='Image', required=False)
 
     class Meta:
         model = Blog
-        fields = ['title', 'tag', 'content']
+        fields = ['title', 'tag', 'content', 'comment_num', 'image']
 
 
 
