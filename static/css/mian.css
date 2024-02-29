@@ -575,7 +575,7 @@ ul.topnews li a i {
 	width: 100%;
 	position: relative;
 	clear: both;
-	background-color: #282828;
+	background-color: #24273a;
 	margin-top: 30px;
 	padding: 30px 0 30px 0;
 }
@@ -585,11 +585,11 @@ ul.topnews li a i {
 	line-height: 1.6
 }
 .footer .footer-copyright a {
-	color: #ddd
+	color: #24273a
 }
 .footer .footer-copyright a:hover {
-	color: #FFF;
-	color: #ddd
+	color: #24273a;
+	color: #24273a;
 }
 .footer .footer-social {
 	float: right;
