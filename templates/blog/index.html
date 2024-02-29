@@ -1,50 +1,18 @@
 <!DOCTYPE html>
-{% extends 'base.html' %}
-{% load static %}
-{#{% load blog_template_tags %}#}
-<html lang="zh">
-    <head>
-        <title>
-            {% block title_block %}Home{% endblock %}
-        </title>
-    </head>
-    <body>
-        {% block body_block %}
-            <section id="hero" class="s-hero">
-                <div class="s-hero__slider">
-                    <div class="s-hero__slide">
-                        <div class="s-hero__slide-bg"
-                             style="background-image: url('../../static/image/12653.jpg')"></div>
-                        <div class="row s-hero__slide-content animate-this">
-                            <div class="column">
-                                <h1 class="s-hero__slide-text">
-                                    <a href="{% url 'blog:blogs' %}">Our Latest news!</a>
-                                </h1>
-                            </div>
-                            <!-- end s-hero__arrows -->
-                        </div>
-                    </div>
-            </div>
-        </div>
-        </div> <!-- end s-hero__slide -->
-    </section>
-    <div class="content-wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-header">
-                        <h2>Latest Blogs</h2>
-                    </div>
+<html lang="en">
 
-<<<<<<< HEAD
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+</head>
+
 <body>
 
     {% if user.is_authenticated %}
     Hello, {{ user.username }}.
-    <img src="/media/profile_images/OIP.png" alt="user picture">
+    <img src="{{ user.picture }}" alt="avatar">
     <a href="{% url 'authentication:logout' %}">退出</a>
-
-
     {% else %}
     Hye, guest.
     {% endif %}
@@ -71,12 +39,7 @@
         注册
     </a>
 
-    
 
-
-
-
-    
 
     {% for blog in blogs %}
     <div>{{ blog.content|safe }}</div>
@@ -84,17 +47,25 @@
 
     <form action="/blog/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form.media}}
-        {{ form.content}}
-        
-        <input type="submit" value="提交">
+        {{ form.title.label_tag}}
+        {{ form.title }}
+        {{ form.tag.label_tag}}
+        {{ form.tag }}
+        {{ form.image.label_tag}}
+        {{ form.image }}
 
-    
+        {{form.media}}
+        {{form.content}}
+
+
+        <input type="submit" value="Submit">
+
+
         
 
     </form>
 
-=======
+{% block content %}
                     <div class="col-md-4 col-sm-6  clear-sm ">
                         <article class="article--small">
                             <a href="show-39.html" title="What is the level of our team?">
@@ -126,12 +97,16 @@
                                 </div>
                             </div>
                         </article>
-{#                        {% get_blogs_list %}#}
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
+
 </body>
+
+
 </html>
+
