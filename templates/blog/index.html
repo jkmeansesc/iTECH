@@ -9,6 +9,15 @@
 
 <body>
 
+    {% if user.is_authenticated %}
+    Hello, {{ user.username }}.
+    <img src="{{ user.picture }}" alt="avatar">
+    <a href="{% url 'authentication:logout' %}">退出</a>
+    {% else %}
+    Hye, guest.
+    {% endif %}
+
+
     <a href="{% url 'blog:index' %}">返回首页</a>
 
     <a href="{% url 'blog:blogs' %}">
@@ -41,14 +50,14 @@
     <div>{{ blog.content|safe }}</div>
     {% endfor %}
 
-    <form action="/blog/" method="post">
+    <form action="/blog/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.media}}
         {{ form.content}}
         
         <input type="submit" value="提交">
 
-
+    
         
 
     </form>
