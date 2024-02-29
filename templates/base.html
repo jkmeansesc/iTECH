@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html>
+<html lang="en">
 <head lang="en">
     <title>4 Angry Men -
         {% block title_block %}
@@ -46,27 +46,33 @@
                             About
                         </a>
                     </li>
-                    <li id="sign_in" class="nav__item">
-                        <a href="{% url 'authentication:login' %}" class="posts ">
-                            Sign in
-                        </a>
-                    </li>
-                    <li id="register" class="nav__item">
-                        <a href="{% url 'authentication:register' %}" class="posts">
-                            Register
-                        </a>
-                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav__item nav__item--main has-children">
+                            <a href="#0" title="">Hello, {{ user.username }}</a>
+                            <ul class="sub-menu">
+                                <li><a href="">my profile</a></li>
+                                <li><a href="">publish a blog</a></li>
+                                <li><a href="{% url 'authentication:logout' %}">log out</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li id="sign_in" class="nav__item">
+                            <a href="{% url 'authentication:login' %}" class="posts ">
+                                Sign in
+                            </a>
+                        </li>
+                        <li id="register" class="nav__item">
+                            <a href="{% url 'authentication:register' %}" class="posts">
+                                Register
+                            </a>
+                        </li>
+                    {% endif %}
                     <li class="nav__item">
                         <a href="search.html" class="search-trigger icon-magnifier"></a>
                     </li>
                 </ul>
-                <ul class="nav__items nav__items--left">
-                </ul>
-
             </nav> <!-- .nav--main -->
         </div>
-
-
         <a href="#0" class="nav-trigger icon-menu"></a>
 
         <div id="search" class="main-search">
@@ -80,9 +86,9 @@
             </div>
         </div> <!-- .main-search -->
     </header>
-    
+
 </div>
- <div class="cover-layer"></div> <!-- cover main content when search form is open -->
+<div class="cover-layer"></div> <!-- cover main content when search form is open -->
 <div>
     {% block body_block %}
     {% endblock %}
@@ -98,7 +104,8 @@
     {% endblock %}
 </div>
 </body>
-    <!-- <script src="static/js/bundle.js"></script> -->
-     <script src="{% static 'js/bundle.js' %}"></script>
+<!-- <script src="static/js/bundle.js"></script> -->
+<script src="{% static 'js/bundle.js' %}"></script>
+<script src="{% static 'js/submenu.js' %}"></script>
 
 </html>
