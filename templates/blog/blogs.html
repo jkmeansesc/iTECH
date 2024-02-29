@@ -44,7 +44,7 @@
                         </li>
 
                         <li style="font-size: large">
-                            <a href="article-E78EAFE5A283E983A8E7BDB2.html">环境部署 </a>
+                            <a href="article-E78EAFE5A283E983A8E7BDB2.html"> </a>
                         </li>
 
                     </ul>
@@ -52,40 +52,47 @@
                 </div>
 
                 <div class="col-md-4 col-sm-6  clear-sm">
+                   
+                <ul>
+                 {% if blogs %}
+                    {% for blog in blogs %}
                     <article class="article--small">
-                        <a href="show-39.html" title="Django5.0正式发布，是你期待的吗？">
-                            <div class="article__image" style="background-image: url(static/image/12653.jpg )">
+                        <a href="{{ blog.url }}" title={{ blog.title}}>
+                            <div class="article__image" style="background-image: url({{ blog.img.url }} )">
                             </div>
                         </a>
                         <div class="article__content">
                             <div class="article__description">
-                                <a href="show-39.html" title="Django5.0正式发布，是你期待的吗？">
-                                    <h3>Django5.0正式发布，是你期待的吗？</h3>
+                                <a href="{{ blog.url }}" title="{{ blog.title }}">
+                                    <h3>{{ blog.title }}</h3>
                                 </a>
                                 <p>
-                                    最近，Django 5.0 已经正式发布，这个新版本在保持一贯的优良特性的同时，还带来了一
+                                    {{ blog.description }}
                                 </p>
                             </div>
 
                             <div class="article__footer">
                                 <a class="btn-more" href="show-39.html" title="View comments">
-                                    <span>1</span>
+                                    <span>{{ blog.views }}</span>
                                 </a>
                                 <div class="tags">
-                                    <a href="article-Django.html" class="article-tag resources">
-                                        Django
-                                    </a>
+                                        {{ blog.author }}
                                 </div>
 
-                                <time class="article__date" datetime="2023年12月8日 14:39">
-                                    2023年12月08日 点击:2199
+                                <time class="article__date" datetime="{{ blog.time }}">
+                                    {{ blog.time }}
                                 </time>
                             </div>
                         </div>
-
                     </article>
+                    {% endfor %}
+                {% else %}
+                <strong class='active' style="font-size: large">
+                    There are no blogs present.
+                </strong>
+                {% endif %}
+                  </ul>
                 </div>
-                
             </div>
 
             <div class="pagination__container">
@@ -115,80 +122,5 @@
     </div>
 </main>
 {% endblock %}
-
-<!-- JavaScripts -->
-
-<script type="text/javascript">
-
-    $('#confirm-delete').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        // var recipient = button.data('whatever') // Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var aid = button.data('aid')
-        var id = button.data('id')
-        var tag = button.data('tag')
-        var modal = $(this)
-        // modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('input[name="aid"]').val(aid)
-        modal.find('input[name="id"]').val(id)
-        modal.find('input[name="tag"]').val(tag)
-
-        // console.log('ok')
-    })
-
-    // btn_delete_comment
-    $('#btn_delete_comment').click(function (event) {
-        // var form = new FormData(document.getElementById("delete_comment"))
-        // var pwd1 = $('#change-pwd [name="password1"]').val()
-        console.log('in comment delete')
-        var aid = $('#delete_comment [name="aid"]').val()
-        var id = $('#delete_comment [name="id"]').val()
-        var tag = $('#delete_comment [name="tag"]').val()
-        var token = $('#delete_comment [name="csrfmiddlewaretoken"]').val()
-        if (!tag) {
-            return
-        }
-
-        var form = new FormData();
-        form.append("id", 'id');
-        form.append("csrfmiddlewaretoken", token);
-        form.append('method', 'delete')
-
-        $.ajax({
-            type: 'POST',
-            url: '/comment/' + id + '/',
-            // data:'json',
-            processData: false,
-            contentType: false,
-            data: form,
-            success: function (response) {
-                if (tag == 'forum') {
-                    window.location.href = '/forum/forum-' + aid + '.html';
-                }
-                if (tag == 'article') {
-                    window.location.href = '/article/show-' + aid + '.html';
-                }
-                if (tag == 'course') {
-                    window.location.href = '/course/show-' + aid + '.html';
-                }
-            }
-        })
-    })
-</script>
-<script src="static/js/bundle.js"></script>
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
 </body>
 </html>

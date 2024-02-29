@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta name="theme-color" content="#ffffff">
     <link href="{% static 'css/fonts.css' %}" rel="stylesheet">
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/app.css' %}" rel="stylesheet">
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
@@ -42,7 +42,7 @@
                         </a>
                     </li>
                     <li class="nav__item nav__item--main">
-                        <a href="" class="posts ">
+                        <a href="{% url 'blog:about' %}" class="posts ">
                             About
                         </a>
                     </li>

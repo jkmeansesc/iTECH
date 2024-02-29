@@ -5446,12 +5446,12 @@ aside .guidelines li {
 }
 
 #article__related-articles, #book-view, .article--big, .article--small, .article-content #comments, .license, .post--rank, .privacy-policy {
-    background-color: #fff
+    background-color: #252d2f
 }
 
 @media only screen and (min-width: 768px) {
     #article__related-articles, #book-view, .article--big, .article--small, .article-content #comments, .license, .post--rank, .privacy-policy {
-        border: 1px solid #eaeaea;
+        border: 1px solid #252d2f;
         border-radius: 3px
     }
 }
@@ -5807,7 +5807,7 @@ svg {
 }
 
 .article--small {
-    border: 1px solid #eaeaea;
+    border: 1px solid #252d2f;
     border-radius: 3px;
     overflow: hidden;
     margin: 10px
@@ -5843,7 +5843,7 @@ svg {
     width: 38px;
     height: 34px;
     font-size: .8em;
-    background-color: #ededed;
+    background-color: #252d2f;
     border-radius: 50%;
     color: #747474;
     line-height: 34px;
@@ -5860,7 +5860,7 @@ svg {
     height: 14px;
     background: transparent;
     border-width: 0 0 2px 3px;
-    border-color: #ededed;
+    border-color: #252d2f;
     border-bottom-left-radius: 10px 22px;
     border-style: solid
 }
@@ -5874,7 +5874,7 @@ svg {
     height: 8px;
     background: transparent;
     border-width: 0 0 2px 6px;
-    border-color: #ededed;
+    border-color: #252d2f;
     border-bottom-left-radius: 22px 19px;
     border-style: solid
 }
@@ -5998,7 +5998,7 @@ svg {
 }
 
 .article__description h3 {
-    color: #343434;
+    color: #838383;
     font-size: 1.5em;
     line-height: 1.35;
     margin-bottom: 1em
@@ -6038,7 +6038,7 @@ svg {
     font-size: 15px;
     line-height: 1.45;
     font-weight: 700;
-    color: #565656;
+    color: #828485;
     margin-bottom: .6em
 }
 
@@ -6473,7 +6473,7 @@ aside .sponsors .wix {
 }
 
 .article__footer .article-tag, .article__header .article-tag {
-    color: #3dd07d;
+    color: #838383;
     font-size: 14px
 }
 
