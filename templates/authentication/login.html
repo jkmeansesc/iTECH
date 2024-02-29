@@ -1,24 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
-</head>
-<body>
-    <form method="post" action="{% url 'authentication:login' %}">
-        {% if error %}
-            <p>{{ error }}</p>
-        {% endif %}
-        <!-- 防止跨站请求伪造 -->
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="用户名">
-        <input type="password" name="password" placeholder="密码">
-        <input type="submit" value="登录">
-    </form>
-    <a href="{% url 'authentication:register' %}">注册</a>
-    <a href="{% url 'authentication:password_reset' %}">忘记密码</a>
-    <a href="{% url 'blog:index' %}">返回首页</a>
-</body>
-</html>
-
+{% extends 'base.html' %}
+{% block title_block %}
+    Login - 4 Angry Men
+{% endblock title_block %}
+{% block body_block %}
+    <div style="height:150px; width: 100%"></div>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 col-centered">
+                    <div class="section"
+                         style="-moz-border-radius: 10px;
+                                -webkit-border-radius: 10px;
+                                border-radius: 15px">
+                        <div class="panel-heading">
+                            <i class="icon-user icon-form"></i>
+                            <h2>Login</h2>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal form--flex"
+                                  role="form"
+                                  method="POST"
+                                  action="{% url 'authentication:login' %}">
+                                {% csrf_token %}
+                                <div class="form-group ">
+                                    <div class="controls ">
+                                        <input id="id_username"
+                                               type="text"
+                                               class="form-control"
+                                               name="username"
+                                               required="">
+                                        <label for="id_username" data-content="Username">Username</label>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="controls">
+                                        <input id="id_password"
+                                               type="password"
+                                               class="form-control"
+                                               name="password"
+                                               required="">
+                                        <label for="id_password" data-content="Password">Password</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary animated sign-in">
+                                        <span>Login</span>
+                                    </button>
+                                    <a class="btn-link" href="{% url 'authentication:password_reset' %}">Forgot Password?</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body_block %}
+{% block sidebar_block %}{% endblock %}
