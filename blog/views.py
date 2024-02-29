@@ -3,6 +3,9 @@ from django.shortcuts import render
 from .forms import BlogForm
 from .models import Blog
 
+# from django.core.mail import send_mail
+# from .utils import send_mails
+
 
 def index(request):
     if request.method == "POST":
@@ -19,6 +22,7 @@ def index(request):
         # 将表单传递给模板
         form = BlogForm()
         context_dict["form"] = form
+
         return render(request, "blog/index.html", context=context_dict)
 
     else:
@@ -43,6 +47,7 @@ def blogs(request):
 
 
 def blog_detail(request):
+
     return render(request, "blog/blog_detail.html")
 
 

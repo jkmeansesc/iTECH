@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 from .forms import UserForm, UserProfileForm
@@ -44,8 +45,6 @@ def user_login(request):
 
         user = authenticate(username=username, password=password)
 
-
-
         if user:
             # is the account active? It could have been disabled.
             if user.is_active:
@@ -59,8 +58,12 @@ def user_login(request):
     else:
         return render(request, 'authentication/login.html')
 
-
 def password_reset(request):
     return render(request, 'authentication/password_reset.html')
-    
-        
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('blog:index'))
+
