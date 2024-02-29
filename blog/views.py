@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .models import Blog
 from .forms import BlogForm
@@ -37,16 +37,30 @@ def index(request):
 
         return render(request, "blog/index.html", context=context_dict)
 
-def publish(request):
 
+def publish(request):
     if request.method == "POST":
         form = BlogForm(request.POST)
         if form.is_valid():
-            form.save(commit=False)
-            return render(request, "blog/publish.html", context={"form": form})
+            blog_instance = form.save(commit=False)
 
-        else:
-            print(form.errors)
+
+
+            if 'image' in request.FILES:
+                blog_instance.image = request.FILES['image']
+            else:
+                print("no image")
+
+            blog_instance.save()
+
+            return redirect("blog:index")
+    else:
+        context_dict = {"message": "have a good day"}
+        form = BlogForm()
+        context_dict["form"] = form
+        return render(request, "blog/publish.html", context=context_dict)
+
+
 
 def about(request):
     return render(request, 'blog/about.html')
@@ -62,4 +76,3 @@ def blog_detail(request):
 
 def search_results(request):
     return render(request, 'blog/search_results.html')
-
