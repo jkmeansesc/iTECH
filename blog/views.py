@@ -35,4 +35,21 @@ def index(request):
         form = BlogForm()
         context_dict['form'] = form
 
-        return render(request, 'blog/index.html', context=context_dict)
+
+
+        return render(request, 'blog/index.html', context=context_dict )
+
+def about(request):
+    return render(request, 'blog/about.html')
+
+def blogs(request):
+    return render(request, 'blog/blogs.html')
+
+def blog_detail(request):
+
+    return render(request, 'blog/blog_detail.html')
+
+def search_results(request):
+    return render(request, 'blog/search_results.html')
+
+

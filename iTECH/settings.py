@@ -134,3 +134,16 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
+CKEDITOR_UPLOAD_PATH = 'content_images/'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = '2079459973@qq.com'
+EMAIL_HOST_PASSWORD = 'kzaazwcemjbcehjd'
+EMAIL_FROM = 'iTECH Gourp15'
+
+
+# 用户没有登录时跳转的页面
+LOGIN_URL = 'authentication:login'

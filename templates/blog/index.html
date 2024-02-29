@@ -17,6 +17,20 @@
         注册
     </a>
 
+    <a href="{% url 'authentication:login' %}">
+        登录
+    </a>
+    <a href="{% url 'authentication:register' %}">
+        注册
+    </a>
+
+    
+
+
+
+
+    
+
     {% for blog in blogs %}
     <div>{{ blog.content|safe }}</div>
     {% endfor %}
@@ -31,7 +45,7 @@
         {{form.media}}
         {{ form.content}}
 
-        
+
         <input type="submit" value="Submit">
 
 
@@ -47,3 +61,4 @@
 
 
 </html>
+
