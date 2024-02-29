@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from .forms import BlogForm
 from .models import Blog
 from .forms import BlogForm
 # from django.core.mail import send_mail
@@ -37,6 +39,7 @@ def index(request):
         form = BlogForm()
         context_dict["form"] = form
 
+        return render(request, "blog/index.html", context=context_dict)
 
 
         return render(request, 'blog/index.html', context=context_dict )
