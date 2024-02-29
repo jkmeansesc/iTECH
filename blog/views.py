@@ -52,10 +52,4 @@ def blog_detail(request):
 
 
 def search_results(request):
-<<<<<<< HEAD
-    return render(request, 'blog/search_results.html')
-
-
-=======
     return render(request, "blog/search_results.html")
->>>>>>> e735b38f3406d9af7c9610ca968fb6437f21fdab
