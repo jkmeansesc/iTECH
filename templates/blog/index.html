@@ -16,13 +16,17 @@
                 <div class="s-hero__slide-bg" style="background-image: url('../../static/image/12653.jpg');"></div>
                 <div class="row s-hero__slide-content animate-this">
                     <div class="column">
-                    <h1 class="s-hero__slide-text">
-                        <a href="{% url 'blog:blogs' %}">
-                            Our Latest news!
-                        </a>
-                    </h1>
-        </div> <!-- end s-hero__arrows -->
-                    </div>
+                        <h1 class="s-hero__slide-text">
+                            <a href="{% url 'blog:blogs' %}">
+                                Our Latest news!
+                            </a>
+                             </h1>
+                              <div class="s-hero__slide-meta">
+                            <span class="cat-links btn btn-success">
+                                <a href="#0">post a blog</a>
+                            </span>
+                    </div> <!-- end s-hero__arrows -->
+                </div>
             </div>
         </div>
         </div> <!-- end s-hero__slide -->
@@ -66,7 +70,7 @@
                                 </div>
                             </div>
                         </article>
-{#                        {% get_blogs_list %}#}
+                        {#                        {% get_blogs_list %}#}
                     </div>
                 </div>
             </div>

@@ -1066,7 +1066,7 @@ pre.hljs {
 }
 
 .btn-outline.btn-success {
-    color: #3dd07d
+    color: #0c274b
 }
 
 .btn-outline.btn-danger {
@@ -1096,12 +1096,68 @@ pre.hljs {
 }
 
 .btn-outline.white.btn-success:hover {
-    color: #3dd07d
+    color: #0c274b
 }
 
 .btn-outline.white.btn-danger:hover {
     color: #ff6860
 }
+.btn-success {
+    color: #fff;
+    text-transform: capitalize;
+    background-color: #252d2f;
+    border-color: #252d2f;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .15);
+    box-shadow: 0 0 1px rgba(0, 0, 0, .15)
+}
+
+.btn-success.focus, .btn-success:focus {
+    color: #fff;
+    background-color: #0c274b;
+    border-color: #262e31
+}
+
+.btn-success:hover {
+    color: #fff;
+    background-color: #252d2f;
+    border-color: #0c274b
+}
+
+.btn-success.active, .btn-success:active, .open > .dropdown-toggle.btn-success {
+    color: #fff;
+    background-color: #0c274b;
+    border-color: #262e31
+}
+
+.btn-success.active.focus, .btn-success.active:focus, .btn-success.active:hover, .btn-success:active.focus, .btn-success:active:focus, .btn-success:active:hover, .open > .dropdown-toggle.btn-success.focus, .open > .dropdown-toggle.btn-success:focus, .open > .dropdown-toggle.btn-success:hover {
+    color: #fff;
+    background-color: #0c274b;
+    border-color: #0c274b
+}
+
+.btn-success.active, .btn-success:active, .open > .dropdown-toggle.btn-success {
+    background-image: none
+}
+
+.btn-success.disabled.focus, .btn-success.disabled:focus, .btn-success.disabled:hover, .btn-success[disabled].focus, .btn-success[disabled]:focus, .btn-success[disabled]:hover, fieldset[disabled] .btn-success.focus, fieldset[disabled] .btn-success:focus, fieldset[disabled] .btn-success:hover {
+    background-color: #0c274b;
+    border-color: #0c274b
+}
+
+.btn-success .badge {
+    color: #0c274b;
+    background-color: #fff
+}
+
+.btn-info {
+    color: #fff;
+    text-transform: capitalize;
+    background-color: #1da7da;
+    border-color: #1da7da;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .15);
+    box-shadow: 0 0 1px rgba(0, 0, 0, .15)
+}
+
 
 .clear-sm {
     clear: both
