@@ -23,8 +23,8 @@
                                   action="{% url 'authentication:register' %}"
                                   enctype="multipart/form-data">
                                 {% csrf_token %}
-                                <div class="form-group ">
-                                    <div class="controls ">
+                                <div class="form-group">
+                                    <div class="controls">
                                         <input id="id_username"
                                                type="text"
                                                class="form-control"
@@ -33,8 +33,8 @@
                                         <label for="id_username" data-content="Username">Username</label>
                                     </div>
                                 </div>
-                                <div class="form-group ">
-                                    <div class="controls ">
+                                <div class="form-group">
+                                    <div class="controls">
                                         <input id="id_password"
                                                type="password"
                                                class="form-control"
@@ -43,8 +43,8 @@
                                         <label for="id_password" data-content="Password">Password</label>
                                     </div>
                                 </div>
-                                <div class="form-group ">
-                                    <div class="controls ">
+                                <div class="form-group">
+                                    <div class="controls">
                                         <input id="id_email"
                                                type="email"
                                                class="form-control"
@@ -59,11 +59,11 @@
                                     </button>
                                     <a class="btn-link" href="{% url 'authentication:login' %}">Already have an account? Login</a>
                                 </div>
+                                {% if registered %}
+                                    <strong>Thank you for registering!</strong>
+                                    <a href="{% url 'authentication:login' %}">Click here to log in.</a>
+                                {% endif %}
                             </form>
-                            {% if registered %}
-                                <strong>Thank you for registering!</strong>
-                                <a href="{% url 'authentication:login' %}">Click here to log in.</a>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
