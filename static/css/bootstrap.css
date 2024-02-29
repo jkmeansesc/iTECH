@@ -5126,7 +5126,7 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
     color: #343434;
     cursor: default;
     background-color: transparent;
-    border-color: #1da7da
+    border-color: #838383FF
 }
 
 .pagination > .disabled > a, .pagination > .disabled > a:focus, .pagination > .disabled > a:hover, .pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span:hover {
@@ -7180,7 +7180,7 @@ button.close {
     }
 }
 
-/*# sourceMappingURL=bootstrap.min.css.map */
+/*# sourceMappingURL=bootstrap.css.map */
 .sidebar-videos .video-thumb {
     width: 94%;
     margin: 0 auto;

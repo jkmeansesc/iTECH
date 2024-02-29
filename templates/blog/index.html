@@ -34,6 +34,7 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
 {% load static %}
+{#{% load blog_template_tags %}#}
 <html lang="zh">
 <head>
     <title>{% block title_block %}
@@ -53,9 +54,8 @@
                             Our Latest news!
                         </a>
                     </h1>
-                        <div class="s-hero__slide-meta">
+        </div> <!-- end s-hero__arrows -->
                     </div>
-                </div>
             </div>
         </div>
         </div> <!-- end s-hero__slide -->
@@ -99,6 +99,7 @@
                                 </div>
                             </div>
                         </article>
+{#                        {% get_blogs_list %}#}
                     </div>
                 </div>
             </div>
