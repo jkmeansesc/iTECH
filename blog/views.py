@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Blog
 from .forms import BlogForm
+# from django.core.mail import send_mail
+# from .utils import send_mails
 
 
 def index(request):
@@ -27,13 +29,13 @@ def index(request):
 
     else:
 
-        context_dict = {'message': "have a good day"}
+        context_dict = {"message": "have a good day"}
         # 得到所有的blogs
         blogs = Blog.objects.all()
-        context_dict['blogs'] = blogs
+        context_dict["blogs"] = blogs
         # 将表单传递给模板
         form = BlogForm()
-        context_dict['form'] = form
+        context_dict["form"] = form
 
 
 

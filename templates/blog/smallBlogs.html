@@ -1,0 +1,39 @@
+<ul>
+    {% if blogs %}
+        {% for blog in blogs %}
+            <article class="article--small">
+                <a href="{{ blog.url }}" title={{ blog.title }}>
+                    <div class="article__image" style="background-image: url({{ blog.img.url }} )">
+                    </div>
+                </a>
+                <div class="article__content">
+                    <div class="article__description">
+                        <a href="{{ blog.url }}" title="{{ blog.title }}">
+                            <h3>{{ blog.title }}</h3>
+                        </a>
+                        <p>
+                            {{ blog.description }}
+                        </p>
+                    </div>
+
+                    <div class="article__footer">
+                        <a class="btn-more" href="show-39.html" title="View comments">
+                            <span>{{ blog.views }}</span>
+                        </a>
+                        <div class="tags">
+                            {{ blog.author }}
+                        </div>
+
+                        <time class="article__date" datetime="{{ blog.time }}">
+                            {{ blog.time }}
+                        </time>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    {% else %}
+        <strong class='active' style="font-size: large">
+            There are no blogs present.
+        </strong>
+    {% endif %}
+</ul>

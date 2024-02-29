@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title_block %}
+        about
+    {% endblock %}</title>
+</head>
+<body>
+    {% block body_block %}
+    
+    <a href="{% url 'blog:search_results' %}">
+        search_results
+    </a>
+{% endblock %}
+</body>
+</html>

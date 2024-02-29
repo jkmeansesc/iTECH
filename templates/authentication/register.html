@@ -1,63 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>register</title>
-</head>
-
-<body>
-    {% if registered %}
-    <p>注册成功</p>
-    {% else %}
-    <!-- enctype="multipart/form-data"设置这个字段是为了告知浏览器打包发送文件（图片文件） -->
-    <form method="post" action="{% url 'authentication:register' %}" enctype="multipart/form-data">
-        <!-- 防止跨站请求伪造，这个也必须得有，否则会报错 -->
-        {% csrf_token %}
-
-        <!-- {{ user_form.as_p }} -->
-        <!-- {{ profile_form.as_p }} -->
-        <!-- {{ user_form.errors }} -->
-
-        {{ user_form.username.label_tag }}
-        {{ user_form.username }}
-        <br>
-
-        {{ user_form.password.label_tag }}
-        {{ user_form.password }}
-        <br>
-
-
-        {{ user_form.email.label_tag }}
-        {{ user_form.email }}
-        <br>
-
-
-        {{ profile_form.picture.label_tag }}
-        {{ profile_form.picture }}
-        <br>
-
-        <input type="submit" value="Register">
-
-        {% if user_form.errors %}
-        <p>{{ user_form.non_field_errors }}</p>
-        <ul>
-            {% for field in user_form %}
-            {% for error in field.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </form>
-    {% endif %}
-
-    <a href="{% url 'authentication:login' %}">登录</a>
-    <a href="{% url 'authentication:password_reset' %}">忘记密码</a>
-    <a href="{% url 'blog:index' %}">返回首页</a>
-
-
-</body>
-
-</html>
+{% extends 'base.html' %}
+{% block title_block %}
+    Register - 4 Angry Men
+{% endblock title_block %}
+{% block body_block %}
+    <div style="height:150px; width: 100%"></div>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 col-centered">
+                    <div class="section"
+                         style="-moz-border-radius: 10px;
+                                -webkit-border-radius: 10px;
+                                border-radius: 15px">
+                        <div class="panel-heading">
+                            <i class="icon-user icon-form"></i>
+                            <h2>Register</h2>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal form--flex"
+                                  role="form"
+                                  method="POST"
+                                  action="{% url 'authentication:register' %}"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <input id="id_username"
+                                               type="text"
+                                               class="form-control"
+                                               name="username"
+                                               required="">
+                                        <label for="id_username" data-content="Username">Username</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <input id="id_password"
+                                               type="password"
+                                               class="form-control"
+                                               name="password"
+                                               required="">
+                                        <label for="id_password" data-content="Password">Password</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <input id="id_email"
+                                               type="email"
+                                               class="form-control"
+                                               name="email"
+                                               required="">
+                                        <label for="id_email" data-content="Email">Email</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary animated sign-in">
+                                        <span>Register</span>
+                                    </button>
+                                    <a class="btn-link" href="{% url 'authentication:login' %}">Already have an account? Login</a>
+                                </div>
+                                {% if registered %}
+                                    <strong>Thank you for registering!</strong>
+                                    <a href="{% url 'authentication:login' %}">Click here to log in.</a>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body_block %}
+{% block sidebar_block %}{% endblock %}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head lang="en">
+    <title>4 Angry Men -
+        {% block title_block %}
+            Welcome
+        {% endblock %}
+    </title>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#ffffff">
+    <link href="{% static 'css/fonts.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/highlight.min.js' %}"></script>
+    <script src="{% static 'js/toastr.min.js' %}"></script>
+</head>
+<body>
+<div class="page__wrapper page--landing">
+    <header class="header--main animate-search no-background-xs">
+        <div class="container-fluid">
+            <nav class="nav--main">
+                <div class="nav__logo">
+                    <a href="">
+                        <span>4 Angry Men</span>
+                    </a>
+                </div>
+                <ul class="nav__items nav__items--right">
+                    <li class="nav__item nav__item--main">
+                        <a href="{% url 'blog:index' %}" class="articles ">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav__item nav__item--main">
+                        <a href="{% url 'blog:blogs' %}" class="posts">
+                            Blogs
+                        </a>
+                    </li>
+                    <li class="nav__item nav__item--main">
+                        <a href="{% url 'blog:about' %}" class="posts ">
+                            About
+                        </a>
+                    </li>
+                    <li id="sign_in" class="nav__item">
+                        <a href="{% url 'authentication:login' %}" class="posts ">
+                            Sign in
+                        </a>
+                    </li>
+                    <li id="register" class="nav__item">
+                        <a href="{% url 'authentication:register' %}" class="posts">
+                            Register
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="search.html" class="search-trigger icon-magnifier"></a>
+                    </li>
+                </ul>
+                <ul class="nav__items nav__items--left">
+                </ul>
+
+            </nav> <!-- .nav--main -->
+        </div>
+
+
+        <a href="#0" class="nav-trigger icon-menu"></a>
+
+        <div id="search" class="main-search">
+            <div class="container-fluid">
+                <form id="search-form-top" class="form__search" action="/search/" method="GET">
+                    <input type="search" name="search" placeholder="Search..." value="" autocomplete="off"
+                           required="">
+                </form>
+                <a href="#0" class="close text-replace">Close Form</a>
+                <div class="cover-layer"></div>
+            </div>
+        </div> <!-- .main-search -->
+    </header>
+    
+</div>
+ <div class="cover-layer"></div> <!-- cover main content when search form is open -->
+<div>
+    {% block body_block %}
+    {% endblock %}
+</div>
+<div>
+    <footer>
+        <p class="copyright">Copyright © 2018 <a href="{% url 'index' %}" target="_blank">4 Angry Men</a>
+            <span class="second-line">All Rights Reserved.</span><br>
+            Powered by <a href="{% url 'index' %}"></a> 4 Angry Men<br>
+        </p>
+    </footer>
+    {% block sidebar_block %}
+    {% endblock %}
+</div>
+</body>
+    <!-- <script src="static/js/bundle.js"></script> -->
+     <script src="{% static 'js/bundle.js' %}"></script>
+
+</html>
