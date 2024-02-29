@@ -9,6 +9,7 @@ from .forms import BlogForm
 # from .utils import send_mails
 
 
+"""
 def index(request):
     if request.method == "POST":
         form = BlogForm(request.POST)
@@ -40,7 +41,7 @@ def index(request):
         context_dict["form"] = form
 
         return render(request, "blog/publish.html", context=context_dict)
-
+"""
 
 def publish(request):
     if request.method == "POST":
@@ -89,3 +90,6 @@ def blog_detail(request):
 
 def search_results(request):
     return render(request, 'blog/search_results.html')
+
+def index(request):
+    return render(request, 'base.html')
