@@ -11,8 +11,10 @@
 
     {% if user.is_authenticated %}
     Hello, {{ user.username }}.
-    <img src="{{ user.picture }}" alt="avatar">
+    <img src="/media/profile_images/OIP.png" alt="user picture">
     <a href="{% url 'authentication:logout' %}">退出</a>
+
+
     {% else %}
     Hye, guest.
     {% endif %}
