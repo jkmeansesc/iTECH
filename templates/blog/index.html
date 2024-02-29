@@ -3,25 +3,26 @@
 {% load static %}
 {#{% load blog_template_tags %}#}
 <html lang="zh">
-<head>
-    <title>{% block title_block %}
-        Home
-    {% endblock %}
-    </title>
-</head>
-<body>{% block body_block %}
-    <section id="hero" class="s-hero">
-        <div class="s-hero__slider">
-            <div class="s-hero__slide">
-                <div class="s-hero__slide-bg" style="background-image: url('../../static/image/12653.jpg');"></div>
-                <div class="row s-hero__slide-content animate-this">
-                    <div class="column">
-                    <h1 class="s-hero__slide-text">
-                        <a href="{% url 'blog:blogs' %}">
-                            Our Latest news!
-                        </a>
-                    </h1>
-        </div> <!-- end s-hero__arrows -->
+    <head>
+        <title>
+            {% block title_block %}Home{% endblock %}
+        </title>
+    </head>
+    <body>
+        {% block body_block %}
+            <section id="hero" class="s-hero">
+                <div class="s-hero__slider">
+                    <div class="s-hero__slide">
+                        <div class="s-hero__slide-bg"
+                             style="background-image: url('../../static/image/12653.jpg')"></div>
+                        <div class="row s-hero__slide-content animate-this">
+                            <div class="column">
+                                <h1 class="s-hero__slide-text">
+                                    <a href="{% url 'blog:blogs' %}">Our Latest news!</a>
+                                </h1>
+                            </div>
+                            <!-- end s-hero__arrows -->
+                        </div>
                     </div>
             </div>
         </div>
@@ -133,5 +134,4 @@
     </div>
 {% endblock %}
 </body>
-
 </html>
