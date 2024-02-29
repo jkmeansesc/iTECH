@@ -4,26 +4,27 @@
 {#{% load blog_template_tags %}#}
 <html lang="zh">
 <head>
-    <title>{% block title_block %}
-        Home
-    {% endblock %}
+    <title>
+        {% block title_block %}Home{% endblock %}
     </title>
 </head>
-<body>{% block body_block %}
+<body>
+{% block body_block %}
     <section id="hero" class="s-hero">
         <div class="s-hero__slider">
             <div class="s-hero__slide">
-                <div class="s-hero__slide-bg" style="background-image: url('../../static/image/12653.jpg');"></div>
+                <div class="s-hero__slide-bg"
+                     style="background-image: url('../../static/image/12653.jpg')"></div>
                 <div class="row s-hero__slide-content animate-this">
                     <div class="column">
-                    <h1 class="s-hero__slide-text">
-                        <a href="{% url 'blog:blogs' %}">
-                            Our Latest news!
-                        </a>
-                    </h1>
-        </div> <!-- end s-hero__arrows -->
+                        <h1 class="s-hero__slide-text">
+                            <a href="{% url 'blog:blogs' %}">Our Latest news!</a>
+                        </h1>
                     </div>
+                    <!-- end s-hero__arrows -->
+                </div>
             </div>
+        </div>
         </div>
         </div> <!-- end s-hero__slide -->
     </section>
@@ -34,7 +35,19 @@
                     <div class="section-header">
                         <h2>Latest Blogs</h2>
                     </div>
-
+{#                    {% for blog in blogs %}#}
+{#                        <div>{{ blog.content|safe }}</div>#}
+{#                    {% endfor %}#}
+{##}
+{#                    <form action="/blog/" method="post" enctype="multipart/form-data">#}
+{#                        {% csrf_token %}#}
+{#                        {{ form.media }}#}
+{#                        {{ form.content }}#}
+{##}
+{#                        <input type="submit" value="提交">#}
+{##}
+{##}
+{#                    </form>#}
                     <div class="col-md-4 col-sm-6  clear-sm ">
                         <article class="article--small">
                             <a href="show-39.html" title="What is the level of our team?">
@@ -66,7 +79,7 @@
                                 </div>
                             </div>
                         </article>
-{#                        {% get_blogs_list %}#}
+                        {#                        {% get_blogs_list %}#}
                     </div>
                 </div>
             </div>
@@ -74,5 +87,4 @@
     </div>
 {% endblock %}
 </body>
-
 </html>

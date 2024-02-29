@@ -46,6 +46,19 @@
                             About
                         </a>
                     </li>
+                    {% if user.is_authenticated %}
+                          <li class="nav__item nav__item--main">
+                        Hello, {{ user.username }}.
+                          </li>
+                        <li class="has-children">
+                        <img src="/media/profile_images/OIP.png" alt="user picture">
+                        <ul class="sub-menu">
+                            <li><a href=" ">my profile</a></li>
+                            <li><a href=" ">publish a blog</a></li>
+                            <li><a href="{% url 'authentication:logout' %}">log out</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
                     <li id="sign_in" class="nav__item">
                         <a href="{% url 'authentication:login' %}" class="posts ">
                             Sign in
@@ -56,6 +69,7 @@
                             Register
                         </a>
                     </li>
+                    {% endif %}
                     <li class="nav__item">
                         <a href="search.html" class="search-trigger icon-magnifier"></a>
                     </li>
@@ -80,9 +94,9 @@
             </div>
         </div> <!-- .main-search -->
     </header>
-    
+
 </div>
- <div class="cover-layer"></div> <!-- cover main content when search form is open -->
+<div class="cover-layer"></div> <!-- cover main content when search form is open -->
 <div>
     {% block body_block %}
     {% endblock %}
@@ -98,7 +112,7 @@
     {% endblock %}
 </div>
 </body>
-    <!-- <script src="static/js/bundle.js"></script> -->
-     <script src="{% static 'js/bundle.js' %}"></script>
+<!-- <script src="static/js/bundle.js"></script> -->
+<script src="{% static 'js/bundle.js' %}"></script>
 
 </html>
