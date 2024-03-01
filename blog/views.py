@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .models import Blog
 from .forms import BlogForm
@@ -37,8 +37,8 @@ def index(request):
 
         return render(request, "blog/index.html", context=context_dict)
 
-def publish(request):
 
+def publish(request):
     if request.method == "POST":
         form = BlogForm(request.POST)
         if form.is_valid():
@@ -62,4 +62,3 @@ def blog_detail(request):
 
 def search_results(request):
     return render(request, 'blog/search_results.html')
-
