@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head lang="en">
+<head>
     <title>4 Angry Men -
         {% block title_block %}
             Welcome
@@ -32,17 +32,17 @@
                 </div>
                 <ul class="nav__items nav__items--right">
                     <li class="nav__item nav__item--main">
-                        <a href="{% url 'blog:index' %}" class="articles ">
+                        <a href="{% url 'index' %}" >
                             Home
                         </a>
                     </li>
                     <li class="nav__item nav__item--main">
-                        <a href="{% url 'blog:blogs' %}" class="posts">
+                        <a href="{% url 'blog:blogs' %}" >
                             Blogs
                         </a>
                     </li>
                     <li class="nav__item nav__item--main">
-                        <a href="{% url 'blog:about' %}" class="posts ">
+                        <a href="{% url 'blog:about' %}" >
                             About
                         </a>
                     </li>
@@ -86,7 +86,6 @@
             </div>
         </div> <!-- .main-search -->
     </header>
-
 </div>
 <div class="cover-layer"></div> <!-- cover main content when search form is open -->
 <div>

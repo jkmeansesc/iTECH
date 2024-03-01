@@ -3632,7 +3632,7 @@ div.ace_gutter-cell.ace_info, div.ace_gutter-cell.ace_warning {
 }
 
 .icon-form, .icon-shadow {
-    box-shadow: 0 1px 1px #ddd
+    box-shadow: 0 1px 1px #645c57
 }
 
 .icon-form {
@@ -3642,7 +3642,7 @@ div.ace_gutter-cell.ace_info, div.ace_gutter-cell.ace_warning {
     font-size: 30px;
     width: 80px;
     height: 80px;
-    background-color: #1da7da;
+    background-color: #0c274b;
     line-height: 80px;
     border-radius: 50%;
     top: -40px;
@@ -3654,6 +3654,52 @@ div.ace_gutter-cell.ace_info, div.ace_gutter-cell.ace_warning {
     .icon-form {
         position: absolute
     }
+}
+
+.btn-primary {
+    color: #fff;
+    text-transform: capitalize;
+    background-color: #0c274b;
+    border-color: #262e31;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .15);
+    box-shadow: 0 0 1px rgba(0, 0, 0, .15)
+}
+.btn-primary.focus, .btn-primary:focus {
+    color: #fff;
+    background-color: #0c274b;
+    border-color: #0c274b
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #153441;
+    border-color: #153441
+}
+
+.btn-primary.active, .btn-primary:active, .open > .dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #0c274b;
+    border-color: #0c274b
+}
+
+.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open > .dropdown-toggle.btn-primary.focus, .open > .dropdown-toggle.btn-primary:focus, .open > .dropdown-toggle.btn-primary:hover {
+    color: #fff;
+    background-color: #0c274b;
+    border-color: #0c274b
+}
+
+.btn-primary.active, .btn-primary:active, .open > .dropdown-toggle.btn-primary {
+    background-image: none
+}
+
+.btn-primary.disabled.focus, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled].focus, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
+    background-color: #0c274b;
+    border-color: #0c274b
+}
+
+.btn-primary .badge {
+    color: #0c274b;
+    background-color: #fff
 }
 
 .image {
