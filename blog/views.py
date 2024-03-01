@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 from .models import Blog
 from .forms import BlogForm
+from .utils import send_mails
 
 
 # from django.core.mail import send_mail
@@ -58,11 +59,12 @@ def publish(request):
         context_dict = {"message": "have a good day"}
         form = BlogForm()
         context_dict["form"] = form
-        return render(request, "blog/publish.html", context=context_dict)
+        return render(request, "blog/publish1.html", context=context_dict)
 
 
 
 def about(request):
+    send_mails()
     return render(request, 'blog/about.html')
 
 

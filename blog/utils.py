@@ -8,4 +8,3 @@ def send_mails():
 
     recipient_list = ["zhengkangwu666@gmail.com", ]
     send_mail(subject=subject, from_email=from_email, recipient_list=recipient_list, message=message)
-
