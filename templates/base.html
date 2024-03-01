@@ -51,7 +51,7 @@
                             <a href="#0" title="">Hello, {{ user.username }}</a>
                             <ul class="sub-menu">
                                 <li><a href="">my profile</a></li>
-                                <li><a href="">publish a blog</a></li>
+                                <li><a href="{%  url 'blog:publish' %}">publish a blog</a></li>
                                 <li><a href="{% url 'authentication:logout' %}">log out</a></li>
                             </ul>
                         </li>

@@ -1,7 +1,7 @@
-<!DOCTYPE html>
 {% extends 'base.html' %}
+{% load blog_template_tags %}
+<!DOCTYPE html>
 {% load static %}
-{#{% load blog_template_tags %}#}
 <html lang="en">
 <head>
     <title>
@@ -21,12 +21,11 @@
                             <a href="{% url 'blog:blogs' %}">Our Latest news!</a>
                         </h1>
                     </div>
-                    <!-- end s-hero__arrows -->
+                    
                 </div>
             </div>
         </div>
-        </div>
-        </div> <!-- end s-hero__slide -->
+        <!-- end s-hero__slide -->
     </section>
     <div class="content-wrapper">
         <div class="container-fluid">
@@ -35,19 +34,6 @@
                     <div class="section-header">
                         <h2>Latest Blogs</h2>
                     </div>
-{#                    {% for blog in blogs %}#}
-{#                        <div>{{ blog.content|safe }}</div>#}
-{#                    {% endfor %}#}
-{##}
-{#                    <form action="/blog/" method="post" enctype="multipart/form-data">#}
-{#                        {% csrf_token %}#}
-{#                        {{ form.media }}#}
-{#                        {{ form.content }}#}
-{##}
-{#                        <input type="submit" value="提交">#}
-{##}
-{##}
-{#                    </form>#}
                     <div class="col-md-4 col-sm-6  clear-sm ">
                         <article class="article--small">
                             <a href="show-39.html" title="What is the level of our team?">
@@ -79,7 +65,7 @@
                                 </div>
                             </div>
                         </article>
-                        {#                        {% get_blogs_list %}#}
+                                                {% get_blogs_list %}
                     </div>
                 </div>
             </div>

@@ -45,8 +45,6 @@ def publish(request):
         if form.is_valid():
             blog_instance = form.save(commit=False)
 
-
-
             if 'image' in request.FILES:
                 blog_instance.image = request.FILES['image']
             else:
@@ -60,7 +58,6 @@ def publish(request):
         form = BlogForm()
         context_dict["form"] = form
         return render(request, "blog/publish1.html", context=context_dict)
-
 
 
 def about(request):
