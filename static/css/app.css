@@ -5585,7 +5585,7 @@ aside .guidelines li {
 }
 
 #book-view, .article--big, .editor-preview, .license, .post--rank, .privacy-policy {
-    background-color: #fff;
+    background-color: #292c41;
     margin-bottom: 1em
 }
 
@@ -5698,7 +5698,7 @@ aside .guidelines li {
 }
 
 #book-view .article__title, .article--big .article__title, .editor-preview .article__title, .license .article__title, .post--rank .article__title, .privacy-policy .article__title {
-    color: #505050;
+    color: #9ba0c0;
     font-size: 2em;
     font-weight: 700;
     margin-bottom: .5em

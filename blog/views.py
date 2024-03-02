@@ -61,7 +61,6 @@ def publish(request):
 
 
 def about(request):
-    send_mails()
     return render(request, 'blog/about.html')
 
 
