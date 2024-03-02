@@ -60,9 +60,7 @@ def publish(request):
         return render(request, "blog/publish1.html", context=context_dict)
 
 
-
 def about(request):
-    send_mails()
     return render(request, 'blog/about.html')
 
 

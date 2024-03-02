@@ -3632,7 +3632,7 @@ div.ace_gutter-cell.ace_info, div.ace_gutter-cell.ace_warning {
 }
 
 .icon-form, .icon-shadow {
-    box-shadow: 0 1px 1px #ddd
+    box-shadow: 0 1px 1px #645c57
 }
 
 .icon-form {
@@ -3642,7 +3642,7 @@ div.ace_gutter-cell.ace_info, div.ace_gutter-cell.ace_warning {
     font-size: 30px;
     width: 80px;
     height: 80px;
-    background-color: #1da7da;
+    background-color: #394449;
     line-height: 80px;
     border-radius: 50%;
     top: -40px;
@@ -3654,6 +3654,52 @@ div.ace_gutter-cell.ace_info, div.ace_gutter-cell.ace_warning {
     .icon-form {
         position: absolute
     }
+}
+
+.btn-primary {
+    color: #fff;
+    text-transform: capitalize;
+    background-color: #394449;
+    border-color: #262e31;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .15);
+    box-shadow: 0 0 1px rgba(0, 0, 0, .15)
+}
+.btn-primary.focus, .btn-primary:focus {
+    color: #fff;
+    background-color: #0c274b;
+    border-color: #0c274b
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #153441;
+    border-color: #153441
+}
+
+.btn-primary.active, .btn-primary:active, .open > .dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #0c274b;
+    border-color: #0c274b
+}
+
+.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open > .dropdown-toggle.btn-primary.focus, .open > .dropdown-toggle.btn-primary:focus, .open > .dropdown-toggle.btn-primary:hover {
+    color: #fff;
+    background-color: #0c274b;
+    border-color: #0c274b
+}
+
+.btn-primary.active, .btn-primary:active, .open > .dropdown-toggle.btn-primary {
+    background-image: none
+}
+
+.btn-primary.disabled.focus, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled].focus, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
+    background-color: #0c274b;
+    border-color: #0c274b
+}
+
+.btn-primary .badge {
+    color: #0c274b;
+    background-color: #fff
 }
 
 .image {
@@ -5539,7 +5585,7 @@ aside .guidelines li {
 }
 
 #book-view, .article--big, .editor-preview, .license, .post--rank, .privacy-policy {
-    background-color: #fff;
+    background-color: #292c41;
     margin-bottom: 1em
 }
 
@@ -5652,7 +5698,7 @@ aside .guidelines li {
 }
 
 #book-view .article__title, .article--big .article__title, .editor-preview .article__title, .license .article__title, .post--rank .article__title, .privacy-policy .article__title {
-    color: #505050;
+    color: #9ba0c0;
     font-size: 2em;
     font-weight: 700;
     margin-bottom: .5em
@@ -6691,7 +6737,7 @@ aside .sponsors .wix {
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 10px;
-    z-index: 1000; /* 确保下拉菜单位于其他元素之上 */
+    z-index: 1000;
 }
 
 
@@ -6843,7 +6889,7 @@ aside .sponsors .wix {
     left: 0;
     width: 100%;
     height: 50px;
-    background: transparent;
+    background:transparent;
     box-shadow: 0 1px 1px rgba(148, 146, 146, 0.15);
     transform: translateZ(0);
     will-change: transform;

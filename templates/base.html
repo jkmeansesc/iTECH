@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head lang="en">
+<head>
     <title>4 Angry Men -
         {% block title_block %}
             Welcome
@@ -9,16 +9,25 @@
     </title>
     <meta charset="utf-8">
     <meta name="theme-color" content="#ffffff">
+    <!-- CSS
+       ================================================== -->
     <link href="{% static 'css/fonts.css' %}" rel="stylesheet">
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/app.css' %}" rel="stylesheet">
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
 
+    <!-- script
+      ================================================== -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/highlight.min.js' %}"></script>
     <script src="{% static 'js/toastr.min.js' %}"></script>
+    <script src="{% static 'js/bundle.js' %}"></script>
+    <script src="{% static 'js/submenu.js' %}"></script>
+
+    <!-- header
+          ================================================== -->
 </head>
 <body>
 <div class="page__wrapper page--landing">
@@ -32,17 +41,17 @@
                 </div>
                 <ul class="nav__items nav__items--right">
                     <li class="nav__item nav__item--main">
-                        <a href="{% url 'blog:index' %}" class="articles ">
+                        <a href="{% url 'index' %}">
                             Home
                         </a>
                     </li>
                     <li class="nav__item nav__item--main">
-                        <a href="{% url 'blog:blogs' %}" class="posts">
+                        <a href="{% url 'blog:blogs' %}">
                             Blogs
                         </a>
                     </li>
                     <li class="nav__item nav__item--main">
-                        <a href="{% url 'blog:about' %}" class="posts ">
+                        <a href="{% url 'blog:about' %}">
                             About
                         </a>
                     </li>
@@ -51,7 +60,7 @@
                             <a href="#0" title="">Hello, {{ user.username }}</a>
                             <ul class="sub-menu">
                                 <li><a href="">my profile</a></li>
-                                <li><a href="">publish a blog</a></li>
+                                <li><a href="{% url 'blog:publish' %}">publish a blog</a></li>
                                 <li><a href="{% url 'authentication:logout' %}">log out</a></li>
                             </ul>
                         </li>
@@ -68,7 +77,7 @@
                         </li>
                     {% endif %}
                     <li class="nav__item">
-                        <a href="search.html" class="search-trigger icon-magnifier"></a>
+                        <a href="{% url 'blog:search_results' %}" class="search-trigger icon-magnifier"></a>
                     </li>
                 </ul>
             </nav> <!-- .nav--main -->
@@ -86,7 +95,6 @@
             </div>
         </div> <!-- .main-search -->
     </header>
-
 </div>
 <div class="cover-layer"></div> <!-- cover main content when search form is open -->
 <div>
@@ -94,6 +102,8 @@
     {% endblock %}
 </div>
 <div>
+    <!-- footer
+          ================================================== -->
     <footer>
         <p class="copyright">Copyright © 2018 <a href="{% url 'index' %}" target="_blank">4 Angry Men</a>
             <span class="second-line">All Rights Reserved.</span><br>
@@ -105,7 +115,5 @@
 </div>
 </body>
 <!-- <script src="static/js/bundle.js"></script> -->
-<script src="{% static 'js/bundle.js' %}"></script>
-<script src="{% static 'js/submenu.js' %}"></script>
 
 </html>

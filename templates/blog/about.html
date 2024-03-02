@@ -1,20 +1,63 @@
 <!DOCTYPE html>
-{% extends 'base.html' %}
 <html lang="en">
+{% extends 'base.html' %}
+{% load static %}
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>
         {% block title_block %}
-        about
-    {% endblock %}</title>
+            About Us
+        {% endblock %} </title>
 </head>
 <body>
-    {% block body_block %}
-    
-    <a href="{% url 'blog:search_results' %}">
-        search_results
-    </a>
+{% block body_block %}
+    <main class="main-content" style=" margin-top:40px;">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9 article-content">
+                        <article class="article--big">
+                            <div class="article__image"
+                                 style="background-image: url({% static 'image/pubg_about.jpg' %})"></div>
+                            <div class="article__content">
+                                <h1 class="article__title">
+                                    <a href="{% url 'index' %}">4 Angry Men</a></h1>
+                                <div class="article__body">
+                                    <p>
+                                        4 Angry Men is a formidable force in the world of PUBG esports, renowned for their
+                                        exceptional skill, strategic prowess, and unwavering determination on the
+                                        battlefield. Comprised of four highly talented and passionate individuals, this
+                                        team
+                                        has carved a path of dominance through intense competition, earning the respect
+                                        and
+                                        admiration of fans worldwide.
+                                    </p>
+
+                                    <h3>Achievements</h3>
+                                    <p>
+                                        Multiple tournament victories in both regional and international competitions.
+                                        Consistently ranked among the top teams in PUBG esports circuits.
+                                        Known for their adaptability and ability to perform under pressure in
+                                        high-stakes
+                                        matches.
+                                    </p>
+                                    <h3>Join the Fury</h3>
+
+                                    <p>
+                                        Follow 4 Angry Men as they continue their journey to conquer the PUBG esports
+                                        scene,
+                                        leaving a trail of victories and unforgettable moments in their wake. Join their
+                                        legion of fans and witness the relentless fury of 4 Angry Men on the
+                                        battlefield.
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 {% endblock %}
 </body>
 </html>
