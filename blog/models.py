@@ -8,7 +8,7 @@ class Blog(models.Model):
     content = RichTextField(default="Please input your content here")
     comment_num = models.IntegerField(default=0)
     image = models.ImageField(upload_to='blog_images', blank=True)
-    # date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.content
