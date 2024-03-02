@@ -1,10 +1,10 @@
 <ul>
-    {% if blogs %}
-         {% for blog in blogs|slice:":6" %}
+    {% if blogs_latest %}
+         {% for blog in blogs_latest %}
             <article class="article--small">
                 <a href="{{ blog.url }}" title="{{ blog.title }}">
                     <div class="article__image"
-                         style="background-image: url('{{ blog.image.url }}')"></div>
+                         style="background-image: url('{{ blog.image }}')"></div>
                 </a>
                 <div class="article__content">
                     <div class="article__description">
