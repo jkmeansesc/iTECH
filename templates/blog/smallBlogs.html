@@ -1,3 +1,4 @@
+{% load custom_filters %}
 <ul>
     {% if blogs_latest %}
         {% for blog in blogs_latest %}
@@ -12,7 +13,7 @@
                         <a href="{{ blog.url }}" title="{{ blog.title }}">
                             <h3>{{ blog.title }}</h3>
                         </a>
-                        <p>{{ blog.content|truncatewords:1 }}</p>
+                       <p>{{ blog.content|first_non_empty_character }}</p>
                     </div>
                     <div class="article__footer">
                         <a class="btn-more" href="{{ blog.url }}" title="View comments">
