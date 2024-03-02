@@ -16,11 +16,11 @@ def index(request):
         else:
             print(form.errors)
 
-        context_dict = {"message": "have a good day"}
-        # 得到所有的blogs
-        blogs = Blog.objects.all()
-        context_dict["blogs"] = blogs
-        # 将表单传递给模板
+        context_dict = {"message": "The latest blogs"}
+        # Get latest 6 blogs
+        blogs_latest = Blog.objects.order_by("-date")[:6]
+        context_dict["blogs_latest"] = blogs_latest
+
         form = BlogForm()
         context_dict["form"] = form
 
@@ -28,11 +28,11 @@ def index(request):
 
     else:
 
-        context_dict = {"message": "have a good day"}
-        # 得到所有的blogs
-        blogs = Blog.objects.all()
-        context_dict["blogs"] = blogs
-        # 将表单传递给模板
+        context_dict = {"message": "The latest blogs"}
+        # Get latest 6 blogs
+        blogs_latest = Blog.objects.order_by("-date")[:6]
+        context_dict["blogs_latest"] = blogs_latest
+
         form = BlogForm()
         context_dict["form"] = form
 
@@ -67,7 +67,28 @@ def about(request):
 
 
 def blogs(request):
-    return render(request, 'blog/blogs.html')
+    # Get all blogs
+    if request.method == "POST":
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+        else:
+            print(form.errors)
+
+        blogs_all = Blog.objects.all()
+        context_dict = {"blogs_all": blogs_all}
+        form = BlogForm()
+        context_dict["form"] = form
+
+        return render(request, 'blog/blogs.html', context=context_dict)
+    else:
+        blogs_all = Blog.objects.all()
+        context_dict = {"blogs_all": blogs_all}
+        form = BlogForm()
+        context_dict["form"] = form
+
+        return render(request, 'blog/blogs.html', context=context_dict)
+
 
 
 def blog_detail(request):
