@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 from .models import Blog
 from .forms import BlogForm
+from .utils import send_mails
 
 
 # from django.core.mail import send_mail
@@ -61,6 +62,7 @@ def publish(request):
 
 
 def about(request):
+    send_mails()
     return render(request, 'blog/about.html')
 
 
