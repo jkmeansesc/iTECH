@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% extends 'base.html' %}
+{% load static %}
 <head>
 
     <title>
@@ -17,7 +18,7 @@
                     <div class="col-md-9 article-content">
                         <article class="article--big">
                             <div class="article__image"
-                                 style="background-image: url(static/image/pubg_about.jpg)"></div>
+                                 style="background-image: url({% static 'image/pubg_about.jpg' %})"></div>
                             <div class="article__content">
                                 <h1 class="article__title">
                                     <a href="{% url 'index' %}">4 Angry Men</a></h1>
