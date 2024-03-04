@@ -5570,16 +5570,16 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
 }
 
 .list-group-item, a.list-group-item, button.list-group-item {
-    color: #747474
+    color: #969492
 }
 
 .list-group-item .list-group-item-heading, a.list-group-item .list-group-item-heading, button.list-group-item .list-group-item-heading {
     font-weight: 700;
-    color: #747474
+    color: #969492
 }
 
 .list-group-item:focus, .list-group-item:hover, a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, button.list-group-item:hover {
-    color: #747474;
+    color: #969492;
     text-decoration: none;
     background-color: rgba(0, 0, 0, .05)
 }

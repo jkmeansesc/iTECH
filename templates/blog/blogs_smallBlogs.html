@@ -1,0 +1,37 @@
+{% load custom_filters %}
+<ul>
+    {% if blogs %}
+        {% for blog in blogs %}
+            <div class="col-md-4 col-sm-6  clear-sm ">
+            <article class="article--small">
+                <a href="{{ blog.url }}" title="{{ blog.title }}">
+                    <div class="article__image"
+                         style="background-image: url('{{ blog.image.url }}')"></div>
+                </a>
+                <div class="article__content">
+                    <div class="article__description">
+                        <a href="{{ blog.url }}" title="{{ blog.title }}">
+                            <h3>{{ blog.title }}</h3>
+                        </a>
+                        <p>{{ blog.content|first_non_empty_character }}</p>
+                    </div>
+                    <div class="article__footer">
+                        <a class="btn-more" href="{{ blog.url }}" title="View comments">
+                            <span>{{ blog.comment_num }}</span>
+                        </a>
+                        <div class="tags">{{ blog.tag }}</div>
+                        <time class="article__date"
+                              datetime="{{ blog.date|date:'d-m-Y H:i:s' }}">
+                            {{ blog.date|date:'d-m-Y H:i:s' }}
+                        </time>
+                    </div>
+                </div>
+            </article>
+            </div>
+        {% endfor %}
+    {% else %}
+        <strong class='active' style="font-size: large">
+            There are no blogs present.
+        </strong>
+    {% endif %}
+</ul>
