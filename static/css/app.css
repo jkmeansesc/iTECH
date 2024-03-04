@@ -5911,9 +5911,6 @@ svg {
 }
 
 .article--small {
-    display: inline-block;
-    width: 30%;
-    vertical-align: top;
     border: 1px solid #252d2f;
     border-radius: 3px;
     overflow: hidden;
@@ -8044,7 +8041,7 @@ select {
 .search-suggestions em, .section--search em, aside em {
     font-style: normal;
     font-weight: 700;
-    color: #1da7da
+    color: #757fb9
 }
 
 .search-suggestions .list__left, .section--search .list__left, aside .list__left {
@@ -8939,18 +8936,15 @@ blockquote.profile__description {
 }
 
 .section {
-    background-color: #fff
+    background-color: #292c41;
+    padding: 2.5em
 }
 
 @media only screen and (min-width: 768px) {
     .section {
-        border: 1px solid #eaeaea;
+        border: 1px solid #292c41;
         border-radius: 3px
     }
-}
-
-.section {
-    padding: 2.5em
 }
 
 .section, .section__title {

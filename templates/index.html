@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="zh">
+<head>
+    <title>{% block title_block %}
+        home
+        {% endblock %}
+    </title>
+</head>
+<body>{% block body_block%}
+         <!-- cover main content when search form is open -->   
+        <main class="main-content">
+            <section>
+                <div class="hero hero--articles">
+                    <div class="container-fluid">
+                        <div class="hero-content">
+                            <div class="row no-margin">
+                                <div class="col-md-5">
+                                    <h2>Welcome to <strong>4 Angry Men !</strong></h2>
+                                    <p style="font-size: medium">
+                                        Hello Players!
+                                    </p>
+                                    <div class="stack-sm">
+                                        <a href="forum.html" class="btn btn-success">
+                                            <span>pinned blog</span>
+                                        </a>
+                                        <span>or</span>
+                                        <a href="{% url 'blog:blogs' %}" class="white" style="
+                              text-transform: capitalize;
+                              border-bottom: 1px solid white;
+                            ">
+                                            view blogs
+                                        </a>
+                                    </div>
+                                </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-wrapper">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section-header">
+                                    <h2>Latest Blogs</h2>
+                                </div>
+
+                                <div class="col-md-4 col-sm-6  clear-sm ">
+                                    <article class="article--small">
+                                        <a href="show-39.html" title="What is the level of our team?">
+                                            <div class="article__image"
+                                                style="background-image: url(static/image/12653.jpg )">
+                                            </div>
+                                        </a>
+                                        <div class="article__content">
+                                            <div class="article__description">
+                                                <a href="show-39.html" title="What is the level of our team?">
+                                                    <h3>What is the level of 4 Angry Men ?</h3>
+                                                </a>
+                                                <p>
+                                                    Recently they had competition with 3 Sad Bird... 
+                                                </p>
+                                            </div>
+                                            <div class="article__footer">
+                                                <a class="btn-more" href="show-39.html" title="comments">
+                                                    <span>1</span>
+                                                </a>
+                                                <div class="tags">
+                                                    <a href="article-Django.html" class="article-tag">
+                                                        Team
+                                                    </a>
+                                                </div>
+                                                <time class="article__date" datetime="2023年12月8日 14:39">
+                                                   25/2/2023
+                                                </time>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script type="text/javascript">
+
+        $('#confirm-delete').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            // var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var aid = button.data('aid')
+            var id = button.data('id')
+            var tag = button.data('tag')
+            var modal = $(this)
+            // modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('input[name="aid"]').val(aid)
+            modal.find('input[name="id"]').val(id)
+            modal.find('input[name="tag"]').val(tag)
+
+            // console.log('ok')
+        })
+
+        // btn_delete_comment
+        $('#btn_delete_comment').click(function (event) {
+            // var form = new FormData(document.getElementById("delete_comment"))
+            // var pwd1 = $('#change-pwd [name="password1"]').val()
+            console.log('in comment delete')
+            var aid = $('#delete_comment [name="aid"]').val()
+            var id = $('#delete_comment [name="id"]').val()
+            var tag = $('#delete_comment [name="tag"]').val()
+            var token = $('#delete_comment [name="csrfmiddlewaretoken"]').val()
+            if (!tag) {
+                return
+            }
+
+            var form = new FormData();
+            form.append("id", 'id');
+            form.append("csrfmiddlewaretoken", token);
+            form.append('method', 'delete')
+
+            $.ajax({
+                type: 'POST',
+                url: '/comment/' + id + '/',
+                // data:'json',
+                processData: false,
+                contentType: false,
+                data: form,
+                success: function (response) {
+                    if (tag == 'article') {
+                        window.location.href = '/article/show-' + aid + '.html';
+                    }
+                    if (tag == 'course') {
+                        window.location.href = '/course/show-' + aid + '.html';
+                    }
+                }
+            })
+        })
+    </script>
+    <!-- <script src="static/js/bundle.js"></script> -->
+    <script src="static/js/bundle.js"></script>
+    
+    <script>
+            (function () {
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+    </script>
+    <div style="display:none;"><a href="https://smalltool.github.io/">仿站工具</a></div>
+    {% endblock %}
+</body>
+
+</html>
