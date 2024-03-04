@@ -3664,6 +3664,7 @@ div.ace_gutter-cell.ace_info, div.ace_gutter-cell.ace_warning {
     -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .15);
     box-shadow: 0 0 1px rgba(0, 0, 0, .15)
 }
+
 .btn-primary.focus, .btn-primary:focus {
     color: #fff;
     background-color: #0c274b;
@@ -6726,9 +6727,11 @@ aside .sponsors .wix {
 .nav__item--main:hover .sub-menu {
     display: block;
 }
+
 .nav__item-content {
     position: relative;
 }
+
 .sub-menu {
     display: none;
     position: absolute;
@@ -6889,7 +6892,7 @@ aside .sponsors .wix {
     left: 0;
     width: 100%;
     height: 50px;
-    background:transparent;
+    background: transparent;
     box-shadow: 0 1px 1px rgba(148, 146, 146, 0.15);
     transform: translateZ(0);
     will-change: transform;
@@ -8038,7 +8041,7 @@ select {
 .search-suggestions em, .section--search em, aside em {
     font-style: normal;
     font-weight: 700;
-    color: #1da7da
+    color: #757fb9
 }
 
 .search-suggestions .list__left, .section--search .list__left, aside .list__left {
@@ -8933,18 +8936,15 @@ blockquote.profile__description {
 }
 
 .section {
-    background-color: #fff
+    background-color: #292c41;
+    padding: 2.5em
 }
 
 @media only screen and (min-width: 768px) {
     .section {
-        border: 1px solid #eaeaea;
+        border: 1px solid #292c41;
         border-radius: 3px
     }
-}
-
-.section {
-    padding: 2.5em
 }
 
 .section, .section__title {
