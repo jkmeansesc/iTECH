@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load blogs_template_tags %}
+<html lang="en">
+<head>
+
+    <title>{% block title_block %}
+        search results
+    {% endblock %}</title>
+</head>
+<body>
+{% block body_block %}
+    <main class="main-content">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="search">
+                            <form id="search-form" class="form-inline" action="/search/?type=article" method="GET">
+                                    <input class="form-control" type="search" name="search" placeholder="Search..."
+                                           autocomplete="off" required value=" ">
+                                <button type="submit" class="btn btn-primary hidden-xs">
+                                    <span>search</span></button>
+                                <button type="submit"
+                                        class="btn-icon icon-magnifier hidden-sm hidden-md hidden-lg"></button>
+                            </form>
+
+                        </div>
+                        <!--content -->
+                        <div class="section section--search">
+                            <div class="tabs__container">
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="articles">
+                                        <ul class="list-group">
+                                            <li>
+                                                <a href="" class="list-group-item">
+                                                    <div class="list__right">
+                                                        <h4 class="list-group-item-heading">
+                                                            blog_title,<em>tags</em>,blog_title
+                                                        </h4>
+                                                        <time>
+                                                            2023/03
+                                                        </time>
+                                                    </div>
+                                                </a>
+                                            </li><li>
+                                                <a href="" class="list-group-item">
+                                                    <div class="list__right">
+                                                        <h4 class="list-group-item-heading">
+                                                            blog_title2,<em>tags</em>,blog_title2
+                                                        </h4>
+                                                        <time>
+                                                            2023/02
+                                                        </time>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+</body>
+</html>
