@@ -1,12 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 
-from .models import Blog
 from .forms import BlogForm
+from .models import Blog
 from .utils import send_mails
-
 
 # from django.core.mail import send_mail
 # from .utils import send_mails
+
 
 def index(request):
     if request.method == "POST":
@@ -45,8 +45,8 @@ def publish(request):
         if form.is_valid():
             blog_instance = form.save(commit=True)
 
-            if 'image' in request.FILES:
-                blog_instance.image = request.FILES['image']
+            if "image" in request.FILES:
+                blog_instance.image = request.FILES["image"]
             else:
                 print("no image")
 
@@ -58,16 +58,16 @@ def publish(request):
             context_dict = {"message": "have a good day"}
             form = BlogForm()
             context_dict["form"] = form
-            return render(request, "blog/publish1.html", context=context_dict)
+            return render(request, "blog/publish.html", context=context_dict)
     else:
         context_dict = {"message": "have a good day"}
         form = BlogForm()
         context_dict["form"] = form
-        return render(request, "blog/publish1.html", context=context_dict)
+        return render(request, "blog/publish.html", context=context_dict)
 
 
 def about(request):
-    return render(request, 'blog/about.html')
+    return render(request, "blog/about.html")
 
 
 def blogs(request):
@@ -84,20 +84,19 @@ def blogs(request):
         form = BlogForm()
         context_dict["form"] = form
 
-        return render(request, 'blog/blogs.html', context=context_dict)
+        return render(request, "blog/blogs.html", context=context_dict)
     else:
         blogs_all = Blog.objects.all()
         context_dict = {"blogs_all": blogs_all}
         form = BlogForm()
         context_dict["form"] = form
 
-        return render(request, 'blog/blogs.html', context=context_dict)
-
+        return render(request, "blog/blogs.html", context=context_dict)
 
 
 def blog_detail(request):
-    return render(request, 'blog/blog_detail.html')
+    return render(request, "blog/blog_detail.html")
 
 
 def search_results(request):
-    return render(request, 'blog/search_results.html')
+    return render(request, "blog/search_results.html")
