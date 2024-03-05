@@ -9149,13 +9149,13 @@ input[type=file]:focus + label {
 }
 
 .panel-heading {
-    background-color: #fff;
+    background-color: #292c41;
     padding: 3em 1em 0;
     text-align: center
 }
 
 .panel-heading h2 {
-    color: #162731;
+    color: #3c4144;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 1.3em;
