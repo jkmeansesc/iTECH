@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 {% load static %}
 {% block title_block %}
     Publish
@@ -8,6 +9,7 @@
     #{{ form.image.id_for_label }} {
         display: none;
     }
+    </style>
     </style>
     <main class="main-content" id="main_content">
         <div class="content-wrapper">
@@ -20,17 +22,17 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="{{ form.title.id_for_label }}">Title:</label>
-                                {{ form.title }}
+                                {{ form.title|add_class:"form-control" }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.tag.id_for_label }}">Tag:</label>
+                                {{ form.tag|add_class:"form-control" }}
                             </div>
                             <div class="form-group">
                                 <label for="{{ form.image.id_for_label }}" id="image-label">Image:</label>
                                 <button type="button" id="upload-btn">Upload Image</button>
                                 <span id="file-name">No file chosen</span>
                                 {{ form.image }}
-                            </div>
-                            <div class="form-group">
-                                <label for="{{ form.tag.id_for_label }}">Tag:</label>
-                                {{ form.tag }}
                             </div>
                             <div class="form-group">
                                 {{ form.media }}
