@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title_block %}
+        {{ user.username }} setting
+    {% endblock %}</title>
+</head>
+
+<body>{% block body_block %}
+    <div class="page__wrapper page--profile">
+        <main class="main-content">
+            <div class="hero hero--profile">
+            </div>
+            <div class="container-fluid">
+                <div class="profile row">
+                    <div class="col-md-3">
+                        <div class="profile__header">
+                            <div class="profile__user-avatar"
+                                 style="background-image: url('{% static 'image/timg.jpg' %}')">
+                            </div>
+                            <div class="profile__info">
+                                <div class="profile__name">
+                                    <h4 class="change-name" data-change="name">
+                                        {{ user.username }}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 profile__content">
+                        <div class="tabs">
+                            <div class="tabs-profile">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation">
+                                        <a href=" " aria-controls="home" role="tab">
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            Comments
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="{% url 'blog:profile_blogs' %} " aria-controls="home" role="tab">
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            Blogs
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="active">
+                                        <a href="/user/settings/" aria-controls="home" role="tab">
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            Setting
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="settings">
+
+                                    <div class="section">
+                                        <ul class="profile__settings">
+                                            <li class="settings__section">
+                                                <h3>
+                                                    Personal Information
+                                                </h3>
+                                                <ul class="settings__subsection">
+                                                    <li>
+                                                        <a href="/user/settings/"
+                                                           class="btn btn-primary btn-outline pull-right"
+                                                           data-toggle="form"
+                                                           data-target="#change-username" data-change=".change-username"
+                                                           data-elem="#elem-username" data-default="#default-username">
+                                                            <span>edit</span>
+                                                        </a>
+                                                        <h4>User Name</h4>
+                                                        <p id="elem-username" class="change-username"
+                                                           data-change="username"
+                                                           style="">
+                                                            {{ user.username }}
+                                                        </p>
+                                                        <p id="default-username" style="display: none;">
+                                                            no username
+                                                        </p>
+                                                        <form id="change-username" action=" " method="POST"
+                                                              style="display: none;">
+                                                            <input type="hidden" name="csrfmiddlewaretoken"
+                                                                   value="6zJ08m2J8YMBn14dnurCS7e0j1oPao5JiGIbUBBsgIBhys6f0r8S86tBOeVdnmXg">
+                                                            <div class="form-group">
+                                                                <div class="controls">
+                                                                    <input name="username" type="text"
+                                                                           class="form-control filled"
+                                                                           value="{{ user.email }}" required="">
+                                                                </div>
+                                                            </div>
+                                                            <input type="submit" class="btn btn-primary" value="edit">
+                                                            <button type="button" class="btn btn-default"
+                                                                    data-dismiss="form"><span>cancel</span></button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/user/settings/"
+                                                           class="btn btn-primary btn-outline pull-right"
+                                                           data-toggle="form"
+                                                           data-target="#change-email" data-change=".change-email"
+                                                           data-elem="#elem-email" data-default="#default-email">
+                                                            <span>edit</span>
+                                                        </a>
+                                                        <h4>Email</h4>
+                                                        <p id="elem-email" class="change-email" data-change="email"
+                                                           style="">
+                                                            {{ user.email }}
+                                                        </p>
+                                                        <p id="default-email" style="display: none;">
+                                                            none
+                                                        </p>
+                                                        <form id="change-email" action="/user/settings/" method="POST"
+                                                              style="display: none;">
+                                                            <input type="hidden" name="csrfmiddlewaretoken"
+                                                                   value="6zJ08m2J8YMBn14dnurCS7e0j1oPao5JiGIbUBBsgIBhys6f0r8S86tBOeVdnmXg">
+                                                            <div class="form-group">
+                                                                <div class="controls">
+                                                                    <input name="email" type="text"
+                                                                           class="form-control filled"
+                                                                           value="valianna222@gmail.com" required="">
+                                                                </div>
+                                                            </div>
+                                                            <input type="submit" class="btn btn-primary" value="修改">
+                                                            <button type="button" class="btn btn-default"
+                                                                    data-dismiss="form"><span>cancel</span></button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <div>
+                                                             <a href="/user/settings/"
+                                                           class="btn btn-primary btn-outline pull-right"
+                                                           data-toggle="form"
+                                                           data-target="#change-username" data-change=".change-profile"
+                                                           data-elem="#elem-username" data-default="#default-profile">
+                                                            <span>edit</span>
+                                                        </a>
+                                                            <h4>Profile</h4>
+                                                            <form action="/user/settings/" method="POST" id='myimage'
+                                                                  enctype="multipart/form-data" class='form-inline'>
+                                                                <input type="hidden" name="csrfmiddlewaretoken"
+                                                                       value="6zJ08m2J8YMBn14dnurCS7e0j1oPao5JiGIbUBBsgIBhys6f0r8S86tBOeVdnmXg">
+                                                                <div class="form-group">
+                                                                     <label for="img_box" class="btn btn-primary btn-outline">choose profile</label>
+                                                                    <input id='img_box' type="file" name="image"
+                                                                           accept="image/gif, image/jpeg, image/png, image/jpg">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div>
+                                                            <div style='height: 10px'></div>
+                                                            <a href="/user/settings/"
+                                                               class="btn btn-primary btn-outline pull-right"
+                                                               data-toggle="form" data-target="#change-pwd">
+                                                                <span>edit</span>
+                                                            </a>
+                                                            <h4>Password</h4>
+                                                            <form id="change-pwd" action="/user/settings/" method="POST"
+                                                                  style="display: none;">
+                                                                <input type="hidden" name="csrfmiddlewaretoken"
+                                                                       value="6zJ08m2J8YMBn14dnurCS7e0j1oPao5JiGIbUBBsgIBhys6f0r8S86tBOeVdnmXg">
+                                                                <div class="form-group">
+                                                                    <div class="controls">
+                                                                        <input name="password" type="text"
+                                                                               class="form-control filled"
+                                                                               placeholder="Input a new password">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="controls">
+                                                                        <input name="password1" type="text"
+                                                                               class="form-control filled"
+                                                                               placeholder="Input new password again">
+                                                                    </div>
+                                                                </div>
+                                                                <div id='pwd_msg' class="alert alert-danger">
+                                                                </div>
+                                                                <input type="button" class="btn btn-primary"
+                                                                       value="complete"
+                                                                       id='set_pwd'>
+                                                                <button type="button" class="btn btn-default"
+                                                                        data-dismiss="form"><span>cancel</span></button>
+                                                            </form>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <style type="text/css">
+                                    #img_box {
+                                        width: auto;
+                                        height: auto;
+                                        position: relative;
+                                        opacity: 1;
+                                        z-index: 1000;
+                                    }
+
+                                    #pwd_msg {
+                                        display: none;
+                                    }
+                                </style>
+                                <script type="text/javascript">
+                                    $('#set_pwd').click(function (e) {
+                                        var pwd = $('#change-pwd [name="password"]').val()
+                                        var pwd1 = $('#change-pwd [name="password1"]').val()
+                                        if (pwd != pwd1) {
+                                            $("#pwd_msg").text('two passwords are different').show()
+                                            return false
+                                        }
+
+                                        var token = $('#change-pwd [name="csrfmiddlewaretoken"]').val()
+
+                                        // var form = new FormData(document.getElementById("gender_radio"))
+                                        var form = new FormData();
+                                        form.append("password", pwd);
+                                        form.append("csrfmiddlewaretoken", token);
+                                        
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/user/settings/',
+                                            // data:'json',
+                                            processData: false,
+                                            contentType: false,
+                                            data: form,
+                                            success: function (response) {
+                                                console.log('ok', response)
+                                                window.location.href = '/user/login/';
+                                            },
+                                            error: function (response) {
+                                                console.log('err', response)
+                                                if (response.status == 200) {
+                                                    window.location.href = '/user/login/';
+                                                } else {
+                                                    $("#pwdmsg").text(response.responseText).show()
+                                                }
+                                            }
+                                        })
+                                    })
+
+                                    $('#pwd_msg').click(function (e) {
+                                        $('#pwd_msg').hide()
+                                    })
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+</body>
+
+</html>
