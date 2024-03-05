@@ -1,81 +1,37 @@
-{% extends 'base.html' %}
-{% block title_block %}
-    Publish
-{% endblock title_block %}
-{% block head %}
-    {{ block.super }}
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
-{% endblock %}
+{% extends "base.html" %}
+{% load static %}
+{% block title_block %}Publish{% endblock %}
 {% block body_block %}
-    <div style="height:150px; width: 100%;"></div>
-    <div class="content-wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-8 col-centered">
-                    <!-- Modified for better layout -->
-                    <div class="section"
-                         style="-moz-border-radius: 10px;
-                                -webkit-border-radius: 10px;
-                                border-radius: 15px">
-                        <div class="panel-heading">
-                            <h2>Publish</h2>
-                        </div>
-                        <div class="panel-body">
-                            <form class="form-horizontal"
-                                  role="form"
-                                  method="post"
-                                  action="{% url 'blog:publish' %}"
-                                  enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <!-- Title Field -->
-                                <div class="form-group">
-                                    <label for="title">Title:</label>
-                                    <input type="text"
-                                           name="title"
-                                           id="title"
-                                           class="form-control"
-                                           value="{{ form.title.value|default_if_none:'' }}">
-                                    {% if form.title.errors %}<div class="error">{{ form.title.errors.as_text }}</div>{% endif %}
-                                </div>
-                                <!-- Image Upload Field -->
-                                <div class="form-group">
-                                    <label for="image">Upload Image:</label>
-                                    <input type="file" name="image" id="image" class="form-control">
-                                    {% if form.image.errors %}<div class="error">{{ form.image.errors.as_text }}</div>{% endif %}
-                                </div>
-                                <!-- Tags Field -->
-                                <div class="form-group">
-                                    <label for="tags">Tags (comma separated):</label>
-                                    <input type="text"
-                                           name="tags"
-                                           id="tags"
-                                           class="form-control"
-                                           value="{{ form.tags.value|default_if_none:'' }}">
-                                    {% if form.tags.errors %}<div class="error">{{ form.tags.errors.as_text }}</div>{% endif %}
-                                </div>
-                                <!-- Content Field (with CKEditor) -->
-                                <div class="form-group">
-                                    <label for="content">Content:</label>
-                                    <textarea id="editor" name="content" class="form-control">{{ form.content.value|default_if_none:'' }}</textarea>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Publish</button>
-                                </div>
-                            </form>
-                        </div>
+    <main class="main-content" id="main_content">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9">
+                        <!-- Article content will go here -->
+                        <form action="{% url 'blog:publish' %}"
+                              method="post"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.image }}
+                            <div class="form-group">
+                                <label for="{{ form.title.id_for_label }}">Title</label>
+                                {{ form.title }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.tag.id_for_label }}">Tag</label>
+                                {{ form.tag }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.media }}
+                                {{ form.content }}
+                            </div>
+                            <div class="text-center">
+                                <input type="submit" value="Submit" class="btn btn-primary">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'))
-            .then(editor => {
-                console.log(editor);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-{% endblock %}
+    </main>
+{% endblock body_block %}
