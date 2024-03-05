@@ -74,28 +74,41 @@ def about(request):
     return render(request, "blog/about.html")
 
 
-def blogs(request):
+def blogs(request, tag=None):
     # Get all blogs
-    if request.method == "POST":
-        form = BlogForm(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
+    blogs_all = Blog.objects.all()
+
+    # 收集所有的blogs的tag
+    tags = []
+    for blog in blogs_all:
+        # 将每个blog的tag根据空格分开
+        blog_tags = blog.tag.split(" ")
+        for blog_tag in blog_tags:
+            tags.append(blog_tag)
+
+    # 找到数量最多的tag，作为热门tag
+    tag_count = {}
+    for tag_ in tags:
+        if tag_ in tag_count:
+            tag_count[tag_] += 1
         else:
-            print(form.errors)
+            tag_count[tag_] = 1
+    # 将tag_count按照value排序
+    tag_count = sorted(tag_count.items(), key=lambda x: x[1], reverse=True)
 
-        blogs_all = Blog.objects.all()
-        context_dict = {"blogs_all": blogs_all}
-        form = BlogForm()
-        context_dict["form"] = form
+    # 取前5个tag作为热门tag,只取tag名字
+    hot_tags = []
+    for tag_ in tag_count[:5]:
+        hot_tags.append(tag_[0])
 
-        return render(request, "blog/blogs.html", context=context_dict)
-    else:
-        blogs_all = Blog.objects.all()
-        context_dict = {"blogs_all": blogs_all}
-        form = BlogForm()
-        context_dict["form"] = form
+    context_dict = {"hot_tags": hot_tags}
 
-        return render(request, "blog/blogs.html", context=context_dict)
+    if tag:
+        # 转变为字符串
+        tag = str(tag)
+        context_dict["tag"] = tag
+
+    return render(request, "blog/blogs.html", context=context_dict)
 
 
 def blog_detail(request, blog_title_slug):

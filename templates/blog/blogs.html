@@ -21,37 +21,20 @@
                         <h2>Blogs</h2>
                         <ul class="section-header__subheading article__tags text-center">
                             <li class='active' style="font-size: large">
-                                <a href="">All</a>
+                                <a href="{% url 'blog:blogs'%}">All</a>
                             </li>
 
-                            <li style="font-size: large">
-                                <a href="article-Django.html">Django </a>
-                            </li>
 
-                            <li style="font-size: large">
-                                <a href="article-python.html">python </a>
-                            </li>
-
-                            <li style="font-size: large">
-                                <a href="article-Bootstrap.html">Bootstrap </a>
-                            </li>
-
-                            <li style="font-size: large">
-                                <a href="article-Vue.html">Vue </a>
-                            </li>
-
-                            <li style="font-size: large">
-                                <a href="article-AdminUI.html">AdminUI </a>
-                            </li>
-
-                            <li style="font-size: large">
-                                <a href="article-E78EAFE5A283E983A8E7BDB2.html"> </a>
-                            </li>
+                            {% for tag in hot_tags %}
+                                <li style="font-size: large">
+                                    <a href="{% url 'blog:blogs' tag %}">{{ tag }} </a>
+                                </li>
+                            {% endfor %}
 
                         </ul>
 
                     </div>
-                    {% get_all_blogs 9 %}
+                    {% get_all_blogs 9 tag %}
 
                     
                     <div class="pagination__container">
