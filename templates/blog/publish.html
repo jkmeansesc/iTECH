@@ -1,27 +1,32 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title_block %}Publish{% endblock %}
+{% block title_block %}
+    Publish
+{% endblock title_block %}
 {% block body_block %}
     <main class="main-content" id="main_content">
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-9">
-                        <!-- Article content will go here -->
                         <form action="{% url 'blog:publish' %}"
                               method="post"
                               enctype="multipart/form-data">
                             {% csrf_token %}
-                            {{ form.image }}
                             <div class="form-group">
                                 <label for="{{ form.title.id_for_label }}">Title</label>
                                 {{ form.title }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.image.id_for_label }}">Image</label>
+                                {{ form.image }}
                             </div>
                             <div class="form-group">
                                 <label for="{{ form.tag.id_for_label }}">Tag</label>
                                 {{ form.tag }}
                             </div>
                             <div class="form-group">
+                                <label for="{{ form.content.id_for_label }}">Content</label>
                                 {{ form.media }}
                                 {{ form.content }}
                             </div>
@@ -34,4 +39,4 @@
             </div>
         </div>
     </main>
-{% endblock body_block %}
+{% endblock %}
