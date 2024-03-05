@@ -4,7 +4,7 @@
         {% for blog in blogs %}
             <div class="col-md-4 col-sm-6  clear-sm ">
             <article class="article--small">
-                <a href="{{ blog.url }}" title="{{ blog.title }}">
+                <a href="{% url 'blog:blog_detail' blog.slug %}" title="{{ blog.title }}">
                     <div class="article__image"
                          style="background-image: url('{{ blog.image.url }}')"></div>
                 </a>
