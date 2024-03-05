@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from .models import Blog
-from .forms import BlogForm
+from .forms import BlogForm, CommentForm
 from .utils import send_mails
 from django.contrib.auth.decorators import login_required
 
@@ -70,6 +70,13 @@ def publish(request):
         context_dict["form"] = form
         return render(request, "blog/publish1.html", context=context_dict)
 
+def publish_comment(request):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+        else:
+            print(form.errors)
 
 def about(request):
     return render(request, 'blog/about.html')
@@ -112,8 +119,6 @@ def blogs(request, tag=None):
         
     return render(request, 'blog/blogs.html', context=context_dict)
 
-
-
 def blog_detail(request, blog_title_slug):
     context_dict = {}
     try:
@@ -123,8 +128,6 @@ def blog_detail(request, blog_title_slug):
         context_dict["blog"] = None
 
     return render(request, 'blog/blog_detail1.html', context=context_dict)
-
-
 
 
 def search_results(request):

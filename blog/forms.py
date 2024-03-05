@@ -1,5 +1,5 @@
 from django import forms
-from .models import Blog
+from .models import Blog, Comment
 from ckeditor.widgets import CKEditorWidget
 
 class BlogForm(forms.ModelForm):
@@ -14,5 +14,11 @@ class BlogForm(forms.ModelForm):
         model = Blog
         fields = ['title', 'tag', 'content', 'image']
 
+class CommentForm(forms.ModelForm):
+
+    content = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': 'Add a comment...'}))
+    class Meta:
+        model = Comment
+        fields = ['content']
 
 
