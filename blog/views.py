@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
-from .forms import BlogForm
+from .forms import BlogForm, CommentForm
 from .models import Blog
 from .utils import send_mails
 
@@ -62,12 +62,21 @@ def publish(request):
             context_dict = {"message": "have a good day"}
             form = BlogForm()
             context_dict["form"] = form
-            return render(request, "blog/publish.html", context=context_dict)
+            return render(request, "blog/publish1.html", context=context_dict)
     else:
         context_dict = {"message": "have a good day"}
         form = BlogForm()
         context_dict["form"] = form
-        return render(request, "blog/publish.html", context=context_dict)
+        return render(request, "blog/publish1.html", context=context_dict)
+
+
+def publish_comment(request):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+        else:
+            print(form.errors)
 
 
 def about(request):
