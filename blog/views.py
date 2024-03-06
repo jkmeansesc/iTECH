@@ -3,7 +3,10 @@ from django.shortcuts import redirect, render
 
 from .forms import BlogForm, CommentForm
 from .models import Blog
+from .forms import BlogForm
 from .utils import send_mails
+from django.contrib.auth.decorators import login_required
+
 
 # from django.core.mail import send_mail
 # from .utils import send_mails

@@ -1038,6 +1038,9 @@ pre.hljs {
     float: left;
     width: 25%
 }
+.list-group-item, a.list-group-item, button.list-group-item {
+    color: #ccd2ef;
+}
 
 .code-tabs .btn-primary, .inline-editor .btn-primary, .quiz .btn-primary {
     color: #fff;
@@ -1062,7 +1065,7 @@ pre.hljs {
 }
 
 .btn-outline.btn-primary {
-    color: #1da7da
+    color: #ffffff
 }
 
 .btn-outline.btn-success {
@@ -3832,7 +3835,7 @@ div.ace_gutter-cell.ace_info, div.ace_gutter-cell.ace_warning {
 }
 
 .comments__container {
-    background: #fff
+    background: #323549
 }
 
 .comments__container h3 {
@@ -5388,7 +5391,7 @@ aside .guidelines li {
 }
 
 .page--profile .section {
-    border: 1px solid #ededed
+    border: 1px solid #292c41
 }
 
 .page--profile .section--posts {
@@ -5726,6 +5729,10 @@ aside .guidelines li {
 #book-view .article__date, .article--big .article__date, .editor-preview .article__date, .license .article__date, .post--rank .article__date, .privacy-policy .article__date {
     color: #999
 }
+
+ .form-group {
+        padding-top: 20px; /* 设置上内边距为20像素 */
+    }
 
 #book-view h2 {
     margin-top: 1em !important
@@ -7377,6 +7384,9 @@ aside .sponsors .wix {
     list-style-type: none
 }
 
+input[type="file"] {
+    display: none;
+}
 .notification {
     width: 100%;
     padding: .5em;
@@ -8181,7 +8191,7 @@ select {
 .hero--profile {
     height: 170px;
     z-index: 0;
-    background: linear-gradient(180deg, #4483d2, #a7c8d3)
+    background: linear-gradient(180deg, #040f23, #24273a)
 }
 
 @media only screen and (min-width: 768px) {
@@ -8558,7 +8568,7 @@ select {
 
 .profile .comments__container {
     padding: 2em;
-    border: 1px solid #ededed
+    border: 1px solid #292c41
 }
 
 .profile .tabs-profile {
@@ -8698,7 +8708,7 @@ select {
 }
 
 .profile__settings {
-    background-color: #fff;
+    background-color: #292c41;;
     padding-top: 1em
 }
 
@@ -9149,13 +9159,13 @@ input[type=file]:focus + label {
 }
 
 .panel-heading {
-    background-color: #fff;
+    background-color: #292c41;
     padding: 3em 1em 0;
     text-align: center
 }
 
 .panel-heading h2 {
-    color: #162731;
+    color: #3c4144;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 1.3em;
