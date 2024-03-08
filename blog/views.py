@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 
 from .forms import BlogForm, CommentForm
 from .models import Blog, Comment
@@ -65,12 +65,12 @@ def publish(request):
             context_dict = {"message": "have a good day"}
             form = BlogForm()
             context_dict["form"] = form
-            return render(request, "blog/publish.html", context=context_dict)
+            return render(request, "blog/publish1.html", context=context_dict)
     else:
         context_dict = {"message": "have a good day"}
         form = BlogForm()
         context_dict["form"] = form
-        return render(request, "blog/publish.html", context=context_dict)
+        return render(request, "blog/publish1.html", context=context_dict)
 
 
 def publish_comment(request, blog_title_slug):
@@ -81,10 +81,10 @@ def publish_comment(request, blog_title_slug):
 
             context_dict = {}
             try:
-                blog = Blog.objects.get(slug=blog_title_slug)
-                context_dict["blog"] = blog
+                comment = Comment.objects.get(blog=blog_title_slug)
+                context_dict["comment"] = comment
             except Blog.DoesNotExist:
-                context_dict["blog"] = None
+                context_dict["comment"] = None
 
             context_dict["form"] = comment_form
             comment_form.save()
@@ -112,7 +112,7 @@ def filter_blogs_author(request, author):
     except Blog.DoesNotExist:
         context_dict["blogs"] = None
 
-    return render(request, "blog/blogs.html", context=context_dict)
+    return render(request, "blog/profile_blogs.html", context=context_dict)
 
 def filter_comments_author(request, author):
     context_dict = {}
@@ -122,7 +122,7 @@ def filter_comments_author(request, author):
     except Comment.DoesNotExist:
         context_dict["comments"] = None
 
-    return render(request, "blog/comments.html", context=context_dict)
+    return render(request, "blog/profile_comments.html", context=context_dict)
 
 def about(request):
     return render(request, 'blog/about.html')
@@ -133,25 +133,25 @@ def blogs(request, tag=None):
     blogs_all = Blog.objects.all()
     current_tag = tag
 
-    # 收集所有的blogs的tag
+    # Get all tags
     tags = []
     for blog in blogs_all:
-        # 将每个blog的tag根据空格分开
+
         blog_tags = blog.tag.split(" ")
         for blog_tag in blog_tags:
             tags.append(blog_tag)
 
-    # 找到数量最多的tag，作为热门tag
+    # count the number of each tag
     tag_count = {}
     for tag_ in tags:
         if tag_ in tag_count:
             tag_count[tag_] += 1
         else:
             tag_count[tag_] = 1
-    # 将tag_count按照value排序
+    # sort the tag_count
     tag_count = sorted(tag_count.items(), key=lambda x: x[1], reverse=True)
 
-    # 取前5个tag作为热门tag,只取tag名字
+    # only get the top 5 tags
     hot_tags = []
     for tag_ in tag_count[:5]:
         hot_tags.append(tag_[0])
@@ -159,7 +159,7 @@ def blogs(request, tag=None):
     context_dict = {"hot_tags": hot_tags}
 
     if tag:
-        # 转变为字符串
+
         tag = str(tag)
         context_dict["tag"] = tag
 
@@ -167,20 +167,31 @@ def blogs(request, tag=None):
 
 
 def blog_detail(request, blog_title_slug):
-    context_dict = {}
-    try:
-        blog = Blog.objects.get(slug=blog_title_slug)
-        context_dict["blog"] = blog
-    except Blog.DoesNotExist:
-        context_dict["blog"] = None
 
-    return render(request, "blog/blog_detail1.html", context=context_dict)
+    blog = get_object_or_404(Blog, slug=blog_title_slug)
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
 
+            comment = comment_form.save(commit=False)
+            comment.blog = blog
+            comment.author = request.user
+            comment.save()
+            comment_form = CommentForm()
+            comments = blog.comments.all().order_by('-date_posted')
+            return render(request, 'blog/blog_detail1.html',
+                          {'blog': blog, 'comment_form': comment_form, 'comments': comments})
+    else:
+        comment_form = CommentForm()
+
+    # sort the comment by the latest date
+    comments = blog.comments.all().order_by('-date_posted')
+    return render(request, 'blog/blog_detail1.html',
+                  {'blog': blog, 'comment_form': comment_form, 'comments': comments})
 
 
 def search_results(request):
     return render(request, "blog/search_results.html")
-    return render(request, 'blog/blog_detail1.html', context=context_dict)
 
 
 def search_results(request):
