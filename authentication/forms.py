@@ -7,6 +7,7 @@ class UserForm(forms.ModelForm):
     
     # password = forms.CharField(widget=forms.PasswordInput())
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'maxlength': '6', 'required': 'required'}))
+
     
 
     class Meta:
