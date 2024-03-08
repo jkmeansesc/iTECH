@@ -1,47 +1,71 @@
-{% extends 'base.html' %}
-{% block head %}
-    {{ block.super }}
-    <!-- Page-specific styles or scripts -->
-{% endblock head %}
-{% block content %}
-    <!-- Insert the contents from the original template adjusted for Django templating syntax -->
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title_block %}
+    Publish
+{% endblock title_block %}
+{% block body_block %}
+    <style>
+    #{{ form.image.id_for_label }} {
+        display: none;
+    }
+    </style>
+    </style>
     <main class="main-content" id="main_content">
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="section">
-                            <div class="panel-heading">
-                                <i class="icon-pencil icon-form"></i>
-                                <h2>创建帖子</h2>
+                    <div class="col-md-9">
+                        <form action="{% url 'blog:publish' %}"
+                              method="post"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="{{ form.title.id_for_label }}">Title:</label>
+                                {{ form.title|add_class:"form-control" }}
                             </div>
-                            <div class="panel-body">
-                                <form class="form-horizontal form--flex"
-                                      role="form"
-                                      method="POST"
-                                      action="{% url 'your_publish_view_url_name' %}">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <!-- Your form fields for post publishing go here -->
-                                        <label for="title">标题</label>
-                                        <input id="title"
-                                               type="text"
-                                               class="form-control"
-                                               name="title"
-                                               value=""
-                                               required="">
-                                    </div>
-                                    <!-- More form fields as necessary -->
-                                    <input type="submit" class="btn btn-primary" value="提交">
-                                </form>
+                            <div class="form-group">
+                                <label for="{{ form.tag.id_for_label }}">Tag:</label>
+                                {{ form.tag|add_class:"form-control" }}
                             </div>
-                        </div>
-                        <div class="go-back-button">
-                            <a href="{% url 'your_forum_home_url_name' %}">⟵ 返回</a>
-                        </div>
+                            <div class="form-group">
+                                <label for="{{ form.image.id_for_label }}" id="image-label">Image:</label>
+                                <button type="button" id="upload-btn">Upload Image</button>
+                                <span id="file-name">No file chosen</span>
+                                {{ form.image }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.media }}
+                                {{ form.content }}
+                            </div>
+                            <div class="text-center">
+                                <input type="submit" value="Submit" class="btn btn-primary">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-{% endblock content %}
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    var uploadBtn = document.getElementById('upload-btn');
+    var fileName = document.getElementById('file-name');
+    var realInput = document.getElementById('{{ form.image.id_for_label }}');
+    var label = document.getElementById('image-label');
+
+    uploadBtn.addEventListener('click', function () {
+        realInput.click(); // Trigger file input click
+    });
+
+    realInput.addEventListener('change', function () {
+        var name = realInput.value.split('\\').pop(); // Extract file name
+        fileName.textContent = name ? name : 'No file chosen'; // Update display
+    });
+
+    label.addEventListener('click', function(e) {
+        e.preventDefault();
+    });
+});
+    </script>
+{% endblock %}

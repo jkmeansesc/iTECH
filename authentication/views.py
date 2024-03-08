@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -10,19 +11,20 @@ from .forms import UserForm, UserProfileForm
 
 def register(request):
     registered = False
+    error_message = ""
 
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
+
             user = user_form.save()
-            user.set_password(user.password) # Hash the password
+            user.set_password(user.password)  # Hash the password
             user.save()
 
-            profile = profile_form.save(commit=False) # Don't save to database yet
+            profile = profile_form.save(commit=False)  # Don't save to database yet
             profile.user = user
-
 
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
@@ -31,12 +33,22 @@ def register(request):
 
             registered = True
         else:
+
+            # Check the errors
+            if user_form.errors:
+                error_message += f"User form errors: {user_form.errors}"
+            if profile_form.errors:
+                error_message += f"Profile form errors: {profile_form.errors}"
+
             print(user_form.errors, profile_form.errors)
+
+            # Invalid form or forms, come back to the registration page, send the error message
+            return render(request, 'authentication/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered, 'error_message': error_message})
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'authentication/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'authentication/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered, 'error_message': error_message})
 
 def user_login(request):
     if request.method == 'POST':

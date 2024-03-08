@@ -47,7 +47,6 @@ def publish(request):
         if form.is_valid():
             blog_instance = form.save(commit=False)
 
-
             if 'image' in request.FILES:
                 blog_instance.image = request.FILES['image']
             else:
@@ -75,11 +74,11 @@ def about(request):
     return render(request, 'blog/about.html')
 
 
-
 def blogs(request, tag=None):
     # Get all blogs
     blogs_all = Blog.objects.all()
-    
+    current_tag = tag
+
     # 收集所有的blogs的tag
     tags = []
     for blog in blogs_all:
@@ -87,7 +86,7 @@ def blogs(request, tag=None):
         blog_tags = blog.tag.split(" ")
         for blog_tag in blog_tags:
             tags.append(blog_tag)
-    
+
     # 找到数量最多的tag，作为热门tag
     tag_count = {}
     for tag_ in tags:
@@ -103,15 +102,17 @@ def blogs(request, tag=None):
     for tag_ in tag_count[:5]:
         hot_tags.append(tag_[0])
 
-    context_dict = {"hot_tags": hot_tags}
+    context_dict = {
+        'hot_tags': hot_tags,
+        'current_tag': current_tag
+    }
 
     if tag:
         # 转变为字符串
         tag = str(tag)
         context_dict["tag"] = tag
-        
-    return render(request, 'blog/blogs.html', context=context_dict)
 
+    return render(request, 'blog/blogs.html', context=context_dict)
 
 
 def blog_detail(request, blog_title_slug):
@@ -125,7 +126,13 @@ def blog_detail(request, blog_title_slug):
     return render(request, 'blog/blog_detail1.html', context=context_dict)
 
 
-
-
 def search_results(request):
     return render(request, 'blog/search_results.html')
+
+
+def profile_settings(request):
+    return render(request, 'blog/profile_settings.html')
+
+
+def profile_blogs(request):
+    return render(request, 'blog/profile_blogs.html')

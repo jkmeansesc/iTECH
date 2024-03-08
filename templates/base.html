@@ -25,6 +25,7 @@
     <script src="{% static 'js/toastr.min.js' %}"></script>
     <script src="{% static 'js/bundle.js' %}"></script>
     <script src="{% static 'js/submenu.js' %}"></script>
+    <script src="{% static 'js/dc.js'%}"></script>
 
     <!-- header
           ================================================== -->
@@ -46,7 +47,7 @@
                         </a>
                     </li>
                     <li class="nav__item nav__item--main">
-                        <a href="{% url 'blog:blogs'%}">
+                        <a href="{% url 'blog:blogs'  %}">
                             Blogs
                         </a>
                     </li>
@@ -59,7 +60,7 @@
                         <li class="nav__item nav__item--main has-children">
                             <a href="#0" title="">Hello, {{ user.username }}</a>
                             <ul class="sub-menu">
-                                <li><a href="{% url 'blog:search_results' %}">my profile</a></li>
+                                <li><a href="{% url 'blog:profile_settings' %}">my profile</a></li>
                                 <li><a href="{% url 'blog:publish' %}">publish a blog</a></li>
                                 <li><a href="{% url 'authentication:logout' %}">log out</a></li>
                             </ul>

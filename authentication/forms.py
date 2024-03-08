@@ -7,8 +7,8 @@ class UserForm(forms.ModelForm):
     
     # password = forms.CharField(widget=forms.PasswordInput())
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'maxlength': '6', 'required': 'required'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'required': 'required', 'unique': 'true'}))
 
-    
 
     class Meta:
         model = User

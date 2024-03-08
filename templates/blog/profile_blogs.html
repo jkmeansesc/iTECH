@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        {% block title_block %}
+            {{ user.username }} blogs
+        {% endblock %}</title>
+</head>
+<body>{% block body_block %}
+    <div class="page__wrapper page--profile">
+        <main class="main-content">
+            <div class="hero hero--profile">
+            </div>
+            <div class="container-fluid">
+                <div class="profile row">
+                    <div class="col-md-3">
+                        <div class="profile__header">
+                            <div class="profile__user-avatar"
+                                 style="background-image: url('{% static 'image/timg.jpg' %}')">
+                            </div>
+                            <div class="profile__info">
+                                <div class="profile__name">
+                                    <h4 class="change-name" data-change="name">
+                                        {{ user.username }}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 profile__content">
+                        <div class="tabs">
+                            <div class="tabs-profile">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation">
+                                        <a href=" " aria-controls="home" role="tab">
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            comments
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="active">
+                                        <a href=" " aria-controls="home" role="tab">
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            blogs
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="{% url 'blog:profile_settings' %}" aria-controls="home" role="tab">
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            Setting
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab-content">
+                            <div class="section">
+                                <div role="tabpanel" class="tab-pane active" id="comments">
+                                    <ul class="comments__container list-group">
+
+                                        <li class="list-group-item">
+                                            <div class="comment__container">
+                                                <div class="comment__wrapper">
+                                                    <div class="comment__footer">
+                                                        title: <span> blog.tag <span><i
+                                                            class="icon-action-redo"
+                                                            aria-hidden="true"></i>
+                                                          <a href=""></a>
+                                                            <a href=""
+                                                            class="btn btn-primary btn-outline pull-right">
+                                                            <span>edit</span>
+                                                            </a>
+                                                            <time style='color:#bababa;font-size: 14px'>2024-02-01</time>
+                                                    </span></span></div>
+                                                    <div class="comment__text">
+                                                        <p>content: py manage.py star...</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="comment__container">
+                                                <div class="comment__wrapper">
+                                                    <div class="comment__footer">
+                                                        title: <span> blog.tag1 <span><i
+                                                            class="icon-action-redo"
+                                                            aria-hidden="true"></i>
+                                                          <a href="">
+                                                                    </a>
+                                                            <time style='color:#bababa;font-size: 14px'>2024-02-01</time>
+                                                    </span></span></div>
+                                                    <div class="comment__text">
+                                                        <p>content: today is a good day...</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    {#                                    <div class="pagination__container">#}
+                                    {#                                        <ul class="pagination">#}
+                                    {#                                            <!-- Previous Page Link -->#}
+                                    {#                                            <li class="previous disabled"><span></span></li>#}
+                                    {##}
+                                    {#                                            <li><a href="/user/forum/lcy99031148@163.com/?page=1">1</a></li>#}
+                                    {#                                            <li class="next disabled"><span></span></li>#}
+                                    {##}
+                                    {#                                        </ul>#}
+                                    {##}
+                                    {#                                    </div>#}
+                                </div>
+                            </div>
+                            <style>
+                                .profile .comments__container {
+                                    border: 0;
+                                }
+                            </style>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+</body>
+
+</html>
