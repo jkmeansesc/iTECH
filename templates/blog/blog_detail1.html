@@ -8,9 +8,6 @@
 <body>
 <article>
 
-
-
-
     <h1>title: {{ blog.title }}</h1>
     <p>tags: {{ blog.tag }}</p>
     <p>author: {{ blog.author }}</p>
@@ -21,11 +18,14 @@
 
     <p>{{ blog.content }}</p>
 
-   
-    
+    <form action="{% url 'comment' blog.id %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="content">
+        <input type="submit" value="submit">
+        <p>{{ comment.content }}</p>
+
+    </form>
 
 </article>
-
-    
 </body>
 </html>
