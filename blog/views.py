@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from .forms import BlogForm, CommentForm
-from .models import Blog
+from .models import Blog, Comment
 from .forms import BlogForm
 from .utils import send_mails
 from django.contrib.auth.decorators import login_required
@@ -104,9 +104,28 @@ def publish_comment(request, blog_title_slug):
         return render(request, "blog/blog_detail1.html", context=context_dict)
 
 
+def filter_blogs_author(request, author):
+    context_dict = {}
+    try:
+        blogs = Blog.objects.filter(author=author)
+        context_dict["blogs"] = blogs
+    except Blog.DoesNotExist:
+        context_dict["blogs"] = None
+
+    return render(request, "blog/blogs.html", context=context_dict)
+
+def filter_comments_author(request, author):
+    context_dict = {}
+    try:
+        comments = Comment.objects.filter(reviewer=author)
+        context_dict["comments"] = comments
+    except Comment.DoesNotExist:
+        context_dict["comments"] = None
+
+    return render(request, "blog/comments.html", context=context_dict)
+
 def about(request):
     return render(request, 'blog/about.html')
-
 
 
 def blogs(request, tag=None):
@@ -156,6 +175,7 @@ def blog_detail(request, blog_title_slug):
         context_dict["blog"] = None
 
     return render(request, "blog/blog_detail1.html", context=context_dict)
+
 
 
 def search_results(request):
