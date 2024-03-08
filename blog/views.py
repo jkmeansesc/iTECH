@@ -66,6 +66,7 @@ def publish(request):
             form = BlogForm()
             context_dict["form"] = form
             return render(request, "blog/publish.html", context=context_dict)
+            return render(request, "blog/publish.html", context=context_dict)
     else:
         context_dict = {"message": "have a good day"}
         form = BlogForm()
@@ -112,7 +113,6 @@ def about(request):
 def blogs(request, tag=None):
     # Get all blogs
     blogs_all = Blog.objects.all()
-    current_tag = tag
 
     # 收集所有的blogs的tag
     tags = []
@@ -173,3 +173,7 @@ def profile_settings(request):
 
 def profile_blogs(request):
     return render(request, 'blog/profile_blogs.html')
+
+
+def profile_comments(request):
+    return render(request, 'blog/profile_comments.html')

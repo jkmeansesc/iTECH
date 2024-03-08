@@ -7,6 +7,7 @@
     <title>{% block title_block %}
         {{ user.username }} setting
     {% endblock %}</title>
+
 </head>
 
 <body>{% block body_block %}
@@ -35,7 +36,7 @@
                             <div class="tabs-profile">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation">
-                                        <a href=" " aria-controls="home" role="tab">
+                                        <a href="{% url 'blog:profile_comments' %}" aria-controls="home" role="tab">
                                             <i class="icon-settings" aria-hidden="true" title="Settings"></i>
                                             Comments
                                         </a>
@@ -47,7 +48,7 @@
                                         </a>
                                     </li>
                                     <li role="presentation" class="active">
-                                        <a href="/user/settings/" aria-controls="home" role="tab">
+                                        <a href="{% url 'blog:profile_settings' %}" aria-controls="home" role="tab">
                                             <i class="icon-settings" aria-hidden="true" title="Settings"></i>
                                             Setting
                                         </a>
@@ -84,8 +85,6 @@
                                                         </p>
                                                         <form id="change-username" action=" " method="POST"
                                                               style="display: none;">
-                                                            <input type="hidden" name="csrfmiddlewaretoken"
-                                                                   value="6zJ08m2J8YMBn14dnurCS7e0j1oPao5JiGIbUBBsgIBhys6f0r8S86tBOeVdnmXg">
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <input name="username" type="text"
@@ -99,7 +98,7 @@
                                                         </form>
                                                     </li>
                                                     <li>
-                                                        <a href="/user/settings/"
+                                                        <a href=" "
                                                            class="btn btn-primary btn-outline pull-right"
                                                            data-toggle="form"
                                                            data-target="#change-email" data-change=".change-email"
@@ -116,8 +115,6 @@
                                                         </p>
                                                         <form id="change-email" action="/user/settings/" method="POST"
                                                               style="display: none;">
-                                                            <input type="hidden" name="csrfmiddlewaretoken"
-                                                                   value="6zJ08m2J8YMBn14dnurCS7e0j1oPao5JiGIbUBBsgIBhys6f0r8S86tBOeVdnmXg">
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <input name="email" type="text"
@@ -142,8 +139,6 @@
                                                             <h4>Profile</h4>
                                                             <form action="/user/settings/" method="POST" id='myimage'
                                                                   enctype="multipart/form-data" class='form-inline'>
-                                                                <input type="hidden" name="csrfmiddlewaretoken"
-                                                                       value="6zJ08m2J8YMBn14dnurCS7e0j1oPao5JiGIbUBBsgIBhys6f0r8S86tBOeVdnmXg">
                                                                 <div class="form-group">
                                                                      <label for="img_box" class="btn btn-primary btn-outline">choose profile</label>
                                                                     <input id='img_box' type="file" name="image"
@@ -163,8 +158,6 @@
                                                             <h4>Password</h4>
                                                             <form id="change-pwd" action="/user/settings/" method="POST"
                                                                   style="display: none;">
-                                                                <input type="hidden" name="csrfmiddlewaretoken"
-                                                                       value="6zJ08m2J8YMBn14dnurCS7e0j1oPao5JiGIbUBBsgIBhys6f0r8S86tBOeVdnmXg">
                                                                 <div class="form-group">
                                                                     <div class="controls">
                                                                         <input name="password" type="text"
@@ -194,61 +187,6 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <style type="text/css">
-                                    #img_box {
-                                        width: auto;
-                                        height: auto;
-                                        position: relative;
-                                        opacity: 1;
-                                        z-index: 1000;
-                                    }
-
-                                    #pwd_msg {
-                                        display: none;
-                                    }
-                                </style>
-                                <script type="text/javascript">
-                                    $('#set_pwd').click(function (e) {
-                                        var pwd = $('#change-pwd [name="password"]').val()
-                                        var pwd1 = $('#change-pwd [name="password1"]').val()
-                                        if (pwd != pwd1) {
-                                            $("#pwd_msg").text('two passwords are different').show()
-                                            return false
-                                        }
-
-                                        var token = $('#change-pwd [name="csrfmiddlewaretoken"]').val()
-
-                                        // var form = new FormData(document.getElementById("gender_radio"))
-                                        var form = new FormData();
-                                        form.append("password", pwd);
-                                        form.append("csrfmiddlewaretoken", token);
-                                        
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: '/user/settings/',
-                                            // data:'json',
-                                            processData: false,
-                                            contentType: false,
-                                            data: form,
-                                            success: function (response) {
-                                                console.log('ok', response)
-                                                window.location.href = '/user/login/';
-                                            },
-                                            error: function (response) {
-                                                console.log('err', response)
-                                                if (response.status == 200) {
-                                                    window.location.href = '/user/login/';
-                                                } else {
-                                                    $("#pwdmsg").text(response.responseText).show()
-                                                }
-                                            }
-                                        })
-                                    })
-
-                                    $('#pwd_msg').click(function (e) {
-                                        $('#pwd_msg').hide()
-                                    })
-                                </script>
                             </div>
                         </div>
                     </div>
