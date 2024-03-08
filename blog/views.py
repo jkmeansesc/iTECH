@@ -62,12 +62,12 @@ def publish(request):
             context_dict = {"message": "have a good day"}
             form = BlogForm()
             context_dict["form"] = form
-            return render(request, "blog/publish1.html", context=context_dict)
+            return render(request, "blog/publish.html", context=context_dict)
     else:
         context_dict = {"message": "have a good day"}
         form = BlogForm()
         context_dict["form"] = form
-        return render(request, "blog/publish1.html", context=context_dict)
+        return render(request, "blog/publish.html", context=context_dict)
 
 
 def about(request):

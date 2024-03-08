@@ -7959,6 +7959,18 @@ select {
     left: 0
 }
 
+#img_box {
+    width: auto;
+    height: auto;
+    position: relative;
+    opacity: 1;
+    z-index: 1000;
+}
+
+#pwd_msg {
+    display: none;
+}
+
 #search-form {
     position: relative;
     margin: 1em 0;
