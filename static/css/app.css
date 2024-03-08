@@ -1038,6 +1038,7 @@ pre.hljs {
     float: left;
     width: 25%
 }
+
 .list-group-item, a.list-group-item, button.list-group-item {
     color: #ccd2ef;
 }
@@ -5730,9 +5731,9 @@ aside .guidelines li {
     color: #999
 }
 
- .form-group {
-        padding-top: 20px; /* 设置上内边距为20像素 */
-    }
+.form-group {
+    padding-top: 20px; /* 设置上内边距为20像素 */
+}
 
 #book-view h2 {
     margin-top: 1em !important
@@ -7387,6 +7388,7 @@ aside .sponsors .wix {
 input[type="file"] {
     display: none;
 }
+
 .notification {
     width: 100%;
     padding: .5em;
@@ -7857,6 +7859,104 @@ select {
 
 .dropdown.open .notification-dropdown {
     display: block
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: auto;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 120px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid #eaeaea;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175)
+
+}
+
+.nav__item--main:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu.pull-right {
+    right: 0;
+    left: auto
+}
+
+.dropdown-menu .divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #e5e5e5
+}
+
+.dropdown-menu > li > a {
+    display: block;
+    padding: 9px 20px 9px 16px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #ffffff;
+    white-space: nowrap
+}
+
+.dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+    color: #262626;
+    text-decoration: none;
+    background-color: #f5f5f5
+}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #1da7da;
+    outline: 0
+}
+
+.dropdown-menu > .disabled > a, .dropdown-menu > .disabled > a:focus, .dropdown-menu > .disabled > a:hover {
+    color: #777
+}
+
+.dropdown-menu > .disabled > a:focus, .dropdown-menu > .disabled > a:hover {
+    text-decoration: none;
+    cursor: not-allowed;
+    background-color: transparent;
+    background-image: none;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false)
+}
+
+.profile .comments__container {
+    border: 0;
+}
+
+.open > .dropdown-menu {
+    display: block
+}
+
+.open > a {
+    outline: 0
+}
+
+.dropdown-menu-right {
+    right: 0;
+    left: auto
+}
+
+.dropdown-menu-left {
+    right: auto;
+    left: 0
 }
 
 #search-form {

@@ -34,13 +34,13 @@
                         <div class="tabs">
                             <div class="tabs-profile">
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation">
+                                    <li role="presentation" class="active">
                                         <a href="{% url 'blog:profile_comments' %}" aria-controls="home" role="tab">
                                             <i class="icon-settings" aria-hidden="true" title="Settings"></i>
                                             Comments
                                         </a>
                                     </li>
-                                    <li role="presentation" class="active">
+                                    <li role="presentation">
                                         <a href=" " aria-controls="home" role="tab">
                                             <i class="icon-settings" aria-hidden="true" title="Settings"></i>
                                             Blogs
@@ -52,6 +52,12 @@
                                             Setting
                                         </a>
                                     </li>
+                                    <li role="presentation">
+                                        <a href="{% url 'blog:profile_settings' %}" aria-controls="home" role="tab">
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            Manage Accounts
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -59,12 +65,11 @@
                             <div class="section">
                                 <div role="tabpanel" class="tab-pane active" id="comments">
                                     <ul class="comments__container list-group">
-
                                         <li class="list-group-item">
                                             <div class="comment__container">
                                                 <div class="comment__wrapper">
                                                     <div class="comment__footer">
-                                                        title: <span> blog.tag <span><i
+                                                        blog.title: <span><span><i
                                                             class="icon-action-redo"
                                                             aria-hidden="true"></i>
                                                           <a href=""></a>
@@ -75,49 +80,17 @@
                                                             <time style='color:#bababa;font-size: 14px'>2024-02-01</time>
                                                     </span></span></div>
                                                     <div class="comment__text">
-                                                        <p>content: py manage.py star...</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="comment__container">
-                                                <div class="comment__wrapper">
-                                                    <div class="comment__footer">
-                                                        title: <span> blog.tag1 <span><i
-                                                            class="icon-action-redo"
-                                                            aria-hidden="true"></i>
-                                                          <a href="">
-                                                                    </a>
-                                                            <time style='color:#bababa;font-size: 14px'>2024-02-01</time>
-                                                    </span></span></div>
-                                                    <div class="comment__text">
-                                                        <p>content: today is a good day...</p>
+                                                        <p>content: you are really great...</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
                                     </ul>
-                                    {#                                    <div class="pagination__container">#}
-                                    {#                                        <ul class="pagination">#}
-                                    {#                                            <!-- Previous Page Link -->#}
-                                    {#                                            <li class="previous disabled"><span></span></li>#}
-                                    {##}
-                                    {#                                            <li><a href="/user/forum/lcy99031148@163.com/?page=1">1</a></li>#}
-                                    {#                                            <li class="next disabled"><span></span></li>#}
-                                    {##}
-                                    {#                                        </ul>#}
-                                    {##}
-                                    {#                                    </div>#}
                                 </div>
                             </div>
                             <style>
-                                .profile .comments__container {
-                                    border: 0;
-                                }
+                               
                             </style>
-
-
                         </div>
                     </div>
                 </div>

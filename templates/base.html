@@ -24,7 +24,6 @@
     <script src="{% static 'js/highlight.min.js' %}"></script>
     <script src="{% static 'js/toastr.min.js' %}"></script>
     <script src="{% static 'js/bundle.js' %}"></script>
-    <script src="{% static 'js/submenu.js' %}"></script>
     <script src="{% static 'js/dc.js'%}"></script>
 
     <!-- header
@@ -58,12 +57,25 @@
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav__item nav__item--main has-children">
-                            <a href="#0" title="">Hello, {{ user.username }}</a>
-                            <ul class="sub-menu">
-                                <li><a href="{% url 'blog:profile_settings' %}">my profile</a></li>
-                                <li><a href="{% url 'blog:publish' %}">publish a blog</a></li>
-                                <li><a href="{% url 'authentication:logout' %}">log out</a></li>
-                            </ul>
+                            <a href="#0" title="">Hello, {{ user.username }}
+                            <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-item">
+                                <div class="section__user-avatar" style="background-image: url('{% static 'image/timg.jpg' %}')"></div>
+                                <div class="profile__info">
+                                    <div class="profile__name">
+                                        {{ user.username }}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="{% url 'blog:profile_settings' %}">my profile</a></li>
+                                <li class="dropdown-item">
+                                    <a href="{% url 'blog:publish' %}">publish a blog</a></li>
+                                <li class="dropdown-item">
+                                    <a href="{% url 'authentication:logout' %}">
+                                        log out</a></li>
+                        </ul>
                         </li>
                     {% else %}
                         <li id="sign_in" class="nav__item">

@@ -77,7 +77,6 @@ def about(request):
 def blogs(request, tag=None):
     # Get all blogs
     blogs_all = Blog.objects.all()
-    current_tag = tag
 
     # 收集所有的blogs的tag
     tags = []
@@ -104,7 +103,7 @@ def blogs(request, tag=None):
 
     context_dict = {
         'hot_tags': hot_tags,
-        'current_tag': current_tag
+        'current_tag': tag
     }
 
     if tag:
@@ -136,3 +135,7 @@ def profile_settings(request):
 
 def profile_blogs(request):
     return render(request, 'blog/profile_blogs.html')
+
+
+def profile_comments(request):
+    return render(request, 'blog/profile_comments.html')
