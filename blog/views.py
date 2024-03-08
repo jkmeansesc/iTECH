@@ -83,12 +83,14 @@ def publish_comment(request):
 
 
 def about(request):
-    return render(request, "blog/about.html")
+    return render(request, 'blog/about.html')
+
 
 
 def blogs(request, tag=None):
     # Get all blogs
     blogs_all = Blog.objects.all()
+    current_tag = tag
 
     # 收集所有的blogs的tag
     tags = []
@@ -120,7 +122,7 @@ def blogs(request, tag=None):
         tag = str(tag)
         context_dict["tag"] = tag
 
-    return render(request, "blog/blogs.html", context=context_dict)
+    return render(request, 'blog/blogs.html', context=context_dict)
 
 
 def blog_detail(request, blog_title_slug):
@@ -136,3 +138,16 @@ def blog_detail(request, blog_title_slug):
 
 def search_results(request):
     return render(request, "blog/search_results.html")
+    return render(request, 'blog/blog_detail1.html', context=context_dict)
+
+
+def search_results(request):
+    return render(request, 'blog/search_results.html')
+
+
+def profile_settings(request):
+    return render(request, 'blog/profile_settings.html')
+
+
+def profile_blogs(request):
+    return render(request, 'blog/profile_blogs.html')
