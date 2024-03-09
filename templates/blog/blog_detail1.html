@@ -1,36 +1,66 @@
-<!-- Display blog post -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ blog.title }}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+
 <article>
-  <h2>{{ blog.title }}</h2>
-  <p>{{ blog.date }}</p>
-  <p>{{ blog.content }}</p>
-  <p>Written by {{ blog.author }}</p>
-  <p>Tags: {{ blog.tag }}</p>
-  <p>Comments: {{ blog.comments.count }}</p>
-
-  {# <form action="{% url 'comment' blog.id %}" method="post">#}
-    {# {% csrf_token %}#}
-    {# <input type="text" name="content">#}
-    {# <input type="submit" value="submit">#}
-    {# <p>{{ comment.content }}</p>#}
-    {##}
-    {# </form>#}
-
+    <h2>{{ blog.title }}</h2>
+    <p>{{ blog.date }}</p>
+    <p>{{ blog.content }}</p>
+    <p>Written by {{ blog.author }}</p>
+    <p>Tags: {{ blog.tag }}</p>
+    <p>Comments: {{ blog.comments.count }}</p>
 </article>
 
 <!-- Comment form -->
-<form action="{% url 'blog:blog_detail' blog.slug %}" method="post">
-  {% csrf_token %}
-  {{ comment_form.as_p }}
-  <input type="submit" value="Submit">
+<form id="commentForm" method="post" action="{% url 'blog:blog_detail' blog.slug %}">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <input type="submit" value="Submit">
 </form>
 
 <!-- List comments -->
-<div>
-  {% for comment in blog.comments.all %}
-  <div>
-    <p>{{ comment.author}} says: </p>
-    <p>{{ comment.content }}</p>
-    <p>Commented on {{ comment.date_posted }}</p>
-  </div>
-  {% endfor %}
+<div id="comments">
+    {% for comment in comments %}
+        <div>
+            <p>{{ comment.author }} says:</p>
+            <p>{{ comment.content }}</p>
+            <p>Commented on {{ comment.date_posted }}</p>
+        </div>
+    {% endfor %}
 </div>
+
+<script>
+$(document).ready(function() {
+    $('#commentForm').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "blog:blog_detail" blog.slug %}',
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+                $('#comments').prepend(
+                    '<div><p>' + response.author + ' says:</p>' +
+                    '<p>' + response.content + '</p>' +
+                    '<p>Commented on ' + response.date_posted + '</p></div>'
+                );
+                $('#commentForm')[0].reset();
+            },
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    });
+});
+
+
+</script>
+
+</body>
+</html>

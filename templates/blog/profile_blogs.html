@@ -62,11 +62,13 @@
                                 <div role="tabpanel" class="tab-pane active" id="comments">
                                     <ul class="comments__container list-group">
 
+
+                                        {% for blog in blogs %}
                                         <li class="list-group-item">
                                             <div class="comment__container">
                                                 <div class="comment__wrapper">
                                                     <div class="comment__footer">
-                                                        title: <span> blog.tag <span><i class="icon-action-redo"
+                                                        {{blog.title}}: <span> {{blog.tag}} <span><i class="icon-action-redo"
                                                                     aria-hidden="true"></i>
                                                                 <a href=""></a>
                                                                 <a href=""
@@ -74,31 +76,31 @@
                                                                     <span>edit</span>
                                                                 </a>
                                                                 <time
-                                                                    style='color:#bababa;font-size: 14px'>2024-02-01</time>
+                                                                    style='color:#bababa;font-size: 14px'>{{ blog.date|date:'d-m-Y H:i:s' }}</time>
                                                             </span></span></div>
                                                     <div class="comment__text">
-                                                        <p>content: py manage.py star...</p>
+                                                        <!-- <p>content: py manage.py star...</p> -->
+                                                        <p>{{ blog.content|slice:":30" }}...</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="list-group-item">
-                                            <div class="comment__container">
-                                                <div class="comment__wrapper">
-                                                    <div class="comment__footer">
-                                                        title: <span> blog.tag1 <span><i class="icon-action-redo"
-                                                                    aria-hidden="true"></i>
-                                                                <a href="">
-                                                                </a>
-                                                                <time
-                                                                    style='color:#bababa;font-size: 14px'>2024-02-01</time>
-                                                            </span></span></div>
-                                                    <div class="comment__text">
-                                                        <p>content: today is a good day...</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
+                                        {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                     </ul>
                                 </div>
                             </div>

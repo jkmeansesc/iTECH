@@ -1,13 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
-
 from .forms import BlogForm, CommentForm
 from .models import Blog, Comment
 from .forms import BlogForm
 from .utils import send_mails
 from django.contrib.auth.decorators import login_required
 # 导入HttpResponse
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 
 # from django.core.mail import send_mail
@@ -106,34 +105,14 @@ def publish_comment(request, blog_title_slug):
         return render(request, "blog/blog_detail1.html", context=context_dict)
 
 
-def filter_blogs_author(request, author):
-    context_dict = {}
-    try:
-        blogs = Blog.objects.filter(author=author)
-        context_dict["blogs"] = blogs
-    except Blog.DoesNotExist:
-        context_dict["blogs"] = None
-
-    return render(request, "blog/profile_blogs.html", context=context_dict)
-
-def filter_comments_author(request, author):
-    context_dict = {}
-    try:
-        comments = Comment.objects.filter(reviewer=author)
-        context_dict["comments"] = comments
-    except Comment.DoesNotExist:
-        context_dict["comments"] = None
-
-    return render(request, "blog/profile_comments.html", context=context_dict)
-
 def about(request):
     return render(request, 'blog/about.html')
+
 
 
 def blogs(request, tag=None):
     # Get all blogs
     blogs_all = Blog.objects.all()
-    current_tag = tag
 
     # Get all tags
     tags = []
@@ -171,7 +150,7 @@ def blogs(request, tag=None):
 def blog_detail(request, blog_title_slug):
 
     blog = get_object_or_404(Blog, slug=blog_title_slug)
-    if request.method == 'POST':
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
 
@@ -180,9 +159,15 @@ def blog_detail(request, blog_title_slug):
             comment.author = request.user
             comment.save()
             comment_form = CommentForm()
+            data = {
+                'author': comment.author.username,
+                'content': comment.content,
+                'date_posted': comment.date_posted.strftime('%Y-%m-%d %H:%M:%S')
+            }
             comments = blog.comments.all().order_by('-date_posted')
-            return render(request, 'blog/blog_detail1.html',
-                          {'blog': blog, 'comment_form': comment_form, 'comments': comments})
+            # return render(request, 'blog/blog_detail1.html',
+            #             #               {'blog': blog, 'comment_form': comment_form, 'comments': comments})
+            return JsonResponse(data)
     else:
         comment_form = CommentForm()
 
@@ -196,9 +181,9 @@ def blog_detail(request, blog_title_slug):
 
 
 def search_results(request):
-    return render(request, 'blog/search_results.html')
 
     search_content = request.GET.get('search_content')
+    print (search_content)
     # 用blog的title和tag进行搜索
     # search_content可能包含多个单词，用空格分开
     search_content = search_content.split(" ")
@@ -227,7 +212,10 @@ def profile_settings(request):
 
 
 def profile_blogs(request):
-    return render(request, 'blog/profile_blogs.html')
+    # 返回本用户的所有blog
+    blogs = Blog.objects.filter(author=request.user)
+    context_dict = {"blogs": blogs}
+    return render(request, 'blog/profile_blogs.html', context=context_dict)
 
 def profile_comments(request):
     return render(request, 'blog/profile_comments.html')
