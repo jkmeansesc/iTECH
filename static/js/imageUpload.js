@@ -1,10 +1,19 @@
-document.getElementById('img_box').addEventListener('change', function(event) {
-        // 获取用户选择的文件
-        var file = event.target.files[0];
+ document.addEventListener('DOMContentLoaded', function() {
+        var fileInput = document.getElementById('img_box');
+        var uploadButton = document.getElementById('upload-btn');
+        var fileNameSpan = document.getElementById('file-name');
 
-        // 如果用户选择了文件
-        if (file) {
-            // 获取文件名并显示在页面上
-            document.getElementById('file_name').innerText = file.name;
-        }
+        uploadButton.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', function() {
+            var selectedFile = fileInput.files[0];
+
+            if (selectedFile) {
+                fileNameSpan.textContent = selectedFile.name;
+            } else {
+                fileNameSpan.textContent = 'No file chosen';
+            }
+        });
     });

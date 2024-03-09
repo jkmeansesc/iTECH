@@ -5,26 +5,44 @@ document.addEventListener("DOMContentLoaded", function() {
     var header = document.querySelector('.header--main');
     var coverLayer = document.querySelector('.cover-layer.search-form-visible');
 
-    // 点击搜索按钮时显示或隐藏搜索栏和覆盖层
+    // Show or hide search form and cover layer when clicking the search icon
     searchIcon.addEventListener('click', function(event) {
         event.preventDefault();
         searchForm.classList.toggle('is-visible');
-        body.classList.toggle('search--visible'); // 切换 body 类
-        header.classList.toggle('search--visible'); // 切换 header 类
-        coverLayer.classList.toggle('is-visible'); // 切换覆盖层类
+        body.classList.toggle('search--visible'); // Toggle body class
+        header.classList.toggle('search--visible'); // Toggle header class
+        coverLayer.classList.toggle('is-visible'); // Toggle cover layer class
     });
 
-    // 点击页面其他地方时隐藏搜索栏
+    // Hide search form when clicking elsewhere on the page
     document.addEventListener('click', function(event) {
-        // 检查点击事件是否发生在搜索按钮或搜索栏内部
+        // Check if the click event occurred outside the search icon or search form
         if (!searchIcon.contains(event.target) && !searchForm.contains(event.target)) {
-            // 如果搜索栏当前可见，则隐藏
+            // If the search form is currently visible, hide it
             if (searchForm.classList.contains('is-visible')) {
                 searchForm.classList.remove('is-visible');
-                body.classList.remove('search--visible'); // 移除 body 类
-                header.classList.remove('search--visible'); // 移除 header 类
-                coverLayer.classList.remove('is-visible'); // 移除覆盖层类
+                body.classList.remove('search--visible'); // Remove body class
+                header.classList.remove('search--visible'); // Remove header class
+                coverLayer.classList.remove('is-visible'); // Remove cover layer class
             }
         }
+    });
+});
+
+// hide navigation bar
+document.addEventListener('DOMContentLoaded', function() {
+    let lastScrollTop = 0;
+    const delta = 2 * window.innerHeight / 100;
+    window.addEventListener('scroll', function() {
+        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        const header = document.querySelector('.header--main');
+
+        if (currentScroll > lastScrollTop + delta) {
+            header.classList.add('is-hidden'); // hide header
+        } else if (currentScroll < lastScrollTop - delta) {
+            header.classList.remove('is-hidden'); // present header
+        }
+
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
     });
 });
