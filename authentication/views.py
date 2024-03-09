@@ -70,12 +70,57 @@ def user_login(request):
     else:
         return render(request, 'authentication/login.html')
 
-def password_reset(request):
-    return render(request, 'authentication/password_reset.html')
-
-
 @login_required
 def user_logout(request):
     logout(request)
     return redirect(reverse('blog:index'))
 
+def password_reset(request):
+    return render(request, 'authentication/password_reset.html')
+
+
+
+def set_username(request):
+    # 得到post请求中的username
+    username = request.POST.get('username')
+    # 得到当前用户
+    user = request.user
+    # 将当前用户的username设置为post请求中的username
+    user.username = username
+    # 保存当前用户
+    user.save()
+    # 返回到设置用户名页面
+    return redirect(reverse('blog:profile_settings'))
+
+def set_email(request):
+    # 得到post请求中的email
+    email = request.POST.get('email')
+    # 得到当前用户
+    user = request.user
+    # 将当前用户的email设置为post请求中的email
+    user.email = email
+    # 保存当前用户
+    user.save()
+    return redirect(reverse('blog:profile_settings'))
+
+def set_avatar(request):
+    # 得到post请求中的avatar
+    avatar = request.FILES.get('avatar')
+    # 得到当前用户
+    user = request.user
+    # 将当前用户的avatar设置为post请求中的avatar
+    user.userprofile.picture = avatar
+    # 保存当前用户
+    user.save()
+    return redirect(reverse('blog:profile_settings'))
+
+def set_password(request):
+    # 得到post请求中的password
+    password = request.POST.get('password')
+    # 得到当前用户
+    user = request.user
+    # 将当前用户的password设置为post请求中的password
+    user.set_password(password)
+    # 保存当前用户
+    user.save()
+    return redirect(reverse('blog:profile_settings'))

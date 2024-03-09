@@ -20,8 +20,7 @@
                     <div class="col-md-3">
                         <div class="profile__header">
                             <div class="profile__user-avatar"
-                                style="background-image: url('{% static 'image/timg.jpg' %}')">
-
+                                style="background-image: url('{{ user.userProfile.picture.url }}')">
                             </div>
                             <div class="profile__info">
                                 <div class="profile__name">
@@ -54,6 +53,17 @@
                                             Setting
                                         </a>
                                     </li>
+
+                                    <!-- 判断用户是否为员工 -->
+                                    {% if user.is_staff %}
+
+                                    <li role="presentation">
+                                        <a href="{% url 'blog:profile_settings' %}" aria-controls="home" role="tab">
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            Manage Accounts
+                                        </a>
+                                    </li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </div>
@@ -68,15 +78,15 @@
                                             <div class="comment__container">
                                                 <div class="comment__wrapper">
                                                     <div class="comment__footer">
-                                                        {{blog.title}}: <span> {{blog.tag}} <span><i class="icon-action-redo"
-                                                                    aria-hidden="true"></i>
+                                                        {{blog.title}}: <span> {{blog.tag}} <span><i
+                                                                    class="icon-action-redo" aria-hidden="true"></i>
                                                                 <a href=""></a>
-                                                                <a href=""
+                                                                <a href="{% url 'blog:blog_delete' blog.id %}"
                                                                     class="btn btn-primary btn-outline pull-right">
-                                                                    <span>edit</span>
+                                                                    <span>delete</span>
                                                                 </a>
-                                                                <time
-                                                                    style='color:#bababa;font-size: 14px'>{{ blog.date|date:'d-m-Y H:i:s' }}</time>
+                                                                <time style='color:#bababa;font-size: 14px'>
+                                                                    {{ blog.date|date:'d-m-Y H:i:s' }}</time>
                                                             </span></span></div>
                                                     <div class="comment__text">
                                                         <!-- <p>content: py manage.py star...</p> -->
@@ -86,19 +96,6 @@
                                             </div>
                                         </li>
                                         {% endfor %}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                                     </ul>

@@ -20,8 +20,9 @@
                     <div class="col-md-3">
                         <div class="profile__header">
                             <div class="profile__user-avatar"
-                                style="background-image: url('{% static 'image/timg.jpg' %}')">
+                                style="background-image: url('{{ user.userProfile.picture.url }}')">
                             </div>
+
                             <div class="profile__info">
                                 <div class="profile__name">
                                     <h4 class="change-name" data-change="name">
@@ -29,6 +30,7 @@
                                     </h4>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="col-md-8 profile__content">
@@ -53,12 +55,17 @@
                                             Setting
                                         </a>
                                     </li>
+                                    <!-- 判断用户是否为员工 -->
+                                    {% if user.is_staff %}
+
                                     <li role="presentation">
                                         <a href="{% url 'blog:profile_settings' %}" aria-controls="home" role="tab">
                                             <i class="icon-settings" aria-hidden="true" title="Settings"></i>
                                             Manage Accounts
                                         </a>
                                     </li>
+                                    {% endif %}
+
                                 </ul>
                             </div>
                         </div>
@@ -76,9 +83,9 @@
                                                         {{comment.blog.title}}: <span><span><i class="icon-action-redo"
                                                                     aria-hidden="true"></i>
                                                                 <a href=""></a>
-                                                                <a href=""
+                                                                <a href="{% url 'blog:comment_delete' comment.id %}"
                                                                     class="btn btn-primary btn-outline pull-right">
-                                                                    <span>edit</span>
+                                                                    <span>delete</span>
                                                                 </a>
                                                                 <time
                                                                     style='color:#bababa;font-size: 14px'>{{ comment.date_posted|date:'d-m-Y H:i:s' }}</time>

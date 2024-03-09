@@ -7,10 +7,12 @@ from .utils import send_mails
 from django.contrib.auth.decorators import login_required
 # 导入HttpResponse
 from django.http import HttpResponse, JsonResponse
+from django.urls import reverse
 
 
 # from django.core.mail import send_mail
 # from .utils import send_mails
+
 
 
 def index(request):
@@ -73,7 +75,6 @@ def publish(request):
         context_dict["form"] = form
         return render(request, "blog/publish1.html", context=context_dict)
 
-
 def publish_comment(request, blog_title_slug):
     if request.method == "POST":
         comment_form = CommentForm(request.POST)
@@ -104,11 +105,8 @@ def publish_comment(request, blog_title_slug):
         context_dict["form"] = comment_form
         return render(request, "blog/blog_detail1.html", context=context_dict)
 
-
 def about(request):
     return render(request, 'blog/about.html')
-
-
 
 def blogs(request, tag=None):
     # Get all blogs
@@ -146,7 +144,6 @@ def blogs(request, tag=None):
 
     return render(request, 'blog/blogs.html', context=context_dict)
 
-
 def blog_detail(request, blog_title_slug):
 
     blog = get_object_or_404(Blog, slug=blog_title_slug)
@@ -177,10 +174,6 @@ def blog_detail(request, blog_title_slug):
     return render(request, 'blog/blog_detail1.html',
                   {'blog': blog, 'comment_form': comment_form, 'comments': comments})
 
-
-
-
-
 def search_results(request):
 
     search_content = request.GET.get('search_content')
@@ -205,13 +198,9 @@ def search_results(request):
 
     return render(request, 'blog/search_results.html', context=context_dict)
 
-    
-    
-
 def profile_settings(request):
     return render(request, 'blog/profile_settings.html')
-
-
+ 
 def profile_blogs(request):
     # 返回本用户的所有blog
     blogs = Blog.objects.filter(author=request.user)
@@ -222,4 +211,18 @@ def profile_comments(request):
     # 返回本用户所有的comment
     comments = Comment.objects.filter(author=request.user)
     context_dict = {"comments": comments}
+
     return render(request, 'blog/profile_comments.html', context=context_dict)
+
+def comment_delete(request, comment_id):
+    # 删除comment
+    comment = Comment.objects.get(id=comment_id)
+    comment.delete()
+    return redirect(reverse('blog:profile_comments'))
+
+def blog_delete(request, blog_id):
+    # 删除blog
+    blog = Blog.objects.get(id=blog_id)
+    blog.delete()
+    return redirect(reverse('blog:profile_blogs'))
+

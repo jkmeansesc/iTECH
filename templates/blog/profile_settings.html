@@ -20,7 +20,7 @@
                     <div class="col-md-3">
                         <div class="profile__header">
                             <div class="profile__user-avatar"
-                                 style="background-image: url('{% static 'image/timg.jpg' %}')">
+                                style="background-image: url('{{ user.userProfile.picture.url }}')">
                             </div>
                             <div class="profile__info">
                                 <div class="profile__name">
@@ -53,6 +53,17 @@
                                             Setting
                                         </a>
                                     </li>
+
+                                    <!-- 判断用户是否为员工 -->
+                                    {% if user.is_staff %}
+
+                                    <li role="presentation">
+                                        <a href="{% url 'blog:profile_settings' %}" aria-controls="home" role="tab">
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            Manage Accounts
+                                        </a>
+                                    </li>
+                                    {% endif %}
 
                                 </ul>
                             </div>
@@ -136,7 +147,7 @@
                                                                     <label for="img_box"
                                                                            class="btn btn-primary btn-outline">choose
                                                                         profile</label>
-                                                                    <input id='img_box' type="file" name="image"
+                                                                    <input id='img_box' type="file" name="avatar"
                                                                            accept="image/gif, image/jpeg, image/png, image/jpg">
                                                                 </div>
                                                                  <a href="{% url 'blog:profile_settings' %}"
