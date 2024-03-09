@@ -17,9 +17,10 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <div class="search">
-                            <form id="search-form" class="form-inline" action="{% url 'blog:search_results' %}" method="GET">
-                                <input class="form-control" type="search" name="search" placeholder="Search..."
-                                    autocomplete="off" required value=" ">
+                            <form id="search-form" class="form-inline" action="{% url 'blog:search_results' %}"
+                                method="GET">
+                                <input class="form-control" type="search" name="search_content" placeholder="Search..."
+                                    autocomplete="off" required value="">
                                 <button type="submit" class="btn btn-primary hidden-xs">
                                     <span>search</span></button>
                                 <button type="submit"
@@ -35,30 +36,21 @@
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="articles">
                                         <ul class="list-group">
+
+                                            {% for blog in blogs %}
                                             <li>
-                                                <a href="" class="list-group-item">
+                                                <a href="{% url 'blog:blog_detail' blog.slug %}" class="list-group-item">
                                                     <div class="list__right">
                                                         <h4 class="list-group-item-heading">
-                                                            blog_title,<em>tags</em>,blog_title
+                                                            {{ blog.title }}<em>{{ blog.tag }}</em>{{ blog.title }}
                                                         </h4>
                                                         <time>
-                                                            2023/03
+                                                            {{ blog.date|date:'d-m-Y H:i:s' }}
                                                         </time>
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="" class="list-group-item">
-                                                    <div class="list__right">
-                                                        <h4 class="list-group-item-heading">
-                                                            blog_title2,<em>tags</em>,blog_title2
-                                                        </h4>
-                                                        <time>
-                                                            2023/02
-                                                        </time>
-                                                    </div>
-                                                </a>
-                                            </li>
+                                            {% endfor %}
                                         </ul>
                                     </div>
                                 </div>

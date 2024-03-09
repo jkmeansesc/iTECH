@@ -160,22 +160,31 @@ def blog_detail(request, blog_title_slug):
     return render(request, "blog/blog_detail1.html", context=context_dict)
 
 
-# def search_results(request):
-#     return render(request, "blog/search_results.html")
-#     return render(request, 'blog/blog_detail1.html', context=context_dict)
-
 
 def search_results(request):
-    if request.method == 'GET':
-        print(123123)
-        search_content = request.GET.get('search_content')
-        print(search_content)
-        return render(request, 'blog/search_results.html')
+    search_content = request.GET.get('search_content')
+    # 用blog的title和tag进行搜索
+    # search_content可能包含多个单词，用空格分开
+    search_content = search_content.split(" ")
 
-    return HttpResponse('You searched for: %s' % search_content)
+    blogs = Blog.objects.all()
+    # 床架一个空的queryset
+    blogs = Blog.objects.none()
+
+    for word in search_content:
+        # 用title进行搜索
+        blogs_title = Blog.objects.filter(title__icontains=word)
+        # 用tag进行搜索
+        blogs_tag = Blog.objects.filter(tag__icontains=word)
+        # 将两个queryset合并，并添加到blogs中
+        blogs = blogs | blogs_title | blogs_tag
+
+    context_dict = {"blogs": blogs}
+
+    return render(request, 'blog/search_results.html', context=context_dict)
+
     
-    # return render(request, 'blog/search_results.html')
-
+    
 
 def profile_settings(request):
     return render(request, 'blog/profile_settings.html')

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
     <title>4 Angry Men -
         {% block title_block %}
-            Welcome
+        Welcome
         {% endblock %}
     </title>
     <meta charset="utf-8">
@@ -25,40 +26,41 @@
     <!-- header
           ================================================== -->
 </head>
+
 <body class="search--visible">
-<div class="page__wrapper page--landing">
-    <header class="header--main animate-search no-background-xs">
-        <div class="container-fluid">
-            <nav class="nav--main">
-                <div class="nav__logo">
-                    <a href="">
-                        <span>4 Angry Men</span>
-                    </a>
-                </div>
-                <ul class="nav__items nav__items--right">
-                    <li class="nav__item nav__item--main">
-                        <a href="{% url 'index' %}">
-                            Home
+    <div class="page__wrapper page--landing">
+        <header class="header--main animate-search no-background-xs">
+            <div class="container-fluid">
+                <nav class="nav--main">
+                    <div class="nav__logo">
+                        <a href="">
+                            <span>4 Angry Men</span>
                         </a>
-                    </li>
-                    <li class="nav__item nav__item--main">
-                        <a href="{% url 'blog:blogs' %}">
-                            Blogs
-                        </a>
-                    </li>
-                    <li class="nav__item nav__item--main">
-                        <a href="{% url 'blog:about' %}">
-                            About
-                        </a>
-                    </li>
-                    {% if user.is_authenticated %}
+                    </div>
+                    <ul class="nav__items nav__items--right">
+                        <li class="nav__item nav__item--main">
+                            <a href="{% url 'index' %}">
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav__item nav__item--main">
+                            <a href="{% url 'blog:blogs' %}">
+                                Blogs
+                            </a>
+                        </li>
+                        <li class="nav__item nav__item--main">
+                            <a href="{% url 'blog:about' %}">
+                                About
+                            </a>
+                        </li>
+                        {% if user.is_authenticated %}
                         <li class="nav__item nav__item--main dropdown account">
                             <a href="" title="">Hello, {{ user.username }}
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li class="dropdown-item">
                                     <div class="section__user-avatar"
-                                         style="background-image: url('{% static 'image/timg.jpg' %}')"></div>
+                                        style="background-image: url('{% static 'image/timg.jpg' %}')"></div>
                                     <div class="profile__info">
                                         <div class="profile__name">
                                             {{ user.username }}
@@ -66,15 +68,18 @@
                                     </div>
                                 </li>
                                 <li class="dropdown-item">
-                                    <a href="{% url 'blog:profile_settings' %}">my profile</a></li>
+                                    <a href="{% url 'blog:profile_settings' %}">my profile</a>
+                                </li>
                                 <li class="dropdown-item">
-                                    <a href="{% url 'blog:publish' %}">publish a blog</a></li>
+                                    <a href="{% url 'blog:publish' %}">publish a blog</a>
+                                </li>
                                 <li class="dropdown-item">
                                     <a href="{% url 'authentication:logout' %}">
-                                        log out</a></li>
+                                        log out</a>
+                                </li>
                             </ul>
                         </li>
-                    {% else %}
+                        {% else %}
                         <li id="sign_in" class="nav__item">
                             <a href="{% url 'authentication:login' %}" class="posts ">
                                 Sign in
@@ -85,49 +90,51 @@
                                 Register
                             </a>
                         </li>
-                    {% endif %}
-                <!-- search icon and search box
+                        {% endif %}
+                        <!-- search icon and search box
       ================================================== -->
-                    <li class="nav__item">
-                        <a class="search-trigger icon-magnifier"></a>
-                    </li>
-                </ul>
-            </nav> <!-- .nav--main -->
-        </div>
-        <a href="" class="nav-trigger icon-menu"></a>
-
-        <div id="search" class="main-search">
-            <div class="container-fluid">
-                <form id="search-form-top" class="form__search" action="/search/" method="GET">
-                    <input type="search" name="search" placeholder="Search..." value="" autocomplete="off" required="">
-                </form>
-                <a href="" class="close text-replace">Close Form</a>
-                <div class="cover-layer"></div>
+                        <li class="nav__item">
+                            <a class="search-trigger icon-magnifier"></a>
+                        </li>
+                    </ul>
+                </nav> <!-- .nav--main -->
             </div>
-        </div> <!-- .main-search -->
-    </header>
-</div>
-<div class="cover-layer"></div> <!-- cover main content when search form is open -->
-<div>
-    {% block body_block %}
-    {% endblock %}
-</div>
-<div>
-    <!-- footer
-          ================================================== -->
-    <footer>
-        <p class="copyright">Copyright © 2018 <a href="{% url 'index' %}" target="_blank">4 Angry Men</a>
-            <span class="second-line">All Rights Reserved.</span><br>
-            Powered by <a href="{% url 'index' %}"></a> 4 Angry Men<br>
-        </p>
-    </footer>
-    {% block sidebar_block %}
-    {% endblock %}
+            <a href="" class="nav-trigger icon-menu"></a>
 
-</div>
+            <div id="search" class="main-search">
+                <div class="container-fluid">
+                    <form id="search-form-top" class="form__search" action="{% url 'blog:search_results' %}" method="GET">
+                        {% csrf_token %}
+                        <input type="search" name="search_content" placeholder="Search..." value="" autocomplete="off"
+                            required="">
+                    </form>
+                    <a href="" class="close text-replace">Close Form</a>
+                    <div class="cover-layer"></div>
+                </div>
+            </div> <!-- .main-search -->
+        </header>
+    </div>
+    <div class="cover-layer"></div> <!-- cover main content when search form is open -->
+    <div>
+        {% block body_block %}
+        {% endblock %}
+    </div>
+    <div>
+        <!-- footer
+          ================================================== -->
+        <footer>
+            <p class="copyright">Copyright © 2018 <a href="{% url 'index' %}" target="_blank">4 Angry Men</a>
+                <span class="second-line">All Rights Reserved.</span><br>
+                Powered by <a href="{% url 'index' %}"></a> 4 Angry Men<br>
+            </p>
+        </footer>
+        {% block sidebar_block %}
+        {% endblock %}
+
+    </div>
 </body>
- <!-- script
+<!-- script
       ================================================== -->
-    <script src="{% static 'js/search.js' %}"></script>
+<script src="{% static 'js/search.js' %}"></script>
 
 </html>
