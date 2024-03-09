@@ -1,13 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
-
 from .forms import BlogForm, CommentForm
 from .models import Blog, Comment
 from .forms import BlogForm
 from .utils import send_mails
 from django.contrib.auth.decorators import login_required
 # 导入HttpResponse
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 
 # from django.core.mail import send_mail
@@ -151,7 +150,7 @@ def blogs(request, tag=None):
 def blog_detail(request, blog_title_slug):
 
     blog = get_object_or_404(Blog, slug=blog_title_slug)
-    if request.method == 'POST':
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
 
@@ -160,9 +159,15 @@ def blog_detail(request, blog_title_slug):
             comment.author = request.user
             comment.save()
             comment_form = CommentForm()
+            data = {
+                'author': comment.author.username,
+                'content': comment.content,
+                'date_posted': comment.date_posted.strftime('%Y-%m-%d %H:%M:%S')
+            }
             comments = blog.comments.all().order_by('-date_posted')
-            return render(request, 'blog/blog_detail1.html',
-                          {'blog': blog, 'comment_form': comment_form, 'comments': comments})
+            # return render(request, 'blog/blog_detail1.html',
+            #             #               {'blog': blog, 'comment_form': comment_form, 'comments': comments})
+            return JsonResponse(data)
     else:
         comment_form = CommentForm()
 
@@ -200,3 +205,6 @@ def profile_settings(request):
 
 def profile_blogs(request):
     return render(request, 'blog/profile_blogs.html')
+
+def profile_comments(request):
+    return render(request, 'blog/profile_comments.html')
