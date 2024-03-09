@@ -6,9 +6,10 @@
 <head>
     <title>
         {% block title_block %}
-            {{ user.username }} blogs
+        {{ user.username }} blogs
         {% endblock %}</title>
 </head>
+
 <body>{% block body_block %}
     <div class="page__wrapper page--profile">
         <main class="main-content">
@@ -19,8 +20,8 @@
                     <div class="col-md-3">
                         <div class="profile__header">
                             <div class="profile__user-avatar"
-                                 style="background-image: url('{% static 'image/timg.jpg' %}')">
-                                 
+                                style="background-image: url('{% static 'image/timg.jpg' %}')">
+
                             </div>
                             <div class="profile__info">
                                 <div class="profile__name">
@@ -65,16 +66,16 @@
                                             <div class="comment__container">
                                                 <div class="comment__wrapper">
                                                     <div class="comment__footer">
-                                                        title: <span> blog.tag <span><i
-                                                            class="icon-action-redo"
-                                                            aria-hidden="true"></i>
-                                                          <a href=""></a>
-                                                            <a href=""
-                                                            class="btn btn-primary btn-outline pull-right">
-                                                            <span>edit</span>
-                                                            </a>
-                                                            <time style='color:#bababa;font-size: 14px'>2024-02-01</time>
-                                                    </span></span></div>
+                                                        title: <span> blog.tag <span><i class="icon-action-redo"
+                                                                    aria-hidden="true"></i>
+                                                                <a href=""></a>
+                                                                <a href=""
+                                                                    class="btn btn-primary btn-outline pull-right">
+                                                                    <span>edit</span>
+                                                                </a>
+                                                                <time
+                                                                    style='color:#bababa;font-size: 14px'>2024-02-01</time>
+                                                            </span></span></div>
                                                     <div class="comment__text">
                                                         <p>content: py manage.py star...</p>
                                                     </div>
@@ -85,13 +86,13 @@
                                             <div class="comment__container">
                                                 <div class="comment__wrapper">
                                                     <div class="comment__footer">
-                                                        title: <span> blog.tag1 <span><i
-                                                            class="icon-action-redo"
-                                                            aria-hidden="true"></i>
-                                                          <a href="">
-                                                                    </a>
-                                                            <time style='color:#bababa;font-size: 14px'>2024-02-01</time>
-                                                    </span></span></div>
+                                                        title: <span> blog.tag1 <span><i class="icon-action-redo"
+                                                                    aria-hidden="true"></i>
+                                                                <a href="">
+                                                                </a>
+                                                                <time
+                                                                    style='color:#bababa;font-size: 14px'>2024-02-01</time>
+                                                            </span></span></div>
                                                     <div class="comment__text">
                                                         <p>content: today is a good day...</p>
                                                     </div>
@@ -107,7 +108,7 @@
             </div>
         </main>
     </div>
-{% endblock %}
+    {% endblock %}
 </body>
 
 </html>

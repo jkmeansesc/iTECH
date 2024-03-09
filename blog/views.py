@@ -193,8 +193,6 @@ def blog_detail(request, blog_title_slug):
 
 
 
-def search_results(request):
-    return render(request, "blog/search_results.html")
 
 
 def search_results(request):
@@ -230,3 +228,6 @@ def profile_settings(request):
 
 def profile_blogs(request):
     return render(request, 'blog/profile_blogs.html')
+
+def profile_comments(request):
+    return render(request, 'blog/profile_comments.html')

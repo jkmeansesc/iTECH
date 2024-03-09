@@ -1,19 +1,19 @@
 <!-- Display blog post -->
 <article>
-    <h2>{{ blog.title }}</h2>
-    <p>{{ blog.date }}</p>
-    <p>{{ blog.content }}</p>
-    <p>Written by {{ blog.author }}</p>
-    <p>Tags: {{ blog.tag }}</p>
-    <p>Comments: {{ blog.comments.count }}</p>
+  <h2>{{ blog.title }}</h2>
+  <p>{{ blog.date }}</p>
+  <p>{{ blog.content }}</p>
+  <p>Written by {{ blog.author }}</p>
+  <p>Tags: {{ blog.tag }}</p>
+  <p>Comments: {{ blog.comments.count }}</p>
 
-{#    <form action="{% url 'comment' blog.id %}" method="post">#}
-{#        {% csrf_token %}#}
-{#        <input type="text" name="content">#}
-{#        <input type="submit" value="submit">#}
-{#        <p>{{ comment.content }}</p>#}
-{##}
-{#    </form>#}
+  {# <form action="{% url 'comment' blog.id %}" method="post">#}
+    {# {% csrf_token %}#}
+    {# <input type="text" name="content">#}
+    {# <input type="submit" value="submit">#}
+    {# <p>{{ comment.content }}</p>#}
+    {##}
+    {# </form>#}
 
 </article>
 
@@ -27,10 +27,10 @@
 <!-- List comments -->
 <div>
   {% for comment in blog.comments.all %}
-    <div>
-      <p>{{ comment.author}} says: </p>
-      <p>{{ comment.content }}</p>
-      <p>Commented on {{ comment.date_posted }}</p>
-    </div>
+  <div>
+    <p>{{ comment.author}} says: </p>
+    <p>{{ comment.content }}</p>
+    <p>Commented on {{ comment.date_posted }}</p>
+  </div>
   {% endfor %}
 </div>
