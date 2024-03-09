@@ -15,6 +15,7 @@ class BlogForm(forms.ModelForm):
         fields = ['title', 'tag', 'content', 'image']
 
 
+
 # class CommentForm(forms.ModelForm):
 #     content = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': 'Add a comment...'}))
 #
