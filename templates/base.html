@@ -91,7 +91,7 @@
                         </li>
                     {% endif %}
                     <li class="nav__item">
-                        <a href="{% url 'blog:search_results' %}" class="search-trigger icon-magnifier"></a>
+                        <a class="search-trigger icon-magnifier"></a>
                     </li>
                 </ul>
             </nav> <!-- .nav--main -->
@@ -100,8 +100,8 @@
 
         <div id="search" class="main-search">
             <div class="container-fluid">
-                <form id="search-form-top" class="form__search" action="/search/" method="GET">
-                    <input type="search" name="search" placeholder="Search..." value="" autocomplete="off"
+                <form id="search-form-top" class="form__search" action="{% url 'blog:search_results' %}" method="GET">
+                    <input type="search" name="search_content" placeholder="Search..." value="" autocomplete="off"
                            required="">
                 </form>
                 <a href="#0" class="close text-replace">Close Form</a>

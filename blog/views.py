@@ -6,6 +6,8 @@ from .models import Blog
 from .forms import BlogForm
 from .utils import send_mails
 from django.contrib.auth.decorators import login_required
+# 导入HttpResponse
+from django.http import HttpResponse
 
 
 # from django.core.mail import send_mail
@@ -158,13 +160,21 @@ def blog_detail(request, blog_title_slug):
     return render(request, "blog/blog_detail1.html", context=context_dict)
 
 
-def search_results(request):
-    return render(request, "blog/search_results.html")
-    return render(request, 'blog/blog_detail1.html', context=context_dict)
+# def search_results(request):
+#     return render(request, "blog/search_results.html")
+#     return render(request, 'blog/blog_detail1.html', context=context_dict)
 
 
 def search_results(request):
-    return render(request, 'blog/search_results.html')
+    if request.method == 'GET':
+        print(123123)
+        search_content = request.GET.get('search_content')
+        print(search_content)
+        return render(request, 'blog/search_results.html')
+
+    return HttpResponse('You searched for: %s' % search_content)
+    
+    # return render(request, 'blog/search_results.html')
 
 
 def profile_settings(request):
