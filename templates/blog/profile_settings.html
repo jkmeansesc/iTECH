@@ -129,10 +129,6 @@
                                                     </li>
                                                     <li>
                                                         <div>
-                                                            <a href=""
-                                                               class="btn btn-primary btn-outline pull-right">
-                                                                <span>edit</span>
-                                                            </a>
                                                             <h4>Profile</h4>
                                                             <form action="/user/settings/" method="POST" id='myimage'
                                                                   enctype="multipart/form-data" class='form-inline'>
@@ -143,6 +139,10 @@
                                                                     <input id='img_box' type="file" name="image"
                                                                            accept="image/gif, image/jpeg, image/png, image/jpg">
                                                                 </div>
+                                                                 <a href="{% url 'blog:profile_settings' %}"
+                                                               class="btn btn-primary btn-outline pull-right">
+                                                                <span>edit</span>
+                                                            </a>
                                                             </form>
                                                         </div>
                                                     </li>
