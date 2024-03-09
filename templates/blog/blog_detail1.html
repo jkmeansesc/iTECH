@@ -14,7 +14,7 @@
     <p>{{ blog.content }}</p>
     <p>Written by {{ blog.author }}</p>
     <p>Tags: {{ blog.tag }}</p>
-    <p>Comments: {{ blog.comments.count }}</p>
+    <p>Comments: <span id="commentCount">{{ blog.comments.count }}</span></p>
 </article>
 
 <!-- Comment form -->
@@ -51,6 +51,8 @@ $(document).ready(function() {
                     '<p>Commented on ' + response.date_posted + '</p></div>'
                 );
                 $('#commentForm')[0].reset();
+                var currentCount = parseInt($('#commentCount').text());
+                $('#commentCount').text(currentCount + 1);
             },
             error: function(xhr, errmsg, err) {
                 console.log(xhr.status + ": " + xhr.responseText);

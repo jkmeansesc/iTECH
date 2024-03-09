@@ -160,6 +160,7 @@ def blog_detail(request, blog_title_slug):
             comment.save()
             comment_form = CommentForm()
             data = {
+                'comment_num': blog.comment_num,
                 'author': comment.author.username,
                 'content': comment.content,
                 'date_posted': comment.date_posted.strftime('%Y-%m-%d %H:%M:%S')
