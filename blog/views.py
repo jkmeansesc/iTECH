@@ -219,4 +219,7 @@ def profile_blogs(request):
     return render(request, 'blog/profile_blogs.html', context=context_dict)
 
 def profile_comments(request):
-    return render(request, 'blog/profile_comments.html')
+    # 返回本用户所有的comment
+    comments = Comment.objects.filter(author=request.user)
+    context_dict = {"comments": comments}
+    return render(request, 'blog/profile_comments.html', context=context_dict)
