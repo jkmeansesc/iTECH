@@ -6,6 +6,8 @@ from .models import Blog, Comment
 from .forms import BlogForm
 from .utils import send_mails
 from django.contrib.auth.decorators import login_required
+# 导入HttpResponse
+from django.http import HttpResponse
 
 
 # from django.core.mail import send_mail
@@ -104,34 +106,14 @@ def publish_comment(request, blog_title_slug):
         return render(request, "blog/blog_detail1.html", context=context_dict)
 
 
-def filter_blogs_author(request, author):
-    context_dict = {}
-    try:
-        blogs = Blog.objects.filter(author=author)
-        context_dict["blogs"] = blogs
-    except Blog.DoesNotExist:
-        context_dict["blogs"] = None
-
-    return render(request, "blog/profile_blogs.html", context=context_dict)
-
-def filter_comments_author(request, author):
-    context_dict = {}
-    try:
-        comments = Comment.objects.filter(reviewer=author)
-        context_dict["comments"] = comments
-    except Comment.DoesNotExist:
-        context_dict["comments"] = None
-
-    return render(request, "blog/profile_comments.html", context=context_dict)
-
 def about(request):
     return render(request, 'blog/about.html')
+
 
 
 def blogs(request, tag=None):
     # Get all blogs
     blogs_all = Blog.objects.all()
-    current_tag = tag
 
     # Get all tags
     tags = []
@@ -190,12 +172,26 @@ def blog_detail(request, blog_title_slug):
                   {'blog': blog, 'comment_form': comment_form, 'comments': comments})
 
 
+# def search_results(request):
+#     return render(request, "blog/search_results.html")
+#     return render(request, 'blog/blog_detail1.html', context=context_dict)
+
+
 def search_results(request):
     return render(request, "blog/search_results.html")
 
 
 def search_results(request):
     return render(request, 'blog/search_results.html')
+    if request.method == 'GET':
+        print(123123)
+        search_content = request.GET.get('search_content')
+        print(search_content)
+        return render(request, 'blog/search_results.html')
+
+    return HttpResponse('You searched for: %s' % search_content)
+
+    # return render(request, 'blog/search_results.html')
 
 
 def profile_settings(request):
