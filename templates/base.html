@@ -19,18 +19,13 @@
 
     <!-- script
       ================================================== -->
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/highlight.min.js' %}"></script>
-    <script src="{% static 'js/toastr.min.js' %}"></script>
-    <script src="{% static 'js/bundle.js' %}"></script>
-    <script src="{% static 'js/dc.js'%}"></script>
-    <script src="{% static 'js/passwordEdit.js'%}"></script>
-
+    <script src="{% static 'js/dc.js' %}"></script>
+    <script src="{% static 'js/passwordEdit.js' %}"></script>
+    <script src="{% static 'js/imageUpload.js' %}"></script>
     <!-- header
           ================================================== -->
 </head>
-<body>
+<body class="search--visible">
 <div class="page__wrapper page--landing">
     <header class="header--main animate-search no-background-xs">
         <div class="container-fluid">
@@ -47,7 +42,7 @@
                         </a>
                     </li>
                     <li class="nav__item nav__item--main">
-                        <a href="{% url 'blog:blogs'  %}">
+                        <a href="{% url 'blog:blogs' %}">
                             Blogs
                         </a>
                     </li>
@@ -57,26 +52,27 @@
                         </a>
                     </li>
                     {% if user.is_authenticated %}
-                        <li class="nav__item nav__item--main has-children">
-                            <a href="#0" title="">Hello, {{ user.username }}
-                            <span class="caret"></span></a>
+                        <li class="nav__item nav__item--main dropdown account">
+                            <a href="" title="">Hello, {{ user.username }}
+                                <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                            <li class="dropdown-item">
-                                <div class="section__user-avatar" style="background-image: url('{% static 'image/timg.jpg' %}')"></div>
-                                <div class="profile__info">
-                                    <div class="profile__name">
-                                        {{ user.username }}
+                                <li class="dropdown-item">
+                                    <div class="section__user-avatar"
+                                         style="background-image: url('{% static 'image/timg.jpg' %}')"></div>
+                                    <div class="profile__info">
+                                        <div class="profile__name">
+                                            {{ user.username }}
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="dropdown-item">
-                                <a href="{% url 'blog:profile_settings' %}">my profile</a></li>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="{% url 'blog:profile_settings' %}">my profile</a></li>
                                 <li class="dropdown-item">
                                     <a href="{% url 'blog:publish' %}">publish a blog</a></li>
                                 <li class="dropdown-item">
                                     <a href="{% url 'authentication:logout' %}">
                                         log out</a></li>
-                        </ul>
+                            </ul>
                         </li>
                     {% else %}
                         <li id="sign_in" class="nav__item">
@@ -90,21 +86,22 @@
                             </a>
                         </li>
                     {% endif %}
+                <!-- search icon and search box
+      ================================================== -->
                     <li class="nav__item">
                         <a href="{% url 'blog:search_results' %}" class="search-trigger icon-magnifier"></a>
                     </li>
                 </ul>
             </nav> <!-- .nav--main -->
         </div>
-        <a href="#0" class="nav-trigger icon-menu"></a>
+        <a href="" class="nav-trigger icon-menu"></a>
 
         <div id="search" class="main-search">
             <div class="container-fluid">
                 <form id="search-form-top" class="form__search" action="/search/" method="GET">
-                    <input type="search" name="search" placeholder="Search..." value="" autocomplete="off"
-                           required="">
+                    <input type="search" name="search" placeholder="Search..." value="" autocomplete="off" required="">
                 </form>
-                <a href="#0" class="close text-replace">Close Form</a>
+                <a href="" class="close text-replace">Close Form</a>
                 <div class="cover-layer"></div>
             </div>
         </div> <!-- .main-search -->
@@ -126,8 +123,11 @@
     </footer>
     {% block sidebar_block %}
     {% endblock %}
+
 </div>
 </body>
-<!-- <script src="static/js/bundle.js"></script> -->
+ <!-- script
+      ================================================== -->
+    <script src="{% static 'js/search.js' %}"></script>
 
 </html>

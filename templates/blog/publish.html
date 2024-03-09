@@ -31,15 +31,12 @@
                                 {{ form.tag|add_class:"form-control"}}
                             </div>
                             <div class="form-group">
-                                <form action="/user/settings/" method="POST" id='myimage'
-                                      enctype="multipart/form-data" class='form-inline'>
-                                    <div class="form-group">
-                                        <label>Background:</label>
-                                        <label for="img_box" class="btn btn-primary btn-outline">choose image</label>
-                                        <input id='img_box' type="file" name="image"
-                                               accept="image/gif, image/jpeg, image/png, image/jpg">
-                                    </div>
-                                </form>
+                                <label for="{{ form.image.id_for_label }}" id="image-label">Background:</label>
+                                <button type="button" id="upload-btn" class="btn btn-primary btn-outline">Upload Image</button>
+                                <input id='img_box' type="file" name="image"
+                                       accept="image/gif, image/jpeg, image/png, image/jpg" style="display: none;">
+                                <span id="file-name">No file chosen</span>
+                                {{ form.image }}
                             </div>
                             <div class="form-group">
                                 {{ form.media }}
