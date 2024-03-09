@@ -1,22 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<!-- Display blog post -->
 <article>
-
-    <h1>title: {{ blog.title }}</h1>
-    <p>tags: {{ blog.tag }}</p>
-    <p>author: {{ blog.author }}</p>
-    <p>comment number: {{ blog.comment_num }}</p>
-    <!-- 设置一下图片的大小 -->
-    <img src="{{ blog.image.url }}" alt="" width="500px" height="300px">
-    <p>date: {{ blog.date }}</p>
-
+    <h2>{{ blog.title }}</h2>
+    <p>{{ blog.date }}</p>
     <p>{{ blog.content }}</p>
+    <p>Written by {{ blog.author }}</p>
+    <p>Tags: {{ blog.tag }}</p>
+    <p>Comments: {{ blog.comments.count }}</p>
 
 {#    <form action="{% url 'comment' blog.id %}" method="post">#}
 {#        {% csrf_token %}#}
@@ -27,5 +16,21 @@
 {#    </form>#}
 
 </article>
-</body>
-</html>
+
+<!-- Comment form -->
+<form action="{% url 'blog:blog_detail' blog.slug %}" method="post">
+  {% csrf_token %}
+  {{ comment_form.as_p }}
+  <input type="submit" value="Submit">
+</form>
+
+<!-- List comments -->
+<div>
+  {% for comment in blog.comments.all %}
+    <div>
+      <p>{{ comment.author}} says: </p>
+      <p>{{ comment.content }}</p>
+      <p>Commented on {{ comment.date_posted }}</p>
+    </div>
+  {% endfor %}
+</div>
