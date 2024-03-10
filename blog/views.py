@@ -68,12 +68,13 @@ def publish(request):
             context_dict = {"message": "have a good day"}
             form = BlogForm()
             context_dict["form"] = form
-            return render(request, "blog/publish1.html", context=context_dict)
+            return render(request, "blog/publish.html", context=context_dict)
     else:
         context_dict = {"message": "have a good day"}
         form = BlogForm()
         context_dict["form"] = form
-        return render(request, "blog/publish1.html", context=context_dict)
+        return render(request, "blog/publish.html", context=context_dict)
+
 
 def publish_comment(request, blog_title_slug):
     if request.method == "POST":
@@ -225,4 +226,3 @@ def blog_delete(request, blog_id):
     blog = Blog.objects.get(id=blog_id)
     blog.delete()
     return redirect(reverse('blog:profile_blogs'))
-

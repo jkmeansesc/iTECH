@@ -1,41 +1,18 @@
-//TODO 重写修改密码
-$('#set_pwd').click(function (e) {
-    var pwd = $('#change-pwd [name="password"]').val()
-    var pwd1 = $('#change-pwd [name="password1"]').val()
-    if (pwd != pwd1) {
-        $("#pwd_msg").text('two passwords are different').show()
-        return false
-    }
+document.addEventListener('DOMContentLoaded', function () {
+    var changePwdForm = document.getElementById('change-pwd');
 
-    var token = $('#change-pwd [name="csrfmiddlewaretoken"]').val()
+    changePwdForm.addEventListener('submit', function (event) {
+        // 在这里可以添加密码匹配的逻辑，例如：
+        var password = changePwdForm.querySelector('[name="password"]').value;
+        var password1 = changePwdForm.querySelector('[name="password1"]').value;
 
-    // var form = new FormData(document.getElementById("gender_radio"))
-    var form = new FormData();
-    form.append("password", pwd);
-    form.append("csrfmiddlewaretoken", token);
+        if (password !== password1) {
+            var errorMsg = document.getElementById('pwd_msg');
+            errorMsg.textContent = 'Two passwords are different';
+            errorMsg.style.display = 'block';
 
-    $.ajax({
-        type: 'POST',
-        url: '/user/settings/',
-        // data:'json',
-        processData: false,
-        contentType: false,
-        data: form,
-        success: function (response) {
-            console.log('ok', response)
-            window.location.href = '/user/login/';
-        },
-        error: function (response) {
-            console.log('err', response)
-            if (response.status == 200) {
-                window.location.href = '/user/login/';
-            } else {
-                $("#pwdmsg").text(response.responseText).show()
-            }
+            event.preventDefault(); // 阻止表单的默认提交行为
+            return false; // 阻止任何可能的事件传播
         }
-    })
-})
-
-$('#pwd_msg').click(function (e) {
-    $('#pwd_msg').hide()
-})
+    });
+});

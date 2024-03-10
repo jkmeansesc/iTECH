@@ -20,7 +20,6 @@
 
     <!-- script
       ================================================== -->
-    <script src="{% static 'js/dc.js' %}"></script>
     <script src="{% static 'js/passwordEdit.js' %}"></script>
     <script src="{% static 'js/imageUpload.js' %}"></script>
     <!-- header
@@ -60,7 +59,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li class="dropdown-item">
                                     <div class="section__user-avatar"
-                                        style="background-image: url('{{ user.userProfile.picture.url }}')"></div>
+                                        style="background-image: url({% static 'image/timg.jpg' %})"></div>
                                     <div class="profile__info">
                                         <div class="profile__name">
                                             {{ user.username }}
@@ -135,6 +134,7 @@
 </body>
 <!-- script
       ================================================== -->
-<script src="{% static 'js/search.js' %}"></script>
+<script src="{% static 'js/search.js' %}"></script> 
+<script src="{% static 'js/editSettings.js' %}"></script>
 
 </html>
