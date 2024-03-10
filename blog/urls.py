@@ -19,7 +19,7 @@ urlpatterns = [
 
 
     path('blog_detail/<slug:blog_title_slug>', views.blog_detail, name='blog_detail'),
-    path('blogs_edit', views.blogs_edit, name='blogs_edit'),
+    path('blogs_edit/<int:blog_id>/', views.blogs_edit, name='blogs_edit'),
     path('manage_blogs/', views.manage_blogs, name='manage_all_blogs'),
     path('manage_accounts/', views.manage_accounts, name='manage_all_accounts'),
     path('manage_comments/', views.manage_comments, name='manage_all_comments'),

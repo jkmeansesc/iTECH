@@ -10,7 +10,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-9">
-                    <form action="{% url 'blog:blogs_edit' %}"
+
+                    
+                    <form action="{% url 'blog:blogs_edit' blog.id %}"
                           method="post"
                           enctype="multipart/form-data">
                         {% csrf_token %}
@@ -32,12 +34,18 @@
                         </div>
                         <div class="form-group">
                             {{ form.media }}
-                            <textarea id="id_content" name="content" class="form-control" rows="10">{{ blog.content }}</textarea>
+                            {{ form.content }}
                         </div>
                         <div class="text-center">
                             <input type="submit" value="Submit" class="btn btn-primary">
                         </div>
                     </form>
+
+
+
+
+
+
                 </div>
             </div>
         </div>
