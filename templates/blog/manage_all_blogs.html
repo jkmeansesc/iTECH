@@ -98,7 +98,7 @@
                                                                     {{ blog.date|date:'d-m-Y H:i:s' }}</time>
                                                             </span></span></div>
                                                     <div class="comment__text">
-                                                        <p>{{ blog.content|slice:":30" }}...</p>
+                                                        <p>{{ blog.content|first_non_empty_character|slice:":30" }}...</p>
                                                     </div>
                                                 </div>
                                             </div>

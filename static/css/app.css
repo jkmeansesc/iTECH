@@ -11176,3 +11176,22 @@ span.CodeMirror-selectedtext {
     --vspace-btn: var(--vspace-2);
 
 }
+
+.username {
+    font-weight: bold; /* Make the username bold */
+    color: #fffcfc; /* Set color for the username */
+    display: inline-block; /* Make the username and block button inline */
+    vertical-align: middle; /* Align elements vertically */
+    margin-right: 10px; /* Add some spacing between the username and block button */
+}
+
+.registered-time {
+    margin-top: 5px; /* Add some space between username and registered time */
+    font-size: 12px; /* Adjust font size for registered time */
+    color: #777; /* Set color for registered time */
+}
+/* CSS */
+.actions a {
+    margin-left: 10px; /* Add some spacing between block button and registered time */
+    padding: 5px 10px; /* Add padding to the block button (5px top/bottom, 10px left/right) */
+}
