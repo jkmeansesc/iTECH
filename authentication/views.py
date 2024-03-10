@@ -113,16 +113,11 @@ def set_email(request):
 
 
 def set_avatar(request):
-    # 得到post请求中的avatar
-    avatar = request.FILES.get('avatar')
-    # 得到当前用户
-    user = request.user
-    # Ensure that the user has a UserProfile
-    userprofile, created = UserProfile.objects.get_or_create(user=user)
-    # 将当前用户的avatar设置为post请求中的avatar
-    userprofile.picture = avatar
-    # 保存当前用户
-    userprofile.save()
+    avatar = request.FILES['image']
+    userProfile = request.user.userProfile
+    userProfile.picture = avatar
+    userProfile.save()
+
     return redirect(reverse('blog:profile_settings'))
 
 
@@ -135,4 +130,5 @@ def set_password(request):
     user.set_password(password)
     # 保存当前用户
     user.save()
-    return redirect(reverse('blog:profile_settings'))
+    return redirect(reverse('authentication:login'))
+

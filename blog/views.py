@@ -244,5 +244,31 @@ def manage_comments(request):
     return render(request, 'blog/manage_all_comments.html')
 
 
-def blogs_edit(request):
-    return render(request, 'blog/blog_edit.html')
+def blogs_edit(request, blog_id):
+    blog = Blog.objects.get(id=blog_id)
+
+    if request.method == "POST":
+        form = BlogForm(request.POST, instance=blog)
+        if form.is_valid():
+            blog_instance = form.save(commit=False)
+
+            # 判断背景图有没有更新
+            if "image" in request.FILES:
+                blog_instance.image = request.FILES["image"]
+
+            blog_instance.save()
+
+            return redirect("blog:profile_blogs")
+        else:
+            context_dict = {"blog": blog}
+            form = BlogForm(instance=blog, initial={'image': None})
+        
+            context_dict["form"] = form
+            return render(request, 'blog/blog_edit.html', context=context_dict)
+    else:
+        context_dict = {"blog": blog}
+        form = BlogForm(instance=blog, initial={'image': None})
+    
+        context_dict["form"] = form
+        return render(request, 'blog/blog_edit.html', context=context_dict)
+
