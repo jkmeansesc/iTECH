@@ -139,7 +139,8 @@ def blogs(request, tag=None):
     for tag_ in tag_count[:5]:
         hot_tags.append(tag_[0])
 
-    context_dict = {"hot_tags": hot_tags}
+    context_dict = {"hot_tags": hot_tags,
+                    "current_tag": tag}
 
     if tag:
         tag = str(tag)
