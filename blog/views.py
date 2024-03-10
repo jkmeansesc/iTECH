@@ -203,20 +203,25 @@ def search_results(request):
 
 
 def profile_settings(request):
-    return render(request, 'blog/profile_settings.html')
+    current_page = 'profile_settings'
+    return render(request, 'blog/profile_settings.html', {'current_page': current_page})
 
 
 def profile_blogs(request):
     # 返回本用户的所有blog
     blogs = Blog.objects.filter(author=request.user)
-    context_dict = {"blogs": blogs}
+    current_page = 'profile_blogs'
+    context_dict = {"blogs": blogs,
+                    "current_page": current_page}
     return render(request, 'blog/profile_blogs.html', context=context_dict)
 
 
 def profile_comments(request):
     # 返回本用户所有的comment
     comments = Comment.objects.filter(author=request.user)
-    context_dict = {"comments": comments}
+    current_page = 'profile_comments'
+    context_dict = {"comments": comments,
+                    "current_page": current_page}
 
     return render(request, 'blog/profile_comments.html', context=context_dict)
 
@@ -253,30 +258,33 @@ def blogs_edit(request, blog_id):
         else:
             context_dict = {"blog": blog}
             form = BlogForm(instance=blog, initial={'image': None})
-        
+
             context_dict["form"] = form
             return render(request, 'blog/blog_edit.html', context=context_dict)
     else:
         context_dict = {"blog": blog}
         form = BlogForm(instance=blog, initial={'image': None})
-    
+
         context_dict["form"] = form
         return render(request, 'blog/blog_edit.html', context=context_dict)
-
 
 
 def manage_accounts(request):
     # 获取所有的普通用户，不能是superuser，不能是staff, 不能是active=False
     users = User.objects.filter(is_superuser=False, is_staff=False, is_active=True)
-    
-    context_dict = {"users": users}
+    current_page = 'manage_accounts'
+
+    context_dict = {"users": users,
+                    "current_page": current_page}
     return render(request, 'blog/manage_all_accounts.html', context=context_dict)
 
 
 def manage_blogs(request):
     # 获取所有的blogs
     blogs = Blog.objects.all()
-    context_dict = {"blogs": blogs}
+    current_page = 'manage_blogs'
+    context_dict = {"blogs": blogs,
+                    "current_page": current_page}
 
     return render(request, 'blog/manage_all_blogs.html', context=context_dict)
 
@@ -284,8 +292,8 @@ def manage_blogs(request):
 def manage_comments(request):
     # 获取所有的comments
     comments = Comment.objects.all()
-    context_dict = {"comments": comments}
+    current_page = 'manage_comments'
+    context_dict = {"comments": comments,
+                    "current_page": current_page}
 
-    return render(request, 'blog/manage_all_comments.html',context=context_dict)
-
-
+    return render(request, 'blog/manage_all_comments.html', context=context_dict)
