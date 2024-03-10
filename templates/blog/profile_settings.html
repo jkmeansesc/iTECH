@@ -20,7 +20,7 @@
                     <div class="col-md-3">
                         <div class="profile__header">
                             <div class="profile__user-avatar"
-                                 style="background-image: url({% static 'image/timg.jpg' %})">
+                                 style="background-image: url({{ user.userprofile.picture.url }})">
                             </div>
                             <div class="profile__info">
                                 <div class="profile__name">
@@ -212,13 +212,6 @@
                                                                                placeholder="Input new password again">
                                                                     </div>
                                                                 </div>
-                                                                {% if messages %}
-                                                                    <ul class="messages">
-                                                                        {% for message in messages %}
-                                                                            <li>{{ message }}</li>
-                                                                        {% endfor %}
-                                                                    </ul>
-                                                                {% endif %}
                                                                 <button type="submit" class="btn btn-primary"
                                                                         value="Save">Save
                                                                 </button>
