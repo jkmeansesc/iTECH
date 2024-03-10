@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -101,7 +102,7 @@
                                                             </span></span></div>
                                                     <div class="comment__text">
                                                         <!-- <p>content: py manage.py star...</p> -->
-                                                        <p>{{ blog.content|slice:":30" }}...</p>
+                                                        <p>{{ blog.content|first_non_empty_character|slice:":30" }}...</p>
                                                     </div>
                                                 </div>
                                             </div>
