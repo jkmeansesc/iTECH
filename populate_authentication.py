@@ -38,7 +38,7 @@ def populate():
     user4 = User(username="user4", email="user4@student.gla.ac.uk")
     user4.set_password("user4")
     user4.save()
-    user_profile3 = UserProfile(user=user3)
+    user_profile4 = UserProfile(user=user4)
     user_profile3.save()
 
 

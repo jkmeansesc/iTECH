@@ -131,3 +131,11 @@ def set_password(request):
     user.save()
     return redirect(reverse('authentication:login'))
 
+
+
+def block_user(request, user_id):
+    # 得到post请求中的password
+    user = User.objects.get(id=user_id)
+    user.is_active = False
+    user.save()
+    return redirect(reverse('blog:manage_all_accounts'))

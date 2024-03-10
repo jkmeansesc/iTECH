@@ -90,7 +90,7 @@
                                                         {{blog.title}}: <span> {{blog.tag}} <span><i
                                                                     class="icon-action-redo" aria-hidden="true"></i>
                                                                 <a href=""></a>
-                                                                <a href="{% url 'blog:blog_delete' %}"
+                                                                <a href="{% url 'blog:blog_delete' blog.id %}"
                                                                     class="btn btn-primary btn-outline pull-right">
                                                                     <span>delete</span>
                                                                 </a>
