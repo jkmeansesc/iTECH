@@ -39,7 +39,7 @@ def populate():
     user4.set_password("user4")
     user4.save()
     user_profile4 = UserProfile(user=user4)
-    user_profile3.save()
+    user_profile4.save()
 
 
     # 设置三名user为员工
