@@ -6,8 +6,8 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-
 from .forms import UserForm, UserProfileForm
+
 
 def register(request):
     registered = False
@@ -43,12 +43,17 @@ def register(request):
             print(user_form.errors, profile_form.errors)
 
             # Invalid form or forms, come back to the registration page, send the error message
-            return render(request, 'authentication/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered, 'error_message': error_message})
+            return render(request, 'authentication/register.html',
+                          {'user_form': user_form, 'profile_form': profile_form, 'registered': registered,
+                           'error_message': error_message})
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'authentication/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered, 'error_message': error_message})
+    return render(request, 'authentication/register.html',
+                  {'user_form': user_form, 'profile_form': profile_form, 'registered': registered,
+                   'error_message': error_message})
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -70,14 +75,15 @@ def user_login(request):
     else:
         return render(request, 'authentication/login.html')
 
+
 @login_required
 def user_logout(request):
     logout(request)
     return redirect(reverse('blog:index'))
 
+
 def password_reset(request):
     return render(request, 'authentication/password_reset.html')
-
 
 
 def set_username(request):
@@ -92,6 +98,7 @@ def set_username(request):
     # 返回到设置用户名页面
     return redirect(reverse('blog:profile_settings'))
 
+
 def set_email(request):
     # 得到post请求中的email
     email = request.POST.get('email')
@@ -103,6 +110,7 @@ def set_email(request):
     user.save()
     return redirect(reverse('blog:profile_settings'))
 
+
 def set_avatar(request):
     # 得到post请求中的avatar
     avatar = request.FILES.get('avatar')
@@ -113,6 +121,7 @@ def set_avatar(request):
     # 保存当前用户
     user.save()
     return redirect(reverse('blog:profile_settings'))
+
 
 def set_password(request):
     # 得到post请求中的password

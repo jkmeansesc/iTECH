@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title_block %}
+    Edit Blog
+{% endblock title_block %}
+{% block body_block %}
+<main class="main-content" id="main_content">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-9">
+                    <form action="{% url 'blog:blogs_edit' %}"
+                          method="post"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{ form.title.id_for_label }}">Title:</label>
+                            <input id="id_title" type="text" name="title" class="form-control" value="{{ blog.title }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.tag.id_for_label }}">Tag:</label>
+                            <input id="id_tag" type="text" name="tag" class="form-control" value="{{ blog.tag }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.image.id_for_label }}" id="image-label">Background:</label>
+                            <button type="button" id="upload-btn" class="btn btn-primary btn-outline">Upload Image</button>
+                            <input id='img_box' type="file" name="image"
+                                   accept="image/gif, image/jpeg, image/png, image/jpg" style="display: none;" value="{{ blog.img.url }}">
+                            <span id="file-name">No file chosen</span>
+                            {{ form.image }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.media }}
+                            <textarea id="id_content" name="content" class="form-control" rows="10">{{ blog.content }}</textarea>
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" value="Submit" class="btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

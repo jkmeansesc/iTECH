@@ -58,9 +58,19 @@
                                     {% if user.is_staff %}
 
                                         <li role="presentation">
-                                            <a href="{% url 'blog:profile_settings' %}" aria-controls="home" role="tab">
+                                            <a href="{% url 'blog:manage_all_accounts' %}" aria-controls="home" role="tab">
                                                 <i class="icon-settings" aria-hidden="true" title="Settings"></i>
                                                 Manage Accounts
+                                            </a>
+                                        </li> <li role="presentation">
+                                            <a href="{% url 'blog:manage_all_blogs' %}" aria-controls="home" role="tab">
+                                                <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                                Manage Blogs
+                                            </a>
+                                        </li> <li role="presentation">
+                                            <a href="{% url 'blog:manage_all_comments' %}" aria-controls="home" role="tab">
+                                                <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                                Manage Comments
                                             </a>
                                         </li>
                                     {% endif %}

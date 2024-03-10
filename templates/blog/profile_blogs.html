@@ -57,12 +57,22 @@
                                     <!-- 判断用户是否为员工 -->
                                     {% if user.is_staff %}
 
-                                    <li role="presentation">
-                                        <a href="{% url 'blog:profile_settings' %}" aria-controls="home" role="tab">
-                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
-                                            Manage Accounts
-                                        </a>
-                                    </li>
+                                     <li role="presentation">
+                                            <a href="{% url 'blog:manage_all_accounts' %}" aria-controls="home" role="tab">
+                                                <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                                Manage Accounts
+                                            </a>
+                                        </li> <li role="presentation">
+                                            <a href="{% url 'blog:manage_all_blogs' %}" aria-controls="home" role="tab">
+                                                <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                                Manage Blogs
+                                            </a>
+                                        </li> <li role="presentation">
+                                            <a href="{% url 'blog:manage_all_comments' %}" aria-controls="home" role="tab">
+                                                <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                                Manage Comments
+                                            </a>
+                                        </li>
                                     {% endif %}
                                 </ul>
                             </div>
@@ -71,8 +81,6 @@
                             <div class="section">
                                 <div role="tabpanel" class="tab-pane active" id="comments">
                                     <ul class="comments__container list-group">
-
-
                                         {% for blog in blogs %}
                                         <li class="list-group-item">
                                             <div class="comment__container">
@@ -84,6 +92,9 @@
                                                                 <a href="{% url 'blog:blog_delete' blog.id %}"
                                                                     class="btn btn-primary btn-outline pull-right">
                                                                     <span>delete</span>
+                                                                </a><a href="{% url 'blog:blogs_edit'%}"
+                                                                    class="btn btn-primary btn-outline pull-right">
+                                                                    <span>edit</span>
                                                                 </a>
                                                                 <time style='color:#bababa;font-size: 14px'>
                                                                     {{ blog.date|date:'d-m-Y H:i:s' }}</time>

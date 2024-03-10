@@ -14,7 +14,6 @@ from django.urls import reverse
 # from .utils import send_mails
 
 
-
 def index(request):
     if request.method == "POST":
         form = BlogForm(request.POST)
@@ -106,8 +105,10 @@ def publish_comment(request, blog_title_slug):
         context_dict["form"] = comment_form
         return render(request, "blog/blog_detail1.html", context=context_dict)
 
+
 def about(request):
     return render(request, 'blog/about.html')
+
 
 def blogs(request, tag=None):
     # Get all blogs
@@ -139,19 +140,17 @@ def blogs(request, tag=None):
     context_dict = {"hot_tags": hot_tags}
 
     if tag:
-
         tag = str(tag)
         context_dict["tag"] = tag
 
     return render(request, 'blog/blogs.html', context=context_dict)
 
-def blog_detail(request, blog_title_slug):
 
+def blog_detail(request, blog_title_slug):
     blog = get_object_or_404(Blog, slug=blog_title_slug)
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
-
             comment = comment_form.save(commit=False)
             comment.blog = blog
             comment.author = request.user
@@ -175,10 +174,10 @@ def blog_detail(request, blog_title_slug):
     return render(request, 'blog/blog_detail1.html',
                   {'blog': blog, 'comment_form': comment_form, 'comments': comments})
 
-def search_results(request):
 
+def search_results(request):
     search_content = request.GET.get('search_content')
-    print (search_content)
+    print(search_content)
     # 用blog的title和tag进行搜索
     # search_content可能包含多个单词，用空格分开
     search_content = search_content.split(" ")
@@ -199,14 +198,17 @@ def search_results(request):
 
     return render(request, 'blog/search_results.html', context=context_dict)
 
+
 def profile_settings(request):
     return render(request, 'blog/profile_settings.html')
- 
+
+
 def profile_blogs(request):
     # 返回本用户的所有blog
     blogs = Blog.objects.filter(author=request.user)
     context_dict = {"blogs": blogs}
     return render(request, 'blog/profile_blogs.html', context=context_dict)
+
 
 def profile_comments(request):
     # 返回本用户所有的comment
@@ -215,14 +217,32 @@ def profile_comments(request):
 
     return render(request, 'blog/profile_comments.html', context=context_dict)
 
+
 def comment_delete(request, comment_id):
     # 删除comment
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
     return redirect(reverse('blog:profile_comments'))
 
+
 def blog_delete(request, blog_id):
     # 删除blog
     blog = Blog.objects.get(id=blog_id)
     blog.delete()
     return redirect(reverse('blog:profile_blogs'))
+
+
+def manage_accounts(request):
+    return render(request, 'blog/manage_all_accounts.html')
+
+
+def manage_blogs(request):
+    return render(request, 'blog/manage_all_blogs.html')
+
+
+def manage_comments(request):
+    return render(request, 'blog/manage_all_comments.html')
+
+
+def blogs_edit(request):
+    return render(request, 'blog/blog_edit.html')
