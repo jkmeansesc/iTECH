@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import UserForm, UserProfileForm
+from .models import UserProfile
 
 
 def register(request):
@@ -116,10 +117,12 @@ def set_avatar(request):
     avatar = request.FILES.get('avatar')
     # 得到当前用户
     user = request.user
+    # Ensure that the user has a UserProfile
+    userprofile, created = UserProfile.objects.get_or_create(user=user)
     # 将当前用户的avatar设置为post请求中的avatar
-    user.userprofile.picture = avatar
+    userprofile.picture = avatar
     # 保存当前用户
-    user.save()
+    userprofile.save()
     return redirect(reverse('blog:profile_settings'))
 
 
