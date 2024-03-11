@@ -34,11 +34,13 @@
                     </div>
                     <div class="col-md-8 profile__content">
                         <div class="tabs">
+                          <!--list tabs for my profile-->
                             {% include 'manage_tabs.html' %}
                     <div class="tab-content">
                         <div class="section">
                             <div role="tabpanel" class="tab-pane active" id="comments">
                                 <ul class="comments__container list-group">
+                                  <!--list all the blogs from this user and he/she can delete or edit them-->
                                     {% for blog in blogs %}
                                         <li class="list-group-item">
                                             <div class="comment__container">
@@ -64,7 +66,6 @@
                                                                     {{ blog.date|date:'d-m-Y H:i:s' }}</time>
                                                             </span></span></div>
                                                     <div class="comment__text">
-                                                        <!-- <p>content: py manage.py star...</p> -->
                                                         <p>{{ blog.content|first_non_empty_character|slice:":30" }}...
                                                         </p>
                                                     </div>

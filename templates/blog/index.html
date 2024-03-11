@@ -11,12 +11,13 @@
 </head>
 <body>
 {% block body_block %}
+    <!--our index header page-->
     <section id="hero" class="s-hero">
         <div class="s-hero__slider">
             <div class="s-hero__slide">
                 <div class="s-hero__slide-bg"
                      style="background-image: url({% static 'image/index_img.jpg' %})"></div>
-                <div class="row s-hero__slide-content animate-this">
+                <div class="row s-hero__slide-content">
                     <div class="column">
                         <h1 class="s-hero__slide-text">
                             <a href="{% url 'blog:blogs' tag='official' %}">Our Latest news!</a>
@@ -26,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <!-- end s-hero__slide -->
+        <!-- end header page -->
     </section>
     <div class="content-wrapper">
         <div class="container-fluid">
@@ -35,6 +36,7 @@
                     <div class="section-header">
                         <h2>Latest Blogs</h2>
                     </div>
+                    <!--use template tags to list small blogs-->
                     {% get_blogs_list %}
                 </div>
             </div>

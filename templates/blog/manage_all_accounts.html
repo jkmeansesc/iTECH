@@ -2,6 +2,8 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+<!--if user is a administrator for this website,
+this page can be accessed-->
 
 <head>
     <title>
@@ -18,6 +20,7 @@
             <div class="container-fluid">
                 <div class="profile row">
                         <div class="col-md-3">
+                            <!--profile image-->
                         <div class="profile__header">
                             <div class="profile__user-avatar"
                                 style="background-image: url('{{ user.userProfile.picture.url }}')">
@@ -33,11 +36,13 @@
                     </div>
                     <div class="col-md-8 profile__content">
                         <div class="tabs">
+                        <!--list tabs for my profile-->
                             {% include 'manage_tabs.html' %}
                         <div class="tab-content">
                             <div class="section">
                                 <div role="tabpanel" class="tab-pane active" id="comments">
                                     <ul class="comments__container list-group">
+                                    <!--list all the users in this page-->
                                         {% for user_ in users %}
                                             <li class="list-group-item">
                                                 <div class="comment__container">

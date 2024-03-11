@@ -8482,7 +8482,9 @@ select {
 .s-hero__slide-text a {
     color: white;
 }
-
+ .s-hero__slide-text a:hover {
+        color: rgba(224, 216, 216,0.6);
+    }
 .cover-layer {
     display: block;
     position: fixed;
@@ -8712,7 +8714,7 @@ select {
 }
 
 .profile .tabs .nav-tabs > li > a {
-    padding: 1em 2em;
+    padding: 6px;
     color: #747474;
     font-weight: 700;
     font-size: 16px;

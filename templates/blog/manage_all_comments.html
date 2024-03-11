@@ -3,6 +3,8 @@
 {% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
+<!--if user is a administrator for this website,
+this page can be accessed-->
 
 <head>
     <title>
@@ -34,11 +36,13 @@
                     </div>
                     <div class="col-md-8 profile__content">
                         <div class="tabs">
+                          <!--list tabs for my profile-->
                             {% include 'manage_tabs.html' %}
                         <div class="tab-content">
                             <div class="section">
                                 <div role="tabpanel" class="tab-pane active" id="comments">
                                     <ul class="comments__container list-group">
+                                         <!--list all the comments from users and admin can delete them-->
                                         {% for comment in comments %}
                                         <li class="list-group-item">
                                             <div class="comment__container">
