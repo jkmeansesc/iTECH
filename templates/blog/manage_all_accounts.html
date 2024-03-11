@@ -6,7 +6,7 @@
 <head>
     <title>
         {% block title_block %}
-        {{ user.username }} blogs
+            {{ user.username }} blogs
         {% endblock %}</title>
 </head>
 
@@ -20,7 +20,7 @@
                     <div class="col-md-3">
                         <div class="profile__header">
                             <div class="profile__user-avatar"
-                                style="background-image: url('{{ user.userProfile.picture.url }}')">
+                                 style="background-image: url('{{ user.userProfile.picture.url }}')">
                             </div>
                             <div class="profile__info">
                                 <div class="profile__name">
@@ -57,18 +57,22 @@
                                     <!-- 判断用户是否为员工 -->
                                     {% if user.is_staff %}
 
-                                      <li role="presentation" class="active">
-                                            <a href="{% url 'blog:manage_all_accounts' %}" aria-controls="home" role="tab">
+                                        <li role="presentation" class="active">
+                                            <a href="{% url 'blog:manage_all_accounts' %}" aria-controls="home"
+                                               role="tab">
                                                 <i class="icon-settings" aria-hidden="true" title="Settings"></i>
                                                 Manage Accounts
                                             </a>
-                                        </li> <li role="presentation">
+                                        </li>
+                                        <li role="presentation">
                                             <a href="{% url 'blog:manage_all_blogs' %}" aria-controls="home" role="tab">
                                                 <i class="icon-settings" aria-hidden="true" title="Settings"></i>
                                                 Manage Blogs
                                             </a>
-                                        </li> <li role="presentation">
-                                            <a href="{% url 'blog:manage_all_comments' %}" aria-controls="home" role="tab">
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="{% url 'blog:manage_all_comments' %}" aria-controls="home"
+                                               role="tab">
                                                 <i class="icon-settings" aria-hidden="true" title="Settings"></i>
                                                 Manage Comments
                                             </a>
@@ -81,26 +85,27 @@
                             <div class="section">
                                 <div role="tabpanel" class="tab-pane active" id="comments">
                                     <ul class="comments__container list-group">
-                                        {% for user in users %}
-                                        <li class="list-group-item">
-                                            <div class="comment__container">
-                                                <div class="comment__wrapper">
-                                                    <div class="comment__footer">
-                                                        <!-- 也许要判断是否是普通用户？-->
-                                                        {{user.username}}
-                                                                <a href="{% url 'authentication:block' user.id %}"
-                                                                    class="btn btn-primary btn-outline pull-right">
-                                                                    <span>block</span>
-                                                                </a>
-                                                                registered time <time style='color:#bababa;font-size: 14px'>
-                                                                    {{ user.date_joined|date:'d-m-Y H:i:s' }}</time>
-                                                           </div>
+                                        {% for user_ in users %}
+                                            <li class="list-group-item">
+                                                <div class="comment__container">
+                                                    <div class="comment__wrapper">
+                                                        <div class="comment__footer">
+                                                            <div class="username">{{ user_.username }}</div>
+                                                            <div class="actions">
+                                                                    <a href="{% url 'authentication:block_user' user_.id %}"
+                                                                       class="btn btn-primary btn-outline pull-right">
+                                                                        <span>block</span>
+                                                                    </a>
+                                                                </div>
+                                                            <div class="registered-time">
+                                                                Registered time:
+                                                                <time style='color:#bababa;font-size: 14px'>{{ user_.date_joined|date:'d-m-Y H:i:s' }}</time>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </li>
+                                            </li>
                                         {% endfor %}
-
-
                                     </ul>
                                 </div>
                             </div>
@@ -110,7 +115,7 @@
             </div>
         </main>
     </div>
-    {% endblock %}
+{% endblock %}
 </body>
 
 </html>

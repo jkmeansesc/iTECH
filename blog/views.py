@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 # 导入HttpResponse
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
+# 导入User
+from django.contrib.auth.models import User
 
 
 # from django.core.mail import send_mail
@@ -201,18 +203,6 @@ def blog_delete(request, blog_id):
     return redirect(reverse('blog:profile_blogs'))
 
 
-def manage_accounts(request):
-    return render(request, 'blog/manage_all_accounts.html')
-
-
-def manage_blogs(request):
-    return render(request, 'blog/manage_all_blogs.html')
-
-
-def manage_comments(request):
-    return render(request, 'blog/manage_all_comments.html')
-
-
 def blogs_edit(request, blog_id):
     blog = Blog.objects.get(id=blog_id)
 
@@ -240,4 +230,30 @@ def blogs_edit(request, blog_id):
     
         context_dict["form"] = form
         return render(request, 'blog/blog_edit.html', context=context_dict)
+
+
+
+def manage_accounts(request):
+    # 获取所有的普通用户，不能是superuser，不能是staff, 不能是active=False
+    users = User.objects.filter(is_superuser=False, is_staff=False, is_active=True)
+    
+    context_dict = {"users": users}
+    return render(request, 'blog/manage_all_accounts.html', context=context_dict)
+
+
+def manage_blogs(request):
+    # 获取所有的blogs
+    blogs = Blog.objects.all()
+    context_dict = {"blogs": blogs}
+
+    return render(request, 'blog/manage_all_blogs.html', context=context_dict)
+
+
+def manage_comments(request):
+    # 获取所有的comments
+    comments = Comment.objects.all()
+    context_dict = {"comments": comments}
+
+    return render(request, 'blog/manage_all_comments.html',context=context_dict)
+
 

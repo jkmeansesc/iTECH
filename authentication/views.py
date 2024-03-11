@@ -124,11 +124,25 @@ def set_avatar(request):
 def set_password(request):
     # 得到post请求中的password
     password = request.POST.get('password')
-    # 得到当前用户
-    user = request.user
-    # 将当前用户的password设置为post请求中的password
-    user.set_password(password)
-    # 保存当前用户
-    user.save()
-    return redirect(reverse('authentication:login'))
+    password1 = request.POST.get('password1')
+    if password != password1:
+        print("The two passwords are not the same")
+        return render(request, 'blog/profile_settings.html', {'error_message': 'The two passwords are not the same'})
+        # return redirect(reverse('blog:profile_settings'), {'error_message': 'The two passwords are not the same'})
+    else:
+        # 得到当前用户
+        user = request.user
+        # 将当前用户的password设置为post请求中的password
+        user.set_password(password)
+        # 保存当前用户
+        user.save()
+        return redirect(reverse('authentication:login'))
 
+
+
+def block_user(request, user_id):
+    # 得到post请求中的password
+    user = User.objects.get(id=user_id)
+    user.is_active = False
+    user.save()
+    return redirect(reverse('blog:manage_all_accounts'))

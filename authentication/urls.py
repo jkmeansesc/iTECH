@@ -12,4 +12,5 @@ urlpatterns = [
     path('set_email/', views.set_email, name='set_email'),
     path('set_avatar/', views.set_avatar, name='set_avatar'),
     path('set_password/', views.set_password, name='set_password'),
+    path('block_user/<int:user_id>', views.block_user, name='block_user'),
 ]

@@ -98,7 +98,7 @@
                                                                     style='color:#bababa;font-size: 14px'>{{ comment.date_posted|date:'d-m-Y H:i:s' }}</time>
                                                             </span></span></div>
                                                     <div class="comment__text">
-                                                        <p>{{ comment.content|slice:":30" }}...</p>
+                                                        <p>{{ comment.content|first_non_empty_character|slice:":30" }}...</p>
                                                     </div>
                                                 </div>
                                             </div>
