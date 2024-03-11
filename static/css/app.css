@@ -8712,7 +8712,7 @@ select {
 }
 
 .profile .tabs .nav-tabs > li > a {
-    padding: 1em 2em;
+    padding: 6px;
     color: #747474;
     font-weight: 700;
     font-size: 16px;
