@@ -299,3 +299,6 @@ def manage_comments(request):
                     "current_page": current_page}
 
     return render(request, 'blog/manage_all_comments.html', context=context_dict)
+
+
+
