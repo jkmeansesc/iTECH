@@ -140,7 +140,7 @@ def blog_detail(request, blog_title_slug):
     comments = blog.comments.all().order_by("-date_posted")
     return render(
         request,
-        "blog/blog_detail1.html",
+        "blog/blog_detail.html",
         {"blog": blog, "comment_form": comment_form, "comments": comments},
     )
 
