@@ -193,8 +193,10 @@ def search_results(request):
         blogs_title = Blog.objects.filter(title__icontains=word)
         # 用tag进行搜索
         blogs_tag = Blog.objects.filter(tag__icontains=word)
-        # 将两个queryset合并，并添加到blogs中
-        blogs = blogs | blogs_title | blogs_tag
+        # 用content进行搜索
+        blogs_content = Blog.objects.filter(content__icontains=word)
+        # 将三个个queryset合并，并添加到blogs中
+        blogs = blogs | blogs_title | blogs_tag | blogs_content
 
     context_dict = {"blogs": blogs}
 
