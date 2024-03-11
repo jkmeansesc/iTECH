@@ -11,8 +11,14 @@ urlpatterns = [
     path('blogs/', views.blogs, name='blogs'),
     path('profile_settings/', views.profile_settings, name='profile_settings'),
     path('profile_blogs/', views.profile_blogs, name='profile_blogs'),
-    path('profile_comments', views.profile_comments, name='profile_comments'),
-
+    path('blog_delete/<int:blog_id>', views.blog_delete, name='blog_delete'),
+    path('profile_comments/', views.profile_comments, name='profile_comments'),
+    path('comment_delete/<int:comment_id>', views.comment_delete, name='comment_delete'),
     path('blog_detail/<slug:blog_title_slug>', views.blog_detail, name='blog_detail'),
+    path('blogs_edit/<int:blog_id>/', views.blogs_edit, name='blogs_edit'),
+    path('manage_blogs/', views.manage_blogs, name='manage_all_blogs'),
+    path('manage_accounts/', views.manage_accounts, name='manage_all_accounts'),
+    path('manage_comments/', views.manage_comments, name='manage_all_comments'),
+
     path('search_results/', views.search_results, name='search_results'),
 ]

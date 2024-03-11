@@ -6,7 +6,7 @@
 <head>
     <title>{% block title_block %}
         {{ user.username }} setting
-    {% endblock %}</title>
+        {% endblock %}</title>
 
 </head>
 
@@ -20,7 +20,7 @@
                     <div class="col-md-3">
                         <div class="profile__header">
                             <div class="profile__user-avatar"
-                                 style="background-image: url('{% static 'image/timg.jpg' %}')">
+                                style="background-image: url('{{ user.userProfile.picture.url }}')">
                             </div>
                             <div class="profile__info">
                                 <div class="profile__name">
@@ -54,6 +54,29 @@
                                         </a>
                                     </li>
 
+                                    <!-- 判断用户是否为员工 -->
+                                    {% if user.is_staff %}
+
+                                    <li role="presentation">
+                                        <a href="{% url 'blog:manage_all_accounts' %}" aria-controls="home" role="tab">
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            Manage Accounts
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="{% url 'blog:manage_all_blogs' %}" aria-controls="home" role="tab">
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            Manage Blogs
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="{% url 'blog:manage_all_comments' %}" aria-controls="home" role="tab">
+                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
+                                            Manage Comments
+                                        </a>
+                                    </li>
+                                    {% endif %}
+
                                 </ul>
                             </div>
                             <div class="tab-content">
@@ -66,122 +89,139 @@
                                                     Personal Information
                                                 </h3>
                                                 <ul class="settings__subsection">
+                                                    <!-- set username-->
                                                     <li>
-                                                        <a href="/user/settings/"
-                                                           class="btn btn-primary btn-outline pull-right"
-                                                           data-toggle="form"
-                                                           data-target="#change-username" data-change=".change-username"
-                                                           data-elem="#elem-username" data-default="#default-username">
+                                                        <a href="{% url 'blog:profile_settings' %}"
+                                                            class="btn btn-primary btn-outline pull-right edit-username-btn"
+                                                            data-toggle="form" data-target="#change-username"
+                                                            data-change=".change-username" data-elem="#elem-username"
+                                                            data-default="#default-username">
                                                             <span>edit</span>
                                                         </a>
-                                                        <h4>User Name</h4>
+                                                        <h4>Username</h4>
                                                         <p id="elem-username" class="change-username"
-                                                           data-change="username"
-                                                           style="">
+                                                            data-change="username" style="display: block;">
                                                             {{ user.username }}
                                                         </p>
                                                         <p id="default-username" style="display: none;">
                                                             no username
                                                         </p>
-                                                        <form id="change-username" action=" " method="POST"
-                                                              style="display: none;">
+                                                        <form id="change-username"
+                                                            action="{% url 'authentication:set_username' %}"
+                                                            method="POST" style="display:none;">
+                                                            {% csrf_token %}
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <input name="username" type="text"
-                                                                           class="form-control filled"
-                                                                           value="{{ user.email }}" required="">
+                                                                        class="form-control filled"
+                                                                        value="{{ user.username }}" required="">
                                                                 </div>
                                                             </div>
-                                                            <input type="submit" class="btn btn-primary" value="edit">
-                                                            <button type="button" class="btn btn-default"
-                                                                    data-dismiss="form"><span>cancel</span></button>
+                                                            <input type="submit" class="btn btn-primary" value="save">
+                                                            <button type="button"
+                                                                class="btn btn-default edit-username-btn"
+                                                                data-dismiss="form"><span>cancel</span></button>
                                                         </form>
                                                     </li>
+                                                    <!-- set email-->
                                                     <li>
-                                                        <a href=" "
-                                                           class="btn btn-primary btn-outline pull-right"
-                                                           data-toggle="form"
-                                                           data-target="#change-email" data-change=".change-email"
-                                                           data-elem="#elem-email" data-default="#default-email">
+                                                        <a href="{% url 'blog:profile_settings' %}"
+                                                            class="btn btn-primary btn-outline pull-right edit-email-btn"
+                                                            data-toggle="form" data-target="#change-email"
+                                                            data-change=".change-email" data-elem="#elem-email"
+                                                            data-default="#default-email">
                                                             <span>edit</span>
                                                         </a>
                                                         <h4>Email</h4>
                                                         <p id="elem-email" class="change-email" data-change="email"
-                                                           style="">
+                                                            style="">
                                                             {{ user.email }}
                                                         </p>
                                                         <p id="default-email" style="display: none;">
                                                             none
                                                         </p>
-                                                        <form id="change-email" action="/user/settings/" method="POST"
-                                                              style="display: none;">
+                                                        <form id="change-email"
+                                                            action="{% url 'authentication:set_email' %}" method="POST"
+                                                            style="display: none;">
+                                                            {% csrf_token %}
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <input name="email" type="text"
-                                                                           class="form-control filled"
-                                                                           value="valianna222@gmail.com" required="">
+                                                                        class="form-control filled"
+                                                                        value="{{ user.email }}" required="">
                                                                 </div>
                                                             </div>
-                                                            <input type="submit" class="btn btn-primary" value="修改">
-                                                            <button type="button" class="btn btn-default"
-                                                                    data-dismiss="form"><span>cancel</span></button>
+                                                            <input type="submit" class="btn btn-primary" value="save">
+                                                            <button type="button" class="btn btn-default edit-email-btn"
+                                                                data-dismiss="form"><span>cancel</span></button>
                                                         </form>
                                                     </li>
+                                                    <!-- set avatar-->
                                                     <li>
                                                         <div>
-                                                             <a href="/user/settings/"
-                                                           class="btn btn-primary btn-outline pull-right"
-                                                           data-toggle="form"
-                                                           data-target="#change-username" data-change=".change-profile"
-                                                           data-elem="#elem-username" data-default="#default-profile">
-                                                            <span>edit</span>
-                                                        </a>
                                                             <h4>Profile</h4>
-                                                            <form action="/user/settings/" method="POST" id='myimage'
-                                                                  enctype="multipart/form-data" class='form-inline'>
-                                                                <div class="form-group">
-                                                                     <label for="img_box" class="btn btn-primary btn-outline">choose profile</label>
-                                                                    <input id='img_box' type="file" name="image"
-                                                                           accept="image/gif, image/jpeg, image/png, image/jpg">
-                                                                </div>
+                                                            <form action="{% url 'authentication:set_avatar' %}"
+                                                                method="POST" id='myimage' enctype="multipart/form-data"
+                                                                class='form-inline'>
+                                                                {% csrf_token %}
+                                                                <button type="button" id="upload-btn"
+                                                                    class="btn btn-primary btn-outline edit-avatar-btn">
+                                                                    Upload
+                                                                </button>
+                                                                <input id='img_box' type="file" name="image"
+                                                                    accept="image/gif, image/jpeg, image/png, image/jpg"
+                                                                    style="display: none;">
+                                                                <span id="file-name">No file chosen</span>
+
+
+
+                                                                <input type="submit"
+                                                                    class="btn btn-primary btn-outline pull-right edit-avatar-btn"
+                                                                    data-toggle="form" data-target="#change-avatar"
+                                                                    data-change=".change-avatar"
+                                                                    data-elem="#elem-avatar"
+                                                                    data-default="#default-avatar" value="edit">
                                                             </form>
                                                         </div>
                                                     </li>
+                                                    <!-- set password-->
                                                     <li>
                                                         <div>
                                                             <div style='height: 10px'></div>
-                                                            <a href="/user/settings/"
-                                                               class="btn btn-primary btn-outline pull-right"
-                                                               data-toggle="form" data-target="#change-pwd">
+                                                            <a href="{% url 'blog:profile_settings' %}"
+                                                                class="btn btn-primary btn-outline pull-right edit-pwd-btn"
+                                                                data-toggle="form" data-target="#change-pwd">
                                                                 <span>edit</span>
                                                             </a>
                                                             <h4>Password</h4>
-                                                            <form id="change-pwd" action="/user/settings/" method="POST"
-                                                                  style="display: none;">
+                                                            <form id="change-pwd"
+                                                                action="{% url 'authentication:set_password' %}"
+                                                                method="POST" style="display: none;">
+                                                                {% csrf_token %}
                                                                 <div class="form-group">
                                                                     <div class="controls">
                                                                         <input name="password" type="text"
-                                                                               class="form-control filled"
-                                                                               placeholder="Input a new password">
+                                                                            class="form-control filled"
+                                                                            placeholder="Input a new password">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div class="controls">
                                                                         <input name="password1" type="text"
-                                                                               class="form-control filled"
-                                                                               placeholder="Input new password again">
+                                                                            class="form-control filled"
+                                                                            placeholder="Input new password again">
                                                                     </div>
                                                                 </div>
-                                                                <div id='pwd_msg' class="alert alert-danger">
-                                                                </div>
-                                                                <input type="button" class="btn btn-primary"
-                                                                       value="complete"
-                                                                       id='set_pwd'>
-                                                                <button type="button" class="btn btn-default"
-                                                                        data-dismiss="form"><span>cancel</span></button>
+                                                                <button type="submit" class="btn btn-primary"
+                                                                    value="Save">Save
+                                                                </button>
+                                                                <button type="button"
+                                                                    class="btn btn-default edit-pwd-btn"
+                                                                    data-dismiss="form"><span>cancel</span></button>
                                                             </form>
                                                         </div>
                                                     </li>
+
                                                 </ul>
                                             </li>
                                         </ul>
@@ -194,7 +234,7 @@
             </div>
         </main>
     </div>
-{% endblock %}
+    {% endblock %}
 </body>
 
 </html>

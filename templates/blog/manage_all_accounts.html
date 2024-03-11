@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +22,6 @@
                             <div class="profile__user-avatar"
                                 style="background-image: url('{{ user.userProfile.picture.url }}')">
                             </div>
-
                             <div class="profile__info">
                                 <div class="profile__name">
                                     <h4 class="change-name" data-change="name">
@@ -31,14 +29,13 @@
                                     </h4>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="col-md-8 profile__content">
                         <div class="tabs">
                             <div class="tabs-profile">
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active">
+                                    <li role="presentation">
                                         <a href="{% url 'blog:profile_comments' %}" aria-controls="home" role="tab">
                                             <i class="icon-settings" aria-hidden="true" title="Settings"></i>
                                             Comments
@@ -56,10 +53,11 @@
                                             Setting
                                         </a>
                                     </li>
+
                                     <!-- 判断用户是否为员工 -->
                                     {% if user.is_staff %}
 
-                                      <li role="presentation">
+                                      <li role="presentation" class="active">
                                             <a href="{% url 'blog:manage_all_accounts' %}" aria-controls="home" role="tab">
                                                 <i class="icon-settings" aria-hidden="true" title="Settings"></i>
                                                 Manage Accounts
@@ -76,7 +74,6 @@
                                             </a>
                                         </li>
                                     {% endif %}
-
                                 </ul>
                             </div>
                         </div>
@@ -84,35 +81,29 @@
                             <div class="section">
                                 <div role="tabpanel" class="tab-pane active" id="comments">
                                     <ul class="comments__container list-group">
-                                        {% for comment in comments %}
+                                        {% for user in users %}
                                         <li class="list-group-item">
                                             <div class="comment__container">
                                                 <div class="comment__wrapper">
                                                     <div class="comment__footer">
-                                                        {{comment.blog.title}}: <span><span><i class="icon-action-redo"
-                                                                    aria-hidden="true"></i>
-                                                                <a href=""></a>
-                                                                <a href="{% url 'blog:comment_delete' comment.id %}"
+                                                        <!-- 也许要判断是否是普通用户？-->
+                                                        {{user.username}}
+                                                                <a href="{% url 'authentication:block' user.id %}"
                                                                     class="btn btn-primary btn-outline pull-right">
-                                                                    <span>delete</span>
+                                                                    <span>block</span>
                                                                 </a>
-                                                                <time
-                                                                    style='color:#bababa;font-size: 14px'>{{ comment.date_posted|date:'d-m-Y H:i:s' }}</time>
-                                                            </span></span></div>
-                                                    <div class="comment__text">
-                                                        <p>{{ comment.content|first_non_empty_character|slice:":30" }}...</p>
-                                                    </div>
+                                                                registered time <time style='color:#bababa;font-size: 14px'>
+                                                                    {{ user.date_joined|date:'d-m-Y H:i:s' }}</time>
+                                                           </div>
                                                 </div>
                                             </div>
                                         </li>
                                         {% endfor %}
-                                    
+
+
                                     </ul>
                                 </div>
                             </div>
-                            <style>
-
-                            </style>
                         </div>
                     </div>
                 </div>

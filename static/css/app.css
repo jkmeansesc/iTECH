@@ -3671,8 +3671,8 @@ div.ace_gutter-cell.ace_info, div.ace_gutter-cell.ace_warning {
 
 .btn-primary.focus, .btn-primary:focus {
     color: #fff;
-    background-color: #0c274b;
-    border-color: #0c274b
+    background-color: #394449;
+    border-color: #394449
 }
 
 .btn-primary:hover {
@@ -7875,7 +7875,7 @@ select {
     font-size: 14px;
     text-align: left;
     list-style: none;
-    background-color: #fff;
+    background-color: transparent;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
     border: 1px solid #ccc;
@@ -8040,7 +8040,7 @@ select {
     background: #191c1e;
     opacity: 0;
     visibility: hidden;
-    transition: opacity .3s, visibility .3s
+    transition: opacity .3s, visibility .3s;
 }
 
 .main-search .container-fluid {
@@ -8706,7 +8706,6 @@ select {
 
 @media only screen and (min-width: 992px) {
     .profile .tabs .nav-tabs {
-        display: block;
         overflow: visible
     }
 }
