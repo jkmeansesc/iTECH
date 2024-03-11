@@ -5,14 +5,11 @@
     Publish
 {% endblock title_block %}
 {% block body_block %}
-    <!-- <style>
-        #
-        {{ form.image.id_for_label }}
-        {
-            display: none
-        ;
-        }
-    </style> -->
+    <style>
+    #{{ form.image.id_for_label }} {
+        display: none;
+    }
+    </style>
     <main class="main-content" id="main_content">
         <div class="content-wrapper">
             <div class="container-fluid">
@@ -24,17 +21,15 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="{{ form.title.id_for_label }}">Title:</label>
-                                {{ form.title|add_class:"form-control"}}
+                                {{ form.title|add_class:"form-control" }}
                             </div>
                             <div class="form-group">
                                 <label for="{{ form.tag.id_for_label }}">Tag:</label>
-                                {{ form.tag|add_class:"form-control"}}
+                                {{ form.tag|add_class:"form-control" }}
                             </div>
                             <div class="form-group">
-                                <label for="{{ form.image.id_for_label }}" id="image-label">Background:</label>
-                                <button type="button" id="upload-btn" class="btn btn-primary btn-outline">Upload Image</button>
-                                <input id='img_box' type="file" name="image"
-                                       accept="image/gif, image/jpeg, image/png, image/jpg" style="display: none;">
+                                <label for="{{ form.image.id_for_label }}" id="image-label">Image:</label>
+                                <button type="button" id="upload-btn">Upload Image</button>
                                 <span id="file-name">No file chosen</span>
                                 {{ form.image }}
                             </div>
@@ -51,4 +46,25 @@
             </div>
         </div>
     </main>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    var uploadBtn = document.getElementById('upload-btn');
+    var fileName = document.getElementById('file-name');
+    var realInput = document.getElementById('{{ form.image.id_for_label }}');
+    var label = document.getElementById('image-label');
+
+    uploadBtn.addEventListener('click', function () {
+        realInput.click(); // Trigger file input click
+    });
+
+    realInput.addEventListener('change', function () {
+        var name = realInput.value.split('\\').pop(); // Extract file name
+        fileName.textContent = name ? name : 'No file chosen'; // Update display
+    });
+
+    label.addEventListener('click', function(e) {
+        e.preventDefault();
+    });
+});
+    </script>
 {% endblock %}
