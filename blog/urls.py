@@ -14,10 +14,6 @@ urlpatterns = [
     path('blog_delete/<int:blog_id>', views.blog_delete, name='blog_delete'),
     path('profile_comments/', views.profile_comments, name='profile_comments'),
     path('comment_delete/<int:comment_id>', views.comment_delete, name='comment_delete'),
-
-    path('comment/<slug:blog_title_slug>', views.publish_comment, name='publish_comment'),
-
-
     path('blog_detail/<slug:blog_title_slug>', views.blog_detail, name='blog_detail'),
     path('blogs_edit/<int:blog_id>/', views.blogs_edit, name='blogs_edit'),
     path('manage_blogs/', views.manage_blogs, name='manage_all_blogs'),

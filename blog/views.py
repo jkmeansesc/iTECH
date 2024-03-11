@@ -75,37 +75,6 @@ def publish(request):
         return render(request, "blog/publish.html", context=context_dict)
 
 
-def publish_comment(request, blog_title_slug):
-    if request.method == "POST":
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            comment_form.save(commit=False)
-
-            context_dict = {}
-            try:
-                comment = Comment.objects.get(blog=blog_title_slug)
-                context_dict["comment"] = comment
-            except Blog.DoesNotExist:
-                context_dict["comment"] = None
-
-            context_dict["form"] = comment_form
-            comment_form.save()
-
-            return render(request, "blog/blog_detail1.html", context=context_dict)
-
-        else:
-            print(comment_form.errors)
-            context_dict = {}
-            comment_form = CommentForm()
-            context_dict["form"] = comment_form
-            return render(request, "blog/blog_detail1.html", context=context_dict)
-    else:
-        context_dict = {}
-        comment_form = CommentForm()
-        context_dict["form"] = comment_form
-        return render(request, "blog/blog_detail1.html", context=context_dict)
-
-
 def about(request):
     return render(request, 'blog/about.html')
 
