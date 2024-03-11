@@ -77,6 +77,7 @@ def user_login(request):
         return render(request, 'authentication/login.html')
 
 
+
 @login_required
 def user_logout(request):
     logout(request)
