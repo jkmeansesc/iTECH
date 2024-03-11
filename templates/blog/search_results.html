@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
+{% load custom_filters %}
 <html lang="en">
 
 <head>
@@ -42,7 +43,7 @@
                                                 <a href="{% url 'blog:blog_detail' blog.slug %}" class="list-group-item">
                                                     <div class="list__right">
                                                         <h4 class="list-group-item-heading">
-                                                            {{ blog.title }}<em>{{ blog.tag }}</em>{{ blog.title }}
+                                                            {{ blog.title }}--<em>{{ blog.tag }}</em>--{{ blog.content|first_non_empty_character }}
                                                         </h4>
                                                         <time>
                                                             {{ blog.date|date:'d-m-Y H:i:s' }}

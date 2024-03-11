@@ -8304,7 +8304,7 @@ select {
 .hero--profile {
     height: 170px;
     z-index: 0;
-    background: linear-gradient(180deg, #040f23, #24273a)
+    background: linear-gradient(180deg, #696fa8, #24273a)
 }
 
 @media only screen and (min-width: 768px) {
