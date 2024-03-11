@@ -46,7 +46,7 @@
                                                             {{ blog.title }}--<em>{{ blog.tag }}</em>--{{ blog.content|first_non_empty_character }}
                                                         </h4>
                                                         <time>
-                                                            {{ blog.date|date:'d-m-Y H:i:s' }}
+                                                            {{ blog.author }}  {{ blog.date|date:'d-m-Y H:i:s' }}
                                                         </time>
                                                     </div>
                                                 </a>
