@@ -34,50 +34,7 @@
                     </div>
                     <div class="col-md-8 profile__content">
                         <div class="tabs">
-                            <div class="tabs-profile">
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation">
-                                        <a href="{% url 'blog:profile_comments' %}" aria-controls="home" role="tab">
-                                            <i class="icon-settings" aria-hidden="true" title="Comments"></i>
-                                            Comments
-                                        </a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a href="{% url 'blog:profile_blogs' %}" aria-controls="home" role="tab">
-                                            <i class="icon-settings" aria-hidden="true" title="Blogs"></i>
-                                            Blogs
-                                        </a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a href="{% url 'blog:profile_settings' %}" aria-controls="home" role="tab">
-                                            <i class="icon-settings" aria-hidden="true" title="Settings"></i>
-                                            Setting
-                                        </a>
-                                    </li>
-
-                                    <!-- 判断用户是否为员工 -->
-                                    {% if user.is_staff %}
-
-                                      <li role="presentation">
-                                            <a href="{% url 'blog:manage_all_accounts' %}" aria-controls="home" role="tab">
-                                                <i class="icon-settings" aria-hidden="true" title=" Manage Accounts"></i>
-                                                Manage Accounts
-                                            </a>
-                                        </li> <li role="presentation">
-                                            <a href="{% url 'blog:manage_all_blogs' %}" aria-controls="home" role="tab">
-                                                <i class="icon-settings" aria-hidden="true" title="Manage Blogs"></i>
-                                                Manage Blogs
-                                            </a>
-                                        </li> <li role="presentation" class="active">
-                                            <a href="{% url 'blog:manage_all_comments' %}" aria-controls="home" role="tab">
-                                                <i class="icon-settings" aria-hidden="true" title=" Manage Comments"></i>
-                                                Manage Comments
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </div>
-                        </div>
+                            {% include 'manage_tabs.html' %}
                         <div class="tab-content">
                             <div class="section">
                                 <div role="tabpanel" class="tab-pane active" id="comments">
@@ -98,19 +55,18 @@
                                                                     style='color:#bababa;font-size: 14px'>{{ comment.date_posted|date:'d-m-Y H:i:s' }}</time>
                                                             </span></span></div>
                                                     <div class="comment__text">
-                                                        <p>{{ comment.content|slice:":30" }}...</p>
+                                                        <p>{{ comment.content|first_non_empty_character|slice:":30" }}...</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
                                         {% endfor %}
-
-
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </main>

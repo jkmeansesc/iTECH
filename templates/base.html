@@ -54,7 +54,7 @@
                         </li>
                         {% if user.is_authenticated %}
                         <li class="nav__item nav__item--main dropdown account">
-                            <a href="" title="">Hello, {{ user.username }}
+                            <a href="{% url 'blog:profile_settings' %}" title="">Hello, {{ user.username }}
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li class="dropdown-item">
