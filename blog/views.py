@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from .forms import BlogForm, CommentForm
-from .models import Blog, Comment, Subscribe
+from .models import Blog, Comment
 from .utils import send_mails
 from django.contrib.auth.models import User
 
@@ -168,7 +168,7 @@ def blog_detail(request, blog_title_slug):
     return render(
         request,
         "blog/blog_detail.html",
-        {"blog": blog, "comment_form": comment_form, "comments": comments, "subscribed": subscribed},
+        {"blog": blog, "comment_form": comment_form, "comments": comments},
     )
 
 
@@ -199,20 +199,27 @@ def search_results(request):
 
 
 def profile_settings(request):
-    return render(request, "blog/profile_settings.html")
+    current_page = "profile_settings"
+    context_dict = {"blogs": blogs,
+                    "current_page": current_page}
+    return render(request, "blog/profile_settings.html", context_dict)
 
 
 def profile_blogs(request):
     # 返回本用户的所有blog
     blogs = Blog.objects.filter(author=request.user)
-    context_dict = {"blogs": blogs}
+    current_tab = "profile_blogs"
+    context_dict = {"blogs": blogs,
+                    "current_page": current_tab}
     return render(request, "blog/profile_blogs.html", context=context_dict)
 
 
 def profile_comments(request):
     # 返回本用户所有的comment
     comments = Comment.objects.filter(author=request.user)
-    context_dict = {"comments": comments}
+    current_tab = "profile_comments"
+    context_dict = {"comments": comments,
+                    "current_page": current_tab}
 
     return render(request, "blog/profile_comments.html", context=context_dict)
 
