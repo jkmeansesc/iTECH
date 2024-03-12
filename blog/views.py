@@ -57,8 +57,24 @@ def publish(request):
                 print("no image")
 
             blog_instance.author = request.user
-
             blog_instance.save()
+
+
+            # 向订阅了这个博主的用户发送邮件
+            author = blog_instance.author.userProfile
+            subscribers = Subscribe.objects.filter(author=author)
+            recipient_list = []
+            for subscriber in subscribers:
+                user = subscriber.user.user
+                recipient_list.append(user.email)
+            subject = "Blog update"
+            message = blog_instance.author.username + " has updated the blog. Please check it out."
+            from_email = "2079459973@qq.com"
+
+            send_mails(subject=subject, from_email=from_email, recipient_list=recipient_list, message=message)
+
+        
+
 
             return redirect("blog:index")
         else:
@@ -275,13 +291,13 @@ def manage_comments(request):
 
 
 @login_required
-def subscribe(request, blog_title_slug):
+def subscribe(request, blog_title_slug):    
     user = request.user.userProfile
     blog = Blog.objects.get(slug=blog_title_slug)
     author = blog.author.userProfile
     # 添加订阅
     subscribe = Subscribe(user=user, author=author)
-    subscribe.save()
+    subscribe.save()    
     comments = blog.comments.all().order_by("-date_posted")
     comment_form = CommentForm()
     return render(
@@ -291,7 +307,7 @@ def subscribe(request, blog_title_slug):
     )
 
 @login_required
-def unsubscribe(request, blog_title_slug):
+def unsubscribe(request, blog_title_slug):    
     user = request.user.userProfile
     blog = Blog.objects.get(slug=blog_title_slug)
     author = blog.author.userProfile
