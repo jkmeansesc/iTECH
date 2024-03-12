@@ -9,6 +9,7 @@ from .models import Blog, Comment
 from .utils import send_mails
 from django.contrib.auth.models import User
 
+
 # from django.core.mail import send_mail
 # from .utils import send_mails
 
@@ -173,20 +174,27 @@ def search_results(request):
 
 
 def profile_settings(request):
-    return render(request, "blog/profile_settings.html")
+    current_page = "profile_settings"
+    context_dict = {"blogs": blogs,
+                    "current_page": current_page}
+    return render(request, "blog/profile_settings.html", context_dict)
 
 
 def profile_blogs(request):
     # 返回本用户的所有blog
     blogs = Blog.objects.filter(author=request.user)
-    context_dict = {"blogs": blogs}
+    current_tab = "profile_blogs"
+    context_dict = {"blogs": blogs,
+                    "current_page": current_tab}
     return render(request, "blog/profile_blogs.html", context=context_dict)
 
 
 def profile_comments(request):
     # 返回本用户所有的comment
     comments = Comment.objects.filter(author=request.user)
-    context_dict = {"comments": comments}
+    current_tab = "profile_comments"
+    context_dict = {"comments": comments,
+                    "current_page": current_tab}
 
     return render(request, "blog/profile_comments.html", context=context_dict)
 
@@ -262,6 +270,3 @@ def manage_comments(request):
                     "current_page": current_page}
 
     return render(request, 'blog/manage_all_comments.html', context=context_dict)
-
-
-
