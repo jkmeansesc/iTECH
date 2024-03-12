@@ -20,10 +20,11 @@
                     <div class="section-header">
                         <h2>Blogs</h2>
                         <ul class="section-header__subheading article__tags text-center">
-                            <li {% if current_tag == "" %} class="active"
-                            {% endif %} style="font-size: large">
+                            <li style="font-size: large">
                                 <a href="{% url 'blog:blogs' %}">All</a>
                             </li>
+                        <!-- if the user click the corresponding tag, blogs with this tag will be filtered
+                        and the title of tag will be highlighted-->
                             {% for tag in hot_tags %}
                                 <li {% if current_tag == tag %} class="active" {% endif %} style="font-size: large">
                                     <a href="{% url 'blog:blogs' tag %}">{{ tag }}</a>
@@ -31,7 +32,7 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    {% get_all_blogs 9 tag %}
+                    {% get_all_blogs None tag %}
 
                 </div>
             </div>

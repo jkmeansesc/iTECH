@@ -1,16 +1,13 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render, get_object_or_404
-from .forms import BlogForm, CommentForm
-from .models import Blog, Comment
-from .forms import BlogForm
-from .utils import send_mails
-from django.contrib.auth.decorators import login_required
 # 导入HttpResponse
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-# 导入User
-from django.contrib.auth.models import User
 
+from .forms import BlogForm, CommentForm
+from .models import Blog, Comment
+from .utils import send_mails
+from django.contrib.auth.models import User
 
 # from django.core.mail import send_mail
 # from .utils import send_mails
@@ -144,7 +141,7 @@ def blog_detail(request, blog_title_slug):
     comments = blog.comments.all().order_by("-date_posted")
     return render(
         request,
-        "blog/blog_detail1.html",
+        "blog/blog_detail.html",
         {"blog": blog, "comment_form": comment_form, "comments": comments},
     )
 
@@ -246,4 +243,37 @@ def blogs_edit(request, blog_id):
         form = BlogForm(instance=blog, initial={"image": None})
 
         context_dict["form"] = form
-        return render(request, "blog/blog_edit.html", context=context_dict)
+        return render(request, 'blog/blog_edit.html', context=context_dict)
+
+
+def manage_accounts(request):
+    # 获取所有的普通用户，不能是superuser，不能是staff, 不能是active=False
+    users = User.objects.filter(is_superuser=False, is_staff=False, is_active=True)
+    current_page = 'manage_accounts'
+
+    context_dict = {"users": users,
+                    "current_page": current_page}
+    return render(request, 'blog/manage_all_accounts.html', context=context_dict)
+
+
+def manage_blogs(request):
+    # 获取所有的blogs
+    blogs = Blog.objects.all()
+    current_page = 'manage_blogs'
+    context_dict = {"blogs": blogs,
+                    "current_page": current_page}
+
+    return render(request, 'blog/manage_all_blogs.html', context=context_dict)
+
+
+def manage_comments(request):
+    # 获取所有的comments
+    comments = Comment.objects.all()
+    current_page = 'manage_comments'
+    context_dict = {"comments": comments,
+                    "current_page": current_page}
+
+    return render(request, 'blog/manage_all_comments.html', context=context_dict)
+
+
+

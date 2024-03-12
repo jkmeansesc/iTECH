@@ -60,12 +60,8 @@
                                     <a class="btn-link" href="{% url 'authentication:login' %}">Already have an account? Login</a>
                                 </div>
                                 {% if error_message != "" %}
-                                    <strong>The user has been registered, please try another one</strong>
+                                    <strong>{{ error_message }}</strong>
 
-                                {% endif %}
-                                {% if registered %}
-                                    <strong>Thank you for registering!</strong>
-                                    <a href="{% url 'authentication:login' %}">Click here to log in.</a>
                                 {% endif %}
                             </form>
                         </div>

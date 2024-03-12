@@ -6,7 +6,7 @@
 <head>
     <title>{% block title_block %}
         {{ user.username }} setting
-        {% endblock %}</title>
+    {% endblock %}</title>
 
 </head>
 
@@ -17,11 +17,11 @@
             </div>
             <div class="container-fluid">
                 <div class="profile row">
-                
+
                     <div class="col-md-3">
                         <div class="profile__header">
                             <div class="profile__user-avatar"
-                                style="background-image: url('{{ user.userProfile.picture.url }}')">
+                                 style="background-image: url('{{ user.userProfile.picture.url }}')">
                             </div>
                             <div class="profile__info">
                                 <div class="profile__name">
@@ -34,6 +34,7 @@
                     </div>
                     <div class="col-md-8 profile__content">
                         <div class="tabs">
+                            <!--list tabs for my profile-->
                             {% include 'manage_tabs.html' %}
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="settings">
@@ -48,68 +49,69 @@
                                                     <!-- set username-->
                                                     <li>
                                                         <a href="{% url 'blog:profile_settings' %}"
-                                                            class="btn btn-primary btn-outline pull-right edit-username-btn"
-                                                            data-toggle="form" data-target="#change-username"
-                                                            data-change=".change-username" data-elem="#elem-username"
-                                                            data-default="#default-username">
+                                                           class="btn btn-primary btn-outline pull-right edit-username-btn"
+                                                           data-toggle="form" data-target="#change-username"
+                                                           data-change=".change-username" data-elem="#elem-username"
+                                                           data-default="#default-username">
                                                             <span>edit</span>
                                                         </a>
                                                         <h4>Username</h4>
                                                         <p id="elem-username" class="change-username"
-                                                            data-change="username" style="display: block;">
+                                                           data-change="username" style="display: block;">
                                                             {{ user.username }}
                                                         </p>
                                                         <p id="default-username" style="display: none;">
                                                             no username
                                                         </p>
                                                         <form id="change-username"
-                                                            action="{% url 'authentication:set_username' %}"
-                                                            method="POST" style="display:none;">
+                                                              action="{% url 'authentication:set_username' %}"
+                                                              method="POST" style="display:none;">
                                                             {% csrf_token %}
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <input name="username" type="text"
-                                                                        class="form-control filled"
-                                                                        value="{{ user.username }}" required="">
+                                                                           class="form-control filled"
+                                                                           value="{{ user.username }}" required="">
                                                                 </div>
                                                             </div>
                                                             <input type="submit" class="btn btn-primary" value="save">
                                                             <button type="button"
-                                                                class="btn btn-default edit-username-btn"
-                                                                data-dismiss="form"><span>cancel</span></button>
+                                                                    class="btn btn-default edit-username-btn"
+                                                                    data-dismiss="form"><span>cancel</span></button>
                                                         </form>
                                                     </li>
                                                     <!-- set email-->
                                                     <li>
                                                         <a href="{% url 'blog:profile_settings' %}"
-                                                            class="btn btn-primary btn-outline pull-right edit-email-btn"
-                                                            data-toggle="form" data-target="#change-email"
-                                                            data-change=".change-email" data-elem="#elem-email"
-                                                            data-default="#default-email">
+                                                           class="btn btn-primary btn-outline pull-right edit-email-btn"
+                                                           data-toggle="form" data-target="#change-email"
+                                                           data-change=".change-email" data-elem="#elem-email"
+                                                           data-default="#default-email">
                                                             <span>edit</span>
                                                         </a>
                                                         <h4>Email</h4>
                                                         <p id="elem-email" class="change-email" data-change="email"
-                                                            style="">
+                                                           style="">
                                                             {{ user.email }}
                                                         </p>
                                                         <p id="default-email" style="display: none;">
                                                             none
                                                         </p>
                                                         <form id="change-email"
-                                                            action="{% url 'authentication:set_email' %}" method="POST"
-                                                            style="display: none;">
+                                                              action="{% url 'authentication:set_email' %}"
+                                                              method="POST"
+                                                              style="display: none;">
                                                             {% csrf_token %}
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <input name="email" type="text"
-                                                                        class="form-control filled"
-                                                                        value="{{ user.email }}" required="">
+                                                                           class="form-control filled"
+                                                                           value="{{ user.email }}" required="">
                                                                 </div>
                                                             </div>
                                                             <input type="submit" class="btn btn-primary" value="save">
                                                             <button type="button" class="btn btn-default edit-email-btn"
-                                                                data-dismiss="form"><span>cancel</span></button>
+                                                                    data-dismiss="form"><span>cancel</span></button>
                                                         </form>
                                                     </li>
                                                     <!-- set avatar-->
@@ -117,26 +119,26 @@
                                                         <div>
                                                             <h4>Profile</h4>
                                                             <form action="{% url 'authentication:set_avatar' %}"
-                                                                method="POST" id='myimage' enctype="multipart/form-data"
-                                                                class='form-inline'>
+                                                                  method="POST" id='myimage'
+                                                                  enctype="multipart/form-data"
+                                                                  class='form-inline'>
                                                                 {% csrf_token %}
                                                                 <button type="button" id="upload-btn"
-                                                                    class="btn btn-primary btn-outline edit-avatar-btn">
+                                                                        class="btn btn-primary btn-outline edit-avatar-btn">
                                                                     Upload
                                                                 </button>
                                                                 <input id='img_box' type="file" name="image"
-                                                                    accept="image/gif, image/jpeg, image/png, image/jpg"
-                                                                    style="display: none;">
+                                                                       accept="image/gif, image/jpeg, image/png, image/jpg"
+                                                                       style="display: none;">
                                                                 <span id="file-name">No file chosen</span>
 
 
-
                                                                 <input type="submit"
-                                                                    class="btn btn-primary btn-outline pull-right edit-avatar-btn"
-                                                                    data-toggle="form" data-target="#change-avatar"
-                                                                    data-change=".change-avatar"
-                                                                    data-elem="#elem-avatar"
-                                                                    data-default="#default-avatar" value="edit">
+                                                                       class="btn btn-primary btn-outline pull-right edit-avatar-btn"
+                                                                       data-toggle="form" data-target="#change-avatar"
+                                                                       data-change=".change-avatar"
+                                                                       data-elem="#elem-avatar"
+                                                                       data-default="#default-avatar" value="edit">
                                                             </form>
                                                         </div>
                                                     </li>
@@ -145,35 +147,35 @@
                                                         <div>
                                                             <div style='height: 10px'></div>
                                                             <a href="{% url 'blog:profile_settings' %}"
-                                                                class="btn btn-primary btn-outline pull-right edit-pwd-btn"
-                                                                data-toggle="form" data-target="#change-pwd">
+                                                               class="btn btn-primary btn-outline pull-right edit-pwd-btn"
+                                                               data-toggle="form" data-target="#change-pwd">
                                                                 <span>edit</span>
                                                             </a>
                                                             <h4>Password</h4>
                                                             <form id="change-pwd"
-                                                                action="{% url 'authentication:set_password' %}"
-                                                                method="POST" style="display: none;">
+                                                                  action="{% url 'authentication:set_password' %}"
+                                                                  method="POST" style="display: none;">
                                                                 {% csrf_token %}
                                                                 <div class="form-group">
                                                                     <div class="controls">
                                                                         <input name="password" type="text"
-                                                                            class="form-control filled"
-                                                                            placeholder="Input a new password">
+                                                                               class="form-control filled"
+                                                                               placeholder="Input a new password">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div class="controls">
                                                                         <input name="password1" type="text"
-                                                                            class="form-control filled"
-                                                                            placeholder="Input new password again">
+                                                                               class="form-control filled"
+                                                                               placeholder="Input new password again">
                                                                     </div>
                                                                 </div>
                                                                 <button type="submit" class="btn btn-primary"
-                                                                    value="Save">Save
+                                                                        value="Save">Save
                                                                 </button>
                                                                 <button type="button"
-                                                                    class="btn btn-default edit-pwd-btn"
-                                                                    data-dismiss="form"><span>cancel</span></button>
+                                                                        class="btn btn-default edit-pwd-btn"
+                                                                        data-dismiss="form"><span>cancel</span></button>
                                                             </form>
                                                         </div>
                                                     </li>
@@ -181,9 +183,9 @@
                                                 </ul>
                                             </li>
                                         </ul>
-
+                                        <!--if two password are different, a error message can be presented-->
                                         {% if error_message %}
-                                        <p><strong>{{ error_message }}</strong></p>
+                                            <p><strong>{{ error_message }}</strong></p>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -194,7 +196,7 @@
             </div>
         </main>
     </div>
-    {% endblock %}
+{% endblock %}
 </body>
 
 </html>

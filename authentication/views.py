@@ -11,81 +11,64 @@ from .models import UserProfile
 
 
 def register(request):
-    registered = False
     error_message = ""
-
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
-
         if user_form.is_valid() and profile_form.is_valid():
-
+            # 密码长度不能小于6
+            if len(user_form.cleaned_data['password']) < 6:
+                error_message += "Password length must be greater than 6."
+                return render(request, 'authentication/register.html',
+                          {'user_form': user_form, 'profile_form': profile_form, 'error_message': error_message})
+            
             user = user_form.save()
             user.set_password(user.password)  # Hash the password
             user.save()
 
             profile = profile_form.save(commit=False)  # Don't save to database yet
             profile.user = user
-
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-
             profile.save()
-
-            registered = True
+            return redirect(reverse('authentication:login'))
         else:
-
             # Check the errors
             if user_form.errors:
-                error_message += f"User form errors: {user_form.errors}"
-            if profile_form.errors:
-                error_message += f"Profile form errors: {profile_form.errors}"
-
-            print(user_form.errors, profile_form.errors)
+                error_message += "The user has been registered, please try another one."
 
             # Invalid form or forms, come back to the registration page, send the error message
             return render(request, 'authentication/register.html',
-                          {'user_form': user_form, 'profile_form': profile_form, 'registered': registered,
-                           'error_message': error_message})
+                          {'user_form': user_form, 'profile_form': profile_form, 'error_message': error_message})
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
-
-    return render(request, 'authentication/register.html',
-                  {'user_form': user_form, 'profile_form': profile_form, 'registered': registered,
-                   'error_message': error_message})
+        return render(request, 'authentication/register.html',
+                    {'user_form': user_form, 'profile_form': profile_form, 'error_message': error_message})
 
 
 def user_login(request):
+    error_message = ""
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        # 判断用户名和密码是否正确，并判断用户是否处于激活状态
         user = authenticate(username=username, password=password)
-
+        
         if user:
-            # is the account active? It could have been disabled.
-            if user.is_active:
-                login(request, user)
-                return redirect(reverse('blog:index'))
-            else:
-                return HttpResponse("Your Rango account is disabled.")
+            login(request, user)
+            return redirect(reverse('blog:index'))
         else:
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
+            error_message = "Invalid login details supplied or your account is disabled."
+            print(error_message)
+            return render(request, 'authentication/login.html', {'error_message': error_message})
     else:
-        return render(request, 'authentication/login.html')
-
+        return render(request, 'authentication/login.html', {'error_message': error_message})
 
 
 @login_required
 def user_logout(request):
     logout(request)
     return redirect(reverse('blog:index'))
-
-
-def password_reset(request):
-    return render(request, 'authentication/password_reset.html')
 
 
 def set_username(request):
@@ -114,6 +97,10 @@ def set_email(request):
 
 
 def set_avatar(request):
+    # 判断是否传了image
+    if request.FILES.get("image") is None:
+        return redirect(reverse('blog:profile_settings'))
+    
     avatar = request.FILES['image']
     userProfile = request.user.userProfile
     userProfile.picture = avatar
@@ -131,14 +118,17 @@ def set_password(request):
         return render(request, 'blog/profile_settings.html', {'error_message': 'The two passwords are not the same'})
         # return redirect(reverse('blog:profile_settings'), {'error_message': 'The two passwords are not the same'})
     else:
-        # 得到当前用户
-        user = request.user
-        # 将当前用户的password设置为post请求中的password
-        user.set_password(password)
-        # 保存当前用户
-        user.save()
-        return redirect(reverse('authentication:login'))
+        if len(password) >= 6:
+            # 得到当前用户
+            user = request.user
+            # 将当前用户的password设置为post请求中的password
+            user.set_password(password)
+            # 保存当前用户
+            user.save()
+            return redirect(reverse('authentication:login'))
 
+        else:
+            return render(request, 'blog/profile_settings.html', {'error_message': 'Password length must be greater than 6.'})
 
 
 def block_user(request, user_id):
@@ -147,3 +137,9 @@ def block_user(request, user_id):
     user.is_active = False
     user.save()
     return redirect(reverse('blog:manage_all_accounts'))
+
+
+def password_reset(request):
+
+    
+    return render(request, 'authentication/password_reset.html')
