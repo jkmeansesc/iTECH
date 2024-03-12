@@ -5,10 +5,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from .forms import BlogForm, CommentForm
-from .models import Blog, Comment
+from .models import Blog, Comment, Subscribe
 from .utils import send_mails
 from django.contrib.auth.models import User
-
 
 # from django.core.mail import send_mail
 # from .utils import send_mails
@@ -140,11 +139,21 @@ def blog_detail(request, blog_title_slug):
 
     # sort the comment by the latest date
     comments = blog.comments.all().order_by("-date_posted")
+
+    # 判断用户是否订阅了这个博主
+    subscribed = False
+    if request.user.is_authenticated:
+        user = request.user.userProfile
+        author = blog.author.userProfile
+        if Subscribe.objects.filter(user=user, author=author).exists():
+            subscribed = True
+
     return render(
         request,
         "blog/blog_detail.html",
-        {"blog": blog, "comment_form": comment_form, "comments": comments},
+        {"blog": blog, "comment_form": comment_form, "comments": comments, "subscribed": subscribed},
     )
+
 
 
 def search_results(request):
@@ -174,27 +183,20 @@ def search_results(request):
 
 
 def profile_settings(request):
-    current_page = "profile_settings"
-    context_dict = {"blogs": blogs,
-                    "current_page": current_page}
-    return render(request, "blog/profile_settings.html", context_dict)
+    return render(request, "blog/profile_settings.html")
 
 
 def profile_blogs(request):
     # 返回本用户的所有blog
     blogs = Blog.objects.filter(author=request.user)
-    current_tab = "profile_blogs"
-    context_dict = {"blogs": blogs,
-                    "current_page": current_tab}
+    context_dict = {"blogs": blogs}
     return render(request, "blog/profile_blogs.html", context=context_dict)
 
 
 def profile_comments(request):
     # 返回本用户所有的comment
     comments = Comment.objects.filter(author=request.user)
-    current_tab = "profile_comments"
-    context_dict = {"comments": comments,
-                    "current_page": current_tab}
+    context_dict = {"comments": comments}
 
     return render(request, "blog/profile_comments.html", context=context_dict)
 
@@ -270,3 +272,35 @@ def manage_comments(request):
                     "current_page": current_page}
 
     return render(request, 'blog/manage_all_comments.html', context=context_dict)
+
+
+@login_required
+def subscribe(request, blog_title_slug):
+    user = request.user.userProfile
+    blog = Blog.objects.get(slug=blog_title_slug)
+    author = blog.author.userProfile
+    # 添加订阅
+    subscribe = Subscribe(user=user, author=author)
+    subscribe.save()
+    comments = blog.comments.all().order_by("-date_posted")
+    comment_form = CommentForm()
+    return render(
+        request,
+        "blog/blog_detail.html",
+        {"blog": blog, "comment_form": comment_form, "comments": comments, "subscribed": True},
+    )
+
+@login_required
+def unsubscribe(request, blog_title_slug):
+    user = request.user.userProfile
+    blog = Blog.objects.get(slug=blog_title_slug)
+    author = blog.author.userProfile
+    # 取消订阅
+    Subscribe.objects.filter(user=user, author=author).delete()
+    comments = blog.comments.all().order_by("-date_posted")
+    comment_form = CommentForm()
+    return render(
+        request,
+        "blog/blog_detail.html",
+        {"blog": blog, "comment_form": comment_form, "comments": comments, "subscribed": False},
+    )
