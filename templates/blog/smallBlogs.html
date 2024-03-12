@@ -17,7 +17,9 @@
                 </div>
                 <div class="article__footer">
                     <a class="btn-more" href="{% url 'blog:blog_detail' blog.slug %}" title="View comments">
-                        <span>{{ blog.comment_num }}</span>
+                        <!-- 添加评论数量 -->
+                        <!-- {{ blog.comments.count }} -->
+                        <span>{{ blog.comments.count}}</span>
                     </a>
                     <div class="tags">{{ blog.tag }}</div>
                     <time class="article__date" datetime="{{ blog.date|date:'d-m-Y H:i:s' }}">

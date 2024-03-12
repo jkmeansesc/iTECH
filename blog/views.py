@@ -7,6 +7,7 @@ from django.urls import reverse
 from .forms import BlogForm, CommentForm
 from .models import Blog, Comment
 from .utils import send_mails
+from django.contrib.auth.models import User
 
 # from django.core.mail import send_mail
 # from .utils import send_mails
@@ -204,18 +205,6 @@ def blog_delete(request, blog_id):
     return redirect(reverse("blog:profile_blogs"))
 
 
-def manage_accounts(request):
-    return render(request, "blog/manage_all_accounts.html")
-
-
-def manage_blogs(request):
-    return render(request, "blog/manage_all_blogs.html")
-
-
-def manage_comments(request):
-    return render(request, "blog/manage_all_comments.html")
-
-
 def blogs_edit(request, blog_id):
     blog = Blog.objects.get(id=blog_id)
 
@@ -242,4 +231,37 @@ def blogs_edit(request, blog_id):
         form = BlogForm(instance=blog, initial={"image": None})
 
         context_dict["form"] = form
-        return render(request, "blog/blog_edit.html", context=context_dict)
+        return render(request, 'blog/blog_edit.html', context=context_dict)
+
+
+def manage_accounts(request):
+    # 获取所有的普通用户，不能是superuser，不能是staff, 不能是active=False
+    users = User.objects.filter(is_superuser=False, is_staff=False, is_active=True)
+    current_page = 'manage_accounts'
+
+    context_dict = {"users": users,
+                    "current_page": current_page}
+    return render(request, 'blog/manage_all_accounts.html', context=context_dict)
+
+
+def manage_blogs(request):
+    # 获取所有的blogs
+    blogs = Blog.objects.all()
+    current_page = 'manage_blogs'
+    context_dict = {"blogs": blogs,
+                    "current_page": current_page}
+
+    return render(request, 'blog/manage_all_blogs.html', context=context_dict)
+
+
+def manage_comments(request):
+    # 获取所有的comments
+    comments = Comment.objects.all()
+    current_page = 'manage_comments'
+    context_dict = {"comments": comments,
+                    "current_page": current_page}
+
+    return render(request, 'blog/manage_all_comments.html', context=context_dict)
+
+
+
