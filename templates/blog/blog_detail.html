@@ -61,7 +61,7 @@
                                                 <div>
                                                     <p class="comment-author">{{ comment.author }} says:</p>
                                                     <p>{{ comment.content }}</p>
-                                                    <p class="comment-date">Commented on: {{ comment.date_posted }}</p>
+                                                    <p class="comment-date">{{ comment.date_posted }}</p>
                                                 </div>
                                             </div>
                                         {% endfor %}
@@ -80,7 +80,7 @@
                                                             '<div>' +
                                                             '<p class="comment-author">' + response.author + ' says:</p>' +
                                                             '<p>' + response.content + '</p>' +
-                                                            '<p class="comment-date">Commented on: ' + response.date_posted + '</p>' +
+                                                            '<p class="comment-date">' + response.date_posted + '</p>' +
                                                             '</div>'
                                                         );
                                                         $('#commentForm')[0].reset();
