@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required
+# 导入User
+from django.contrib.auth.models import User
 # 导入HttpResponse
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from .forms import BlogForm, CommentForm
-from .models import Blog, Comment
+from .models import Blog, Comment, Subscribe
 from .utils import send_mails
 from django.contrib.auth.models import User
 
@@ -57,7 +59,6 @@ def publish(request):
                 print("no image")
 
             blog_instance.author = request.user
-
             blog_instance.save()
 
 
@@ -74,7 +75,7 @@ def publish(request):
 
             send_mails(subject=subject, from_email=from_email, recipient_list=recipient_list, message=message)
 
-
+        
 
 
             return redirect("blog:index")
@@ -122,7 +123,7 @@ def blogs(request, tag=None):
     for tag_ in tag_count[:5]:
         hot_tags.append(tag_[0])
 
-    context_dict = {"hot_tags": hot_tags}
+    context_dict = {"hot_tags": hot_tags, "current_tag": tag}
 
     if tag:
         tag = str(tag)
@@ -168,8 +169,9 @@ def blog_detail(request, blog_title_slug):
     return render(
         request,
         "blog/blog_detail.html",
-        {"blog": blog, "comment_form": comment_form, "comments": comments},
+        {"blog": blog, "comment_form": comment_form, "comments": comments, "subscribed": subscribed},
     )
+
 
 
 def search_results(request):
@@ -199,27 +201,20 @@ def search_results(request):
 
 
 def profile_settings(request):
-    current_page = "profile_settings"
-    context_dict = {"blogs": blogs,
-                    "current_page": current_page}
-    return render(request, "blog/profile_settings.html", context_dict)
+    return render(request, "blog/profile_settings.html")
 
 
 def profile_blogs(request):
     # 返回本用户的所有blog
     blogs = Blog.objects.filter(author=request.user)
-    current_tab = "profile_blogs"
-    context_dict = {"blogs": blogs,
-                    "current_page": current_tab}
+    context_dict = {"blogs": blogs}
     return render(request, "blog/profile_blogs.html", context=context_dict)
 
 
 def profile_comments(request):
     # 返回本用户所有的comment
     comments = Comment.objects.filter(author=request.user)
-    current_tab = "profile_comments"
-    context_dict = {"comments": comments,
-                    "current_page": current_tab}
+    context_dict = {"comments": comments}
 
     return render(request, "blog/profile_comments.html", context=context_dict)
 
@@ -264,7 +259,7 @@ def blogs_edit(request, blog_id):
         form = BlogForm(instance=blog, initial={"image": None})
 
         context_dict["form"] = form
-        return render(request, 'blog/blog_edit.html', context=context_dict)
+        return render(request, "blog/blog_edit.html", context=context_dict)
 
 
 def manage_accounts(request):
@@ -303,13 +298,13 @@ def blog_delete_manage(request, blog_id):
     return redirect(reverse('blog:mange_all_blogs'))
 
 @login_required
-def subscribe(request, blog_title_slug):
+def subscribe(request, blog_title_slug):    
     user = request.user.userProfile
     blog = Blog.objects.get(slug=blog_title_slug)
     author = blog.author.userProfile
     # 添加订阅
     subscribe = Subscribe(user=user, author=author)
-    subscribe.save()
+    subscribe.save()    
     comments = blog.comments.all().order_by("-date_posted")
     comment_form = CommentForm()
     return render(
@@ -319,7 +314,7 @@ def subscribe(request, blog_title_slug):
     )
 
 @login_required
-def unsubscribe(request, blog_title_slug):
+def unsubscribe(request, blog_title_slug):    
     user = request.user.userProfile
     blog = Blog.objects.get(slug=blog_title_slug)
     author = blog.author.userProfile
