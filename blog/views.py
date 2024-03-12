@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from .forms import BlogForm, CommentForm
-from .models import Blog, Comment
+from .models import Blog, Comment, Subscribe
 from .utils import send_mails
 from django.contrib.auth.models import User
 
@@ -59,6 +59,27 @@ def publish(request):
             blog_instance.author = request.user
 
             blog_instance.save()
+
+
+
+            # 向订阅了这个博主的用户发送邮件
+            # author = blog_instance.author.userProfile
+            # subscribers = Subscribe.objects.filter(author=author)
+            # recipient_list = []
+            # for subscriber in subscribers:
+            #     user = subscriber.user
+            #     recipient_list.append(user.email)
+            # subject = "Blog update"
+            # message = blog_instance.author." has updated the blog. Please check it out."
+            # from_email = "2079459973@qq.com"
+
+            # recipient_list = ["zhengkangwu666@gmail.com", ]
+            # send_mail(subject=subject, from_email=from_email, recipient_list=recipient_list, message=message)
+
+
+
+            # send_mails(emails, blog_instance.title, blog_instance.content)
+
 
             return redirect("blog:index")
         else:
@@ -139,11 +160,21 @@ def blog_detail(request, blog_title_slug):
 
     # sort the comment by the latest date
     comments = blog.comments.all().order_by("-date_posted")
+
+    # 判断用户是否订阅了这个博主
+    subscribed = False
+    if request.user.is_authenticated:
+        user = request.user.userProfile
+        author = blog.author.userProfile
+        if Subscribe.objects.filter(user=user, author=author).exists():
+            subscribed = True
+
     return render(
         request,
         "blog/blog_detail.html",
-        {"blog": blog, "comment_form": comment_form, "comments": comments},
+        {"blog": blog, "comment_form": comment_form, "comments": comments, "subscribed": subscribed},
     )
+
 
 
 def search_results(request):
@@ -264,4 +295,33 @@ def manage_comments(request):
     return render(request, 'blog/manage_all_comments.html', context=context_dict)
 
 
+@login_required
+def subscribe(request, blog_title_slug):    
+    user = request.user.userProfile
+    blog = Blog.objects.get(slug=blog_title_slug)
+    author = blog.author.userProfile
+    # 添加订阅
+    subscribe = Subscribe(user=user, author=author)
+    subscribe.save()    
+    comments = blog.comments.all().order_by("-date_posted")
+    comment_form = CommentForm()
+    return render(
+        request,
+        "blog/blog_detail.html",
+        {"blog": blog, "comment_form": comment_form, "comments": comments, "subscribed": True},
+    )
 
+@login_required
+def unsubscribe(request, blog_title_slug):    
+    user = request.user.userProfile
+    blog = Blog.objects.get(slug=blog_title_slug)
+    author = blog.author.userProfile
+    # 取消订阅
+    Subscribe.objects.filter(user=user, author=author).delete()
+    comments = blog.comments.all().order_by("-date_posted")
+    comment_form = CommentForm()
+    return render(
+        request,
+        "blog/blog_detail.html",
+        {"blog": blog, "comment_form": comment_form, "comments": comments, "subscribed": False},
+    )

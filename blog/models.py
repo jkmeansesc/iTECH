@@ -33,3 +33,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+
+# 订阅博主的模型
+class Subscribe(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='subscribed_user')
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='subscribed_author')
+    date_subscribed = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} subscribed {self.author}"
