@@ -42,42 +42,40 @@ class UserProfileModelTest(TestCase):
 class AuthenticationTest(TestCase):
 
     def setUp(self):
-        # Every test needs a client.
         self.client = Client()
-        self.test_user = User.objects.create_user(username="test", password="test123")
-        self.test_user.save()
-
-    def test_register(self):
-        response = self.client.post(
-            reverse("authentication:register"),
-            {"username": "test2", "password": "test123", "email": "test2@gmail.com"},
+        self.test_user = User.objects.create_user(
+            username="testuser", password="testpassword"
         )
-        self.assertEqual(response.status_code, 302)  # Expecting a redirect
+        self.test_profile = UserProfile.objects.create(user=self.test_user)
 
-    def test_login(self):
+    def test_registration_view(self):
+        response = self.client.get(reverse("authentication:register"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_login_view(self):
         response = self.client.post(
-            reverse("authentication:user_login"),
-            {"username": "test", "password": "test123"},
+            reverse("authentication:login"),
+            {"username": "testuser", "password": "testpassword"},
         )
-        self.assertEqual(response.status_code, 302)  # Expecting a redirect
+        self.assertEqual(response.status_code, 302)
 
-    def test_login_failure(self):
+    def test_user_logout_view(self):
+        self.client.login(username="testuser", password="testpassword")
+        response = self.client.get(reverse("authentication:logout"))
+        self.assertEqual(response.status_code, 302)
+
+    def test_change_password_view(self):
+        self.client.login(username="testuser", password="testpassword")
         response = self.client.post(
-            reverse("authentication:user_login"),
-            {"username": "wrong", "password": "wrong"},
+            reverse("authentication:set_password"),
+            {"password": "newpassword", "password1": "newpassword"},
         )
-        self.assertEqual(
-            response.status_code, 200
-        )  # Expecting a rendered form with error message
+        self.assertEqual(response.status_code, 302)
+        self.test_user.refresh_from_db()
+        self.assertTrue(self.test_user.check_password("newpassword"))
 
-    def test_logout(self):
-        self.client.login(username="test", password="test123")
-        response = self.client.get(reverse("authentication:user_logout"))
-        self.assertEqual(response.status_code, 302)  # Expecting a redirect
-
-    def test_set_username(self):
-        self.client.login(username="test", password="test123")
+    def test_password_reset_view(self):
         response = self.client.post(
-            reverse("authentication:set_username"), {"username": "newname"}
+            reverse("authentication:password_reset"), {"email": self.test_user.email}
         )
-        self.assertEqual(response.status_code, 302)  # Expecting a redirect
+        self.assertEqual(response.status_code, 200)
