@@ -16,7 +16,7 @@
                             <div class="col-md-9 col-md-offset-1 article-content">
                                 <article class="article--big">
                                     <div class="article__image"
-                                         style="background-image: url({{ blog.image.url }})"></div>
+                                         style="background-image: url('{{ blog.image.url }}')"></div>
                                     <div class="article__metadata">
                                         <div>
                                             <span>Published on: {{ blog.date }}</span>
@@ -29,9 +29,20 @@
                                         </div>
                                     </div>
                                     <div class="article__content">
-                                        <a href="" class="btn btn-primary btn-outline pull-right">
-                                            <span>Subscribe</span>
-                                        </a>
+                                        {% if subscribed %}
+                                            <a href="{% url 'blog:unsubscribe' blog.slug %}"
+                                               class="btn btn-primary btn-outline pull-right">
+                                                <span>Unsubscribe</span>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'blog:subscribe' blog.slug %}"
+                                               class="btn btn-primary btn-outline pull-right">
+                                                <span>Subscribe</span>
+                                            </a>
+                                        {% endif %}
+                                    
+
+
                                         <h1 class="article__title">{{ blog.title }}</h1>
                                         <div class="article__body">{{ blog.content|safe }}</div>
                                     </div>
