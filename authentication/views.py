@@ -65,19 +65,10 @@ def user_login(request):
         return render(request, 'authentication/login.html', {'error_message': error_message})
 
 
-        
-
-
-
-
 @login_required
 def user_logout(request):
     logout(request)
     return redirect(reverse('blog:index'))
-
-
-def password_reset(request):
-    return render(request, 'authentication/password_reset.html')
 
 
 def set_username(request):
@@ -106,6 +97,10 @@ def set_email(request):
 
 
 def set_avatar(request):
+    # 判断是否传了image
+    if request.FILES.get("image") is None:
+        return redirect(reverse('blog:profile_settings'))
+    
     avatar = request.FILES['image']
     userProfile = request.user.userProfile
     userProfile.picture = avatar
@@ -123,14 +118,17 @@ def set_password(request):
         return render(request, 'blog/profile_settings.html', {'error_message': 'The two passwords are not the same'})
         # return redirect(reverse('blog:profile_settings'), {'error_message': 'The two passwords are not the same'})
     else:
-        # 得到当前用户
-        user = request.user
-        # 将当前用户的password设置为post请求中的password
-        user.set_password(password)
-        # 保存当前用户
-        user.save()
-        return redirect(reverse('authentication:login'))
+        if len(password) >= 6:
+            # 得到当前用户
+            user = request.user
+            # 将当前用户的password设置为post请求中的password
+            user.set_password(password)
+            # 保存当前用户
+            user.save()
+            return redirect(reverse('authentication:login'))
 
+        else:
+            return render(request, 'blog/profile_settings.html', {'error_message': 'Password length must be greater than 6.'})
 
 
 def block_user(request, user_id):
@@ -139,3 +137,9 @@ def block_user(request, user_id):
     user.is_active = False
     user.save()
     return redirect(reverse('blog:manage_all_accounts'))
+
+
+def password_reset(request):
+
+    
+    return render(request, 'authentication/password_reset.html')
