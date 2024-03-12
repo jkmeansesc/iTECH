@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import UserForm, UserProfileForm
 from .models import UserProfile
+from blog.utils import send_mails
 
 
 def register(request):
@@ -140,6 +141,53 @@ def block_user(request, user_id):
 
 
 def password_reset(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        user = User.objects.filter(email=email).first()
+        if user is not None:
+            userProfile = user.userProfile
+            userProfile.generate_token()
+            subject = "Reset your password"
 
+            # 将token设置成参数
+
+
+            message = "Please click the link below to reset your password: http://127.0.0.1:8000/authentication/password_reset_confirm/" + userProfile.token
+            from_email = "2079459973@qq.com"
+            recipient_list = [email, ]
+            send_mails(subject, message, from_email, recipient_list)
+
+            return render(request, 'authentication/password_reset.html', {'success_message': 'We have sent you an email with a link to reset your password.'})
+        else:
+            return render(request, 'authentication/password_reset.html', {'error_message': 'No user found with that email address.'})
+
+    else:
+        return render(request, 'authentication/password_reset.html')
+
+def password_reset_confirm(request, token):
+    if request.method == 'POST':
+        new_password1 = request.POST.get('new_password1')
+        new_password2 = request.POST.get('new_password2')
+        if new_password1 != new_password2:
+            return render(request, 'authentication/password_reset_confirm.html', {'token': token,'error_message': 'The two passwords are not the same'})
+        else:
+            if len(new_password1) >= 6:
+                userProfile = UserProfile.objects.filter(token=token).first()
+                if userProfile is not None and userProfile.is_token_valid():
+                    user = userProfile.user
+                    user.set_password(new_password1)
+                    user.save()
+                    # 设置token为空
+                    userProfile.token = None
+                    userProfile.save()
     
-    return render(request, 'authentication/password_reset.html')
+                    return redirect(reverse('authentication:login'))
+                else:
+                    return render(request, 'authentication/password_reset_confirm.html', {'token': token, 'error_message': 'The token is invalid or expired.'})
+            else:
+                return render(request, 'authentication/password_reset_confirm.html', {'token': token, 'error_message': 'Password length must be greater than 6.'})
+    else:
+        return render(request, 'authentication/password_reset_confirm.html', {'token': token})
+
+
+
