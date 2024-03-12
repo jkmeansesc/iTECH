@@ -48,6 +48,10 @@
                                     </button>
                                     <a class="btn-link" href="{% url 'authentication:password_reset' %}">Forgot Password?</a>
                                 </div>
+
+                                {% if error_message != "" %}
+                                    <strong>{{ error_message }}</strong>
+                                {% endif %}
                             </form>
                         </div>
                     </div>
