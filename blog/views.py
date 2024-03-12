@@ -9,6 +9,7 @@ from .models import Blog, Comment, Subscribe
 from .utils import send_mails
 from django.contrib.auth.models import User
 
+
 # from django.core.mail import send_mail
 # from .utils import send_mails
 
@@ -59,7 +60,6 @@ def publish(request):
             blog_instance.author = request.user
             blog_instance.save()
 
-
             # 向订阅了这个博主的用户发送邮件
             author = blog_instance.author.userProfile
             subscribers = Subscribe.objects.filter(author=author)
@@ -72,9 +72,6 @@ def publish(request):
             from_email = "2079459973@qq.com"
 
             send_mails(subject=subject, from_email=from_email, recipient_list=recipient_list, message=message)
-
-        
-
 
             return redirect("blog:index")
         else:
@@ -171,7 +168,6 @@ def blog_detail(request, blog_title_slug):
     )
 
 
-
 def search_results(request):
     search_content = request.GET.get("search_content")
     print(search_content)
@@ -199,20 +195,26 @@ def search_results(request):
 
 
 def profile_settings(request):
-    return render(request, "blog/profile_settings.html")
+    current_page = "profile_settings"
+    context_dict = {"current_page": current_page}
+    return render(request, "blog/profile_settings.html", context_dict)
 
 
 def profile_blogs(request):
     # 返回本用户的所有blog
     blogs = Blog.objects.filter(author=request.user)
-    context_dict = {"blogs": blogs}
+    current_page = "profile_blogs"
+    context_dict = {"blogs": blogs,
+                    "current_page": current_page}
     return render(request, "blog/profile_blogs.html", context=context_dict)
 
 
 def profile_comments(request):
     # 返回本用户所有的comment
     comments = Comment.objects.filter(author=request.user)
-    context_dict = {"comments": comments}
+    current_page = "profile_comments"
+    context_dict = {"comments": comments,
+                    "current_page": current_page}
 
     return render(request, "blog/profile_comments.html", context=context_dict)
 
@@ -291,13 +293,13 @@ def manage_comments(request):
 
 
 @login_required
-def subscribe(request, blog_title_slug):    
+def subscribe(request, blog_title_slug):
     user = request.user.userProfile
     blog = Blog.objects.get(slug=blog_title_slug)
     author = blog.author.userProfile
     # 添加订阅
     subscribe = Subscribe(user=user, author=author)
-    subscribe.save()    
+    subscribe.save()
     comments = blog.comments.all().order_by("-date_posted")
     comment_form = CommentForm()
     return render(
@@ -306,8 +308,9 @@ def subscribe(request, blog_title_slug):
         {"blog": blog, "comment_form": comment_form, "comments": comments, "subscribed": True},
     )
 
+
 @login_required
-def unsubscribe(request, blog_title_slug):    
+def unsubscribe(request, blog_title_slug):
     user = request.user.userProfile
     blog = Blog.objects.get(slug=blog_title_slug)
     author = blog.author.userProfile
