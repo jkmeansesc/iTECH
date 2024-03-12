@@ -19,7 +19,7 @@
                 </a>
             </li>
 
-            <!-- 判断用户是否为员工 -->
+            <!-- check if user is staff -->
             {% if user.is_staff %}
                 <li role="presentation" {% if current_page == 'manage_accounts' %} class="active{% endif %}">
                     <a href="{% url 'blog:manage_all_accounts' %}" aria-controls="home"

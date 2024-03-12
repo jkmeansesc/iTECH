@@ -1,4 +1,4 @@
-# 邮件发送功能
+# the function to send email
 from django.core.mail import send_mail
 
 def send_mails(subject, message, from_email, recipient_list):
