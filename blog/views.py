@@ -57,28 +57,23 @@ def publish(request):
                 print("no image")
 
             blog_instance.author = request.user
-
             blog_instance.save()
 
 
-
             # 向订阅了这个博主的用户发送邮件
-            # author = blog_instance.author.userProfile
-            # subscribers = Subscribe.objects.filter(author=author)
-            # recipient_list = []
-            # for subscriber in subscribers:
-            #     user = subscriber.user
-            #     recipient_list.append(user.email)
-            # subject = "Blog update"
-            # message = blog_instance.author." has updated the blog. Please check it out."
-            # from_email = "2079459973@qq.com"
+            author = blog_instance.author.userProfile
+            subscribers = Subscribe.objects.filter(author=author)
+            recipient_list = []
+            for subscriber in subscribers:
+                user = subscriber.user.user
+                recipient_list.append(user.email)
+            subject = "Blog update"
+            message = blog_instance.author.username + " has updated the blog. Please check it out."
+            from_email = "2079459973@qq.com"
 
-            # recipient_list = ["zhengkangwu666@gmail.com", ]
-            # send_mail(subject=subject, from_email=from_email, recipient_list=recipient_list, message=message)
+            send_mails(subject=subject, from_email=from_email, recipient_list=recipient_list, message=message)
 
-
-
-            # send_mails(emails, blog_instance.title, blog_instance.content)
+        
 
 
             return redirect("blog:index")
