@@ -10,7 +10,6 @@ from .models import UserProfile
 class UserProfileModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        # Create a user and associated profile
         cls.user = User.objects.create_user(
             username="testuser", email="test@gmail.com", password="12345"
         )
