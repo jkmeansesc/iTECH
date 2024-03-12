@@ -64,19 +64,10 @@ def user_login(request):
         return render(request, 'authentication/login.html', {'error_message': error_message})
 
 
-        
-
-
-
-
 @login_required
 def user_logout(request):
     logout(request)
     return redirect(reverse('blog:index'))
-
-
-def password_reset(request):
-    return render(request, 'authentication/password_reset.html')
 
 
 def set_username(request):
@@ -137,7 +128,6 @@ def set_password(request):
 
         else:
             return render(request, 'blog/profile_settings.html', {'error_message': 'Password length must be greater than 6.'})
-            # return redirect(reverse('blog:profile_settings'), {'error_message': 'Password length must be greater than 6.'})
 
 
 def block_user(request, user_id):
@@ -146,3 +136,9 @@ def block_user(request, user_id):
     user.is_active = False
     user.save()
     return redirect(reverse('blog:manage_all_accounts'))
+
+
+def password_reset(request):
+
+    
+    return render(request, 'authentication/password_reset.html')
