@@ -17,6 +17,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
+                    <!--search box-->
                         <div class="search">
                             <form id="search-form" class="form-inline" action="{% url 'blog:search_results' %}"
                                 method="GET">
@@ -27,11 +28,8 @@
                                 <button type="submit"
                                     class="btn-icon icon-magnifier hidden-sm hidden-md hidden-lg"></button>
                             </form>
-
-
-
                         </div>
-                        <!--content -->
+                        <!--search results content -->
                         <div class="section section--search">
                             <div class="tabs__container">
                                 <div class="tab-content">

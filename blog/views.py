@@ -1,16 +1,13 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render, get_object_or_404
-from .forms import BlogForm, CommentForm
-from .models import Blog, Comment
-from .forms import BlogForm
-from .utils import send_mails
-from django.contrib.auth.decorators import login_required
 # 导入HttpResponse
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-# 导入User
-from django.contrib.auth.models import User
 
+from .forms import BlogForm, CommentForm
+from .models import Blog, Comment
+from .utils import send_mails
+from django.contrib.auth.models import User
 
 # from django.core.mail import send_mail
 # from .utils import send_mails
@@ -77,39 +74,8 @@ def publish(request):
         return render(request, "blog/publish.html", context=context_dict)
 
 
-def publish_comment(request, blog_title_slug):
-    if request.method == "POST":
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            comment_form.save(commit=False)
-
-            context_dict = {}
-            try:
-                comment = Comment.objects.get(blog=blog_title_slug)
-                context_dict["comment"] = comment
-            except Blog.DoesNotExist:
-                context_dict["comment"] = None
-
-            context_dict["form"] = comment_form
-            comment_form.save()
-
-            return render(request, "blog/blog_detail1.html", context=context_dict)
-
-        else:
-            print(comment_form.errors)
-            context_dict = {}
-            comment_form = CommentForm()
-            context_dict["form"] = comment_form
-            return render(request, "blog/blog_detail1.html", context=context_dict)
-    else:
-        context_dict = {}
-        comment_form = CommentForm()
-        context_dict["form"] = comment_form
-        return render(request, "blog/blog_detail1.html", context=context_dict)
-
-
 def about(request):
-    return render(request, 'blog/about.html')
+    return render(request, "blog/about.html")
 
 
 def blogs(request, tag=None):
@@ -139,19 +105,18 @@ def blogs(request, tag=None):
     for tag_ in tag_count[:5]:
         hot_tags.append(tag_[0])
 
-    context_dict = {"hot_tags": hot_tags,
-                    "current_tag": tag}
+    context_dict = {"hot_tags": hot_tags}
 
     if tag:
         tag = str(tag)
         context_dict["tag"] = tag
 
-    return render(request, 'blog/blogs.html', context=context_dict)
+    return render(request, "blog/blogs.html", context=context_dict)
 
 
 def blog_detail(request, blog_title_slug):
     blog = get_object_or_404(Blog, slug=blog_title_slug)
-    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+    if request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest":
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
@@ -160,12 +125,12 @@ def blog_detail(request, blog_title_slug):
             comment.save()
             comment_form = CommentForm()
             data = {
-                'comment_num': blog.comment_num,
-                'author': comment.author.username,
-                'content': comment.content,
-                'date_posted': comment.date_posted.strftime('%Y-%m-%d %H:%M:%S')
+                "comment_num": blog.comment_num,
+                "author": comment.author.username,
+                "content": comment.content,
+                "date_posted": comment.date_posted.strftime("%Y-%m-%d %H:%M:%S"),
             }
-            comments = blog.comments.all().order_by('-date_posted')
+            comments = blog.comments.all().order_by("-date_posted")
             # return render(request, 'blog/blog_detail1.html',
             #             #               {'blog': blog, 'comment_form': comment_form, 'comments': comments})
             return JsonResponse(data)
@@ -173,13 +138,16 @@ def blog_detail(request, blog_title_slug):
         comment_form = CommentForm()
 
     # sort the comment by the latest date
-    comments = blog.comments.all().order_by('-date_posted')
-    return render(request, 'blog/blog_detail1.html',
-                  {'blog': blog, 'comment_form': comment_form, 'comments': comments})
+    comments = blog.comments.all().order_by("-date_posted")
+    return render(
+        request,
+        "blog/blog_detail.html",
+        {"blog": blog, "comment_form": comment_form, "comments": comments},
+    )
 
 
 def search_results(request):
-    search_content = request.GET.get('search_content')
+    search_content = request.GET.get("search_content")
     print(search_content)
     # 用blog的title和tag进行搜索
     # search_content可能包含多个单词，用空格分开
@@ -201,45 +169,40 @@ def search_results(request):
 
     context_dict = {"blogs": blogs}
 
-    return render(request, 'blog/search_results.html', context=context_dict)
+    return render(request, "blog/search_results.html", context=context_dict)
 
 
 def profile_settings(request):
-    current_page = 'profile_settings'
-    return render(request, 'blog/profile_settings.html', {'current_page': current_page})
+    return render(request, "blog/profile_settings.html")
 
 
 def profile_blogs(request):
     # 返回本用户的所有blog
     blogs = Blog.objects.filter(author=request.user)
-    current_page = 'profile_blogs'
-    context_dict = {"blogs": blogs,
-                    "current_page": current_page}
-    return render(request, 'blog/profile_blogs.html', context=context_dict)
+    context_dict = {"blogs": blogs}
+    return render(request, "blog/profile_blogs.html", context=context_dict)
 
 
 def profile_comments(request):
     # 返回本用户所有的comment
     comments = Comment.objects.filter(author=request.user)
-    current_page = 'profile_comments'
-    context_dict = {"comments": comments,
-                    "current_page": current_page}
+    context_dict = {"comments": comments}
 
-    return render(request, 'blog/profile_comments.html', context=context_dict)
+    return render(request, "blog/profile_comments.html", context=context_dict)
 
 
 def comment_delete(request, comment_id):
     # 删除comment
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
-    return redirect(reverse('blog:profile_comments'))
+    return redirect(reverse("blog:profile_comments"))
 
 
 def blog_delete(request, blog_id):
     # 删除blog
     blog = Blog.objects.get(id=blog_id)
     blog.delete()
-    return redirect(reverse('blog:profile_blogs'))
+    return redirect(reverse("blog:profile_blogs"))
 
 
 def blogs_edit(request, blog_id):
@@ -259,13 +222,13 @@ def blogs_edit(request, blog_id):
             return redirect("blog:profile_blogs")
         else:
             context_dict = {"blog": blog}
-            form = BlogForm(instance=blog, initial={'image': None})
+            form = BlogForm(instance=blog, initial={"image": None})
 
             context_dict["form"] = form
-            return render(request, 'blog/blog_edit.html', context=context_dict)
+            return render(request, "blog/blog_edit.html", context=context_dict)
     else:
         context_dict = {"blog": blog}
-        form = BlogForm(instance=blog, initial={'image': None})
+        form = BlogForm(instance=blog, initial={"image": None})
 
         context_dict["form"] = form
         return render(request, 'blog/blog_edit.html', context=context_dict)

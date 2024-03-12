@@ -1,37 +1,95 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
 {% load static %}
-{% block title_block %}
-    Blog Details
-{% endblock title_block %}
+<head>
+    <title>
+        {% block title_block %}{{ blog.title }}{% endblock %}
+    </title>
+</head>
+<body>
 {% block body_block %}
-    <main class="main-content" id="main_content">
+    <main class="main-content" style=" margin-top:40px;">
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-9">
-                        <!-- Article content will go here -->
-                        <div class="post__header">
-                            <h2>{{ post.title }}</h2>
-                            <div class="container">
-                                <h1>Lorem Ipsum: The Design Essential</h1>
-                                <p>
-                                    Lorem Ipsum has become synonymous with the design process, serving as the quintessential placeholder text for designers worldwide. Its nonsensical arrangement of words and letters provides the perfect backdrop for visual elements to shine. Designers rely on Lorem Ipsum to maintain focus on layout, typography, and overall aesthetics without the distraction of meaningful content. This streamlined approach allows for seamless exploration of design concepts, fostering creativity and innovation in every project.
-                                </p>
-                                <p>
-                                    From website prototypes to print advertisements, Lorem Ipsum remains a cornerstone of the design workflow. Its flexibility and neutrality make it an ideal companion for designers at every stage of the creative process. By using Lorem Ipsum, designers can efficiently test different layouts, font choices, and color schemes, ensuring that the final product meets both aesthetic and functional requirements. With Lorem Ipsum as their guide, designers can iterate rapidly, refining their designs until they achieve perfection.
-                                </p>
-                                <p>
-                                    Lorem Ipsum's enduring popularity stems from its ability to transcend language and context, making it universally applicable in diverse design projects. Whether designing a sleek mobile app interface or a sprawling editorial spread, Lorem Ipsum provides the consistency and structure needed to bring creative visions to life. As the design landscape continues to evolve, Lorem Ipsum remains an invaluable tool, empowering designers to unleash their creativity and deliver compelling visual experiences to audiences around the globe.
-                                </p>
+                    <div class="col-md-9 col-md-offset-1 article-content">
+                        <article class="article--big">
+                            <div class="article__image"
+                                 style="background-image: url({{ blog.image.url }})"></div>
+                            <div class="article__metadata">
+                                <div>
+                                    <span>Published on: {{ blog.date }}</span>
+                                </div>
+                                <div>
+                                    <span>Author: {{ blog.author }}</span>
+                                </div>
+                                <div>
+                                    <span>Tags: {{ blog.tag }}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="post__body">{{ post.body|safe }}</div>
-                        <div class="post__footer">
-                            <!-- Post footer content -->
-                        </div>
+
+                            <div class="article__content">
+                                 <a href=""
+                                   class="btn btn-primary btn-outline pull-right">
+                                    <span>Subscribe</span>
+                                </a>
+                                <h1 class="article__title">{{ blog.title }}</h1>
+                                <div class="article__body">{{ blog.content|safe }}</div>
+                            </div>
+                        </article>
+                        <section class="comments-section">
+                            <div class="comment-title">Leave a Comment:</div>
+                            <form id="commentForm"
+                                  method="post"
+                                  action="{% url 'blog:blog_detail' blog.slug %}">
+                                {% csrf_token %}
+                                <div class="comment-form">{{ comment_form.as_p }}</div>
+                                <div class="submit-button">
+                                    <input type="submit" value="Submit">
+                                </div>
+                            </form>
+                            <div id="comments">
+                                {% for comment in comments %}
+                                    <div>
+                                        <p>{{ comment.author }} says:</p>
+                                        <p>{{ comment.content }}</p>
+                                        <p>Commented on {{ comment.date_posted }}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <script>
+                                $(document).ready(function () {
+                                    $('#commentForm').on('submit', function (e) {
+                                        e.preventDefault();
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '{% url "blog:blog_detail" blog.slug %}',
+                                            data: $(this).serialize(),
+                                            dataType: 'json',
+                                            success: function (response) {
+                                                $('#comments').prepend(
+                                                    '<div><p>' + response.author + ' says:</p>' +
+                                                    '<p>' + response.content + '</p>' +
+                                                    '<p>Commented on ' + response.date_posted + '</p></div>'
+                                                );
+                                                $('#commentForm')[0].reset();
+                                                var currentCount = parseInt($('#commentCount').text());
+                                                $('#commentCount').text(currentCount + 1);
+                                            },
+                                            error: function (xhr, errmsg, err) {
+                                                console.log(xhr.status + ": " + xhr.responseText);
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
+                        </section>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-{% endblock body_block %}
+{% endblock %}
+</body>
+</html>

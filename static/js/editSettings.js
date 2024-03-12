@@ -1,4 +1,4 @@
-// Get the edit button element
+// Get the edit username button element
 var editButton = document.querySelector('.btn.btn-primary.btn-outline.pull-right.edit-username-btn');
 
 // Add click event listener
