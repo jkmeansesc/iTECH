@@ -11,6 +11,7 @@ from .models import Blog, Comment, Subscribe
 from .utils import send_mails
 from django.contrib.auth.models import User
 
+
 # from django.core.mail import send_mail
 # from .utils import send_mails
 
@@ -259,7 +260,7 @@ def blogs_edit(request, blog_id):
         form = BlogForm(instance=blog, initial={"image": None})
 
         context_dict["form"] = form
-        return render(request, "blog/blog_edit.html", context=context_dict)
+        return render(request, 'blog/blog_edit.html', context=context_dict)
 
 
 def manage_accounts(request):
