@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import UserForm, UserProfileForm
+from .models import UserProfile
 
 
 def register(request):
@@ -116,7 +117,7 @@ def set_avatar(request):
     userProfile = request.user.userProfile
     userProfile.picture = avatar
     userProfile.save()
-    
+
     return redirect(reverse('blog:profile_settings'))
 
 

@@ -5,31 +5,31 @@
     Publish
 {% endblock title_block %}
 {% block body_block %}
-    
-        {{ form.image.id_for_label }}
-       
     <main class="main-content" id="main_content">
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-8 col-md-offset-2">
                         <form action="{% url 'blog:publish' %}"
                               method="post"
                               enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="{{ form.title.id_for_label }}">Title:</label>
-                                {{ form.title|add_class:"form-control"}}
+                                {{ form.title|add_class:"form-control" }}
                             </div>
                             <div class="form-group">
                                 <label for="{{ form.tag.id_for_label }}">Tag:</label>
-                                {{ form.tag|add_class:"form-control"}}
+                                {{ form.tag|add_class:"form-control" }}
                             </div>
                             <div class="form-group">
                                 <label for="{{ form.image.id_for_label }}" id="image-label">Background:</label>
                                 <button type="button" id="upload-btn" class="btn btn-primary btn-outline">Upload Image</button>
-                                <input id='img_box' type="file" name="image"
-                                       accept="image/gif, image/jpeg, image/png, image/jpg" style="display: none;">
+                                <input id='img_box'
+                                       type="file"
+                                       name="image"
+                                       accept="image/gif, image/jpeg, image/png, image/jpg"
+                                       style="display: none">
                                 <span id="file-name">No file chosen</span>
                                 {{ form.image }}
                             </div>

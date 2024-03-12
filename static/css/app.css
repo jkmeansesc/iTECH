@@ -1,16 +1,108 @@
-a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, button, canvas, caption, center, cite, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    vertical-align: baseline
+a,
+abbr,
+acronym,
+address,
+applet,
+article,
+aside,
+audio,
+b,
+big,
+blockquote,
+body,
+button,
+canvas,
+caption,
+center,
+cite,
+dd,
+del,
+details,
+dfn,
+div,
+dl,
+dt,
+em,
+embed,
+fieldset,
+figcaption,
+figure,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+html,
+i,
+iframe,
+img,
+ins,
+kbd,
+label,
+legend,
+li,
+mark,
+menu,
+nav,
+object,
+ol,
+output,
+p,
+pre,
+q,
+ruby,
+s,
+samp,
+section,
+small,
+span,
+strike,
+strong,
+sub,
+summary,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+time,
+tr,
+tt,
+u,
+ul,
+var,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
 }
 
-article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section {
-    display: block
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section {
+  display: block;
 }
 
-ol, ul {
-    list-style: none
+ol,
+ul {
+  list-style: none;
 }
 
 blockquote, q {
@@ -5553,7 +5645,7 @@ aside .guidelines li {
     background-position: 50%
 }
 
-#article__related-articles, #book-view, .article--big, .article--small, .article-content #comments, .license, .post--rank, .privacy-policy {
+#article__related-articles, #book-view, .article--big, .article--small, .license, .post--rank, .privacy-policy {
     background-color: #252d2f
 }
 
@@ -5563,7 +5655,10 @@ aside .guidelines li {
         border-radius: 3px
     }
 }
-
+.article-content #comments
+{
+    background: #292c41;
+}
 .preview-banner {
     position: absolute;
     top: -80px;
@@ -5723,7 +5818,7 @@ aside .guidelines li {
 
 @media only screen and (min-width: 768px) {
     #book-view .article__content, .article--big .article__content, .editor-preview .article__content, .license .article__content, .post--rank .article__content, .privacy-policy .article__content {
-        padding: 70px 80px
+        padding: 10px 80px
     }
 }
 
@@ -8478,13 +8573,14 @@ select {
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
 }
+ .s-hero__slide-text a:hover {
+        color: #867575;
+    }
 
 .s-hero__slide-text a {
     color: white;
 }
- .s-hero__slide-text a:hover {
-        color: rgba(224, 216, 216,0.6);
-    }
+
 .cover-layer {
     display: block;
     position: fixed;
@@ -8714,7 +8810,7 @@ select {
 }
 
 .profile .tabs .nav-tabs > li > a {
-    padding: 6px;
+    padding: 1em 2em;
     color: #747474;
     font-weight: 700;
     font-size: 16px;
@@ -11181,21 +11277,72 @@ span.CodeMirror-selectedtext {
 }
 
 .username {
-    font-weight: bold; /* Make the username bold */
-    color: #fffcfc; /* Set color for the username */
-    display: inline-block; /* Make the username and block button inline */
-    vertical-align: middle; /* Align elements vertically */
-    margin-right: 10px; /* Add some spacing between the username and block button */
+  font-weight: bold; /* Make the username bold */
+  color: #fffcfc; /* Set color for the username */
+  display: inline-block; /* Make the username and block button inline */
+  vertical-align: middle; /* Align elements vertically */
+  margin-right: 10px; /* Add some spacing between the username and block button */
 }
 
 .registered-time {
-    margin-top: 5px; /* Add some space between username and registered time */
-    font-size: 12px; /* Adjust font size for registered time */
-    color: #777; /* Set color for registered time */
+  margin-top: 5px; /* Add some space between username and registered time */
+  font-size: 12px; /* Adjust font size for registered time */
+  color: #777; /* Set color for registered time */
 }
 
 /* CSS */
 .actions a {
-    margin-left: 10px; /* Add some spacing between block button and registered time */
-    padding: 5px 10px; /* Add padding to the block button (5px top/bottom, 10px left/right) */
+  margin-left: 10px; /* Add some spacing between block button and registered time */
+  padding: 5px 10px; /* Add padding to the block button (5px top/bottom, 10px left/right) */
+}
+
+.article__metadata {
+  font-size: 1em;
+  color: #838393;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #292c41;
+  border-left: 5px solid #5151b9;
+}
+
+.article__metadata > div {
+  margin-bottom: 5px; /* space out the lines */
+}
+
+.comments-section {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #292c41;
+  border-radius: 5px;
+  background-color: #292c41;
+}
+
+.comments-section textarea#id_content {
+  height: 80px;
+  width: 100%;
+  color: #cdd6f4;
+  background-color: #24273a;
+}
+
+.comments-section label[for="id_content"] {
+  display: none;
+}
+
+.comment-title {
+  font-size: 1.2em;
+  color: #737394;
+  padding-bottom: 10px;
+}
+
+.comment-form {
+  margin-bottom: 10px;
+}
+
+.submit-button input {
+  padding: 5px 10px;
+  color: #cdd6f4;
+  background-color: #6c7086;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
 }
