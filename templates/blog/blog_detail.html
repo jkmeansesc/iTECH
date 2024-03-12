@@ -45,9 +45,9 @@
                                   action="{% url 'blog:blog_detail' blog.slug %}">
                                 {% csrf_token %}
                                 <div class="comment-form">{{ comment_form.as_p }}</div>
-                                <div class="submit-button">
-                                    <input type="submit" value="Submit">
-                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                        <span>Submit</span>
+                                    </button>
                             </form>
                             <div id="comments">
                                 {% for comment in comments %}
