@@ -275,5 +275,9 @@ def manage_comments(request):
 
     return render(request, 'blog/manage_all_comments.html', context=context_dict)
 
-
+def blog_delete_manage(request, blog_id):
+    # delete_blog
+    blog = Blog.objects.get(id=blog_id)
+    blog.delete()
+    return redirect(reverse('blog:mange_all_blogs'))
 
