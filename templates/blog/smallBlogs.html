@@ -11,7 +11,14 @@
             <div class="article__content">
                 <div class="article__description">
                     <a href="{% url 'blog:blog_detail' blog.slug %}" title="{{ blog.title }}">
-                        <h3>{{ blog.title|first_non_empty_character|slice:":20" }}...</h3>
+                        <!-- 判断blog.title的长度，如果长度大于25，截取前25个字符，否则显示全部字符 -->
+                        {% if blog.title|length > 25 %}
+                            <h3>{{ blog.title|first_non_empty_character|slice:":25" }}...</h3>
+                        {% else %}
+                            <h3>{{ blog.title|first_non_empty_character }}</h3>
+                        {% endif %}
+
+                        <!-- <h3>{{ blog.title|first_non_empty_character|slice:":20" }}...</h3> -->
                     </a>
                     <p>{{ blog.content|first_non_empty_character }}</p>
                 </div>

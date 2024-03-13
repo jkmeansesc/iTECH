@@ -11,8 +11,11 @@
             <div class="article__content">
                 <div class="article__description">
                     <a href="{{ blog.url }}" title="{{ blog.title }}">
-                        <h3>{{ blog.title|first_non_empty_character|slice:":25" }}...
-                        </h3>
+                        {% if blog.title|length > 25 %}
+                            <h3>{{ blog.title|first_non_empty_character|slice:":25" }}...</h3>
+                        {% else %}
+                            <h3>{{ blog.title|first_non_empty_character }}</h3>
+                        {% endif %}
                     </a>
                     <p>{{ blog.content|first_non_empty_character }}</p>
                 </div>
