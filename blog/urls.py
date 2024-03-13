@@ -23,4 +23,7 @@ urlpatterns = [
     path('search_results/', views.search_results, name='search_results'),
     path('subscribe/<slug:blog_title_slug>', views.subscribe, name='subscribe'),
     path('unsubscribe/<slug:blog_title_slug>', views.unsubscribe, name='unsubscribe'),
+
+    path('blog_delete_manage/<int:blog_id>', views.blog_delete_manage, name='blog_delete_manage'),
+    path('comment_delete_manage/<int:comment_id>', views.comment_delete_manage, name='comment_delete_manage'),
 ]

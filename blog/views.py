@@ -218,14 +218,14 @@ def comment_delete(request, comment_id):
     # delete comment
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
-    return redirect(reverse("blog:comment_delete"))
+    return redirect(reverse("blog:profile_comments"))
 
 
 def blog_delete(request, blog_id):
     # delete_blog
     blog = Blog.objects.get(id=blog_id)
     blog.delete()
-    return redirect(reverse("blog:blog_delete"))
+    return redirect(reverse("blog:profile_blogs"))
 
 
 def blogs_edit(request, blog_id):
@@ -287,11 +287,27 @@ def manage_comments(request):
 
     return render(request, 'blog/manage_all_comments.html', context=context_dict)
 
+
+
+
 def blog_delete_manage(request, blog_id):
     # delete_blog
     blog = Blog.objects.get(id=blog_id)
     blog.delete()
-    return redirect(reverse('blog:mange_all_blogs'))
+    return redirect(reverse('blog:manage_all_blogs'))
+
+
+def comment_delete_manage(request, comment_id):
+    # delete comment
+    comment = Comment.objects.get(id=comment_id)
+    comment.delete()
+    return redirect(reverse('blog:manage_all_comments'))
+
+
+
+
+
+
 
 @login_required
 def subscribe(request, blog_title_slug):    

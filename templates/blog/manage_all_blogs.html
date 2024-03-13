@@ -51,8 +51,9 @@ this page can be accessed-->
                                                         <a href= "{% url 'blog:blog_detail' blog.slug %}">
                                                         {{blog.title}}: <span> {{blog.tag}} <span><i
                                                                     class="icon-action-redo" aria-hidden="true"></i>
+
                                                                 <a href=""></a>
-                                                                <a href="{% url 'blog:blog_delete' blog.id %}"
+                                                                <a href="{% url 'blog:blog_delete_manage' blog.id %}"
                                                                     class="btn btn-primary btn-outline pull-right">
                                                                     <span>delete</span>
                                                                 </a>
