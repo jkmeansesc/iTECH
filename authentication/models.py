@@ -17,14 +17,14 @@ class UserProfile(models.Model):
     token_created_at = models.DateTimeField(null=True, blank=True)
 
     def generate_token(self):
-        # 生成随机令牌
+        # generate a token and save it to the database
         self.token = default_token_generator.make_token(self.user)
         self.token_created_at = timezone.now()
         self.save()
 
     def is_token_valid(self):
         if self.token_created_at:
-            expiration_time = self.token_created_at + timedelta(minutes=3) # 3分钟内有效
+            expiration_time = self.token_created_at + timedelta(minutes=3) # token is valid for 3 minutes
             return timezone.now() <= expiration_time
         return False
 

@@ -34,7 +34,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
 
-# 订阅博主的模型
+# Subscribe model to keep track of the users who subscribed to the author
 class Subscribe(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='subscribed_user')
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='subscribed_author')
