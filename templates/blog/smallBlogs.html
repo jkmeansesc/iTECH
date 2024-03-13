@@ -11,7 +11,7 @@
             <div class="article__content">
                 <div class="article__description">
                     <a href="{% url 'blog:blog_detail' blog.slug %}" title="{{ blog.title }}">
-                        <h3>{{ blog.title }}</h3>
+                        <h3>{{ blog.title|first_non_empty_character|slice:":20" }}...</h3>
                     </a>
                     <p>{{ blog.content|first_non_empty_character }}</p>
                 </div>
