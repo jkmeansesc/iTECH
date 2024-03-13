@@ -223,14 +223,14 @@ def comment_delete(request, comment_id):
     # 删除comment
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
-    return redirect(reverse("blog:profile_comments"))
+    return redirect(reverse("blog:comment_delete"))
 
 
 def blog_delete(request, blog_id):
     # 删除blog
     blog = Blog.objects.get(id=blog_id)
     blog.delete()
-    return redirect(reverse("blog:profile_blogs"))
+    return redirect(reverse("blog:blog_delete"))
 
 
 def blogs_edit(request, blog_id):
