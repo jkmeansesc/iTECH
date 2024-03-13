@@ -148,3 +148,5 @@ EMAIL_HOST_PASSWORD = "jvuquucasbmqeefc"
 
 # 用户没有登录时跳转的页面
 LOGIN_URL = "authentication:login"
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static/root/")
