@@ -196,20 +196,20 @@ def search_results(request):
 
 
 def profile_settings(request):
-    return render(request, "blog/profile_settings.html")
+    return render(request, "blog/profile_settings.html", context={"current_page": "profile_settings"})
 
 
 def profile_blogs(request):
     # return all the blogs of the current user
     blogs = Blog.objects.filter(author=request.user)
-    context_dict = {"blogs": blogs}
+    context_dict = {"blogs": blogs, "current_page": "profile_blogs"}
     return render(request, "blog/profile_blogs.html", context=context_dict)
 
 
 def profile_comments(request):
     # return all the comments of the current user
     comments = Comment.objects.filter(author=request.user)
-    context_dict = {"comments": comments}
+    context_dict = {"comments": comments, "current_page": "profile_comments"}
 
     return render(request, "blog/profile_comments.html", context=context_dict)
 
