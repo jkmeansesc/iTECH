@@ -10,15 +10,15 @@ from django.contrib.auth.models import User
 
 
 def populate():
-    # 删除所有用户
+    # delete all users
     User.objects.all().delete()
-    # 删除所有用户信息
+    # delete all user profiles
     UserProfile.objects.all().delete()
 
-    # 创建超级用户
+    # create superuser
     User.objects.create_superuser(username='group15', password='group15')
 
-    # 创建用户 User 和 UserProfile
+    # create users
     user1 = User(username="user1", email="user1@student.gla.ac.uk")
     user1.set_password("user1")
     user1.save()
@@ -42,7 +42,7 @@ def populate():
     user_profile4.save()
 
 
-    # 设置三名user为员工
+    # set user1, user2, user3 as staff
     user1.is_staff = True
     user1.save()
     user2.is_staff = True

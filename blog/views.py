@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-# 导入HttpResponse
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -60,7 +59,7 @@ def publish(request):
             blog_instance.author = request.user
             blog_instance.save()
 
-            # 向订阅了这个博主的用户发送邮件
+            # send email to all the subscribers
             author = blog_instance.author.userProfile
             subscribers = Subscribe.objects.filter(author=author)
             recipient_list = []
@@ -72,6 +71,7 @@ def publish(request):
             from_email = "2079459973@qq.com"
 
             send_mails(subject=subject, from_email=from_email, recipient_list=recipient_list, message=message)
+
 
             return redirect("blog:index")
         else:
@@ -118,7 +118,7 @@ def blogs(request, tag=None):
     for tag_ in tag_count[:5]:
         hot_tags.append(tag_[0])
 
-    context_dict = {"hot_tags": hot_tags}
+    context_dict = {"hot_tags": hot_tags, "current_tag": tag}
 
     if tag:
         tag = str(tag)
@@ -153,7 +153,7 @@ def blog_detail(request, blog_title_slug):
     # sort the comment by the latest date
     comments = blog.comments.all().order_by("-date_posted")
 
-    # 判断用户是否订阅了这个博主
+    # check if the user has subscribed the author
     subscribed = False
     if request.user.is_authenticated:
         user = request.user.userProfile
@@ -168,25 +168,26 @@ def blog_detail(request, blog_title_slug):
     )
 
 
+
 def search_results(request):
     search_content = request.GET.get("search_content")
     print(search_content)
-    # 用blog的title和tag进行搜索
-    # search_content可能包含多个单词，用空格分开
+
+    # search_content may contain multiple words, so we need to split it
     search_content = search_content.split(" ")
 
     blogs = Blog.objects.all()
-    # 床架一个空的queryset
+    # get a empty queryset
     blogs = Blog.objects.none()
 
     for word in search_content:
-        # 用title进行搜索
+        # search by title
         blogs_title = Blog.objects.filter(title__icontains=word)
-        # 用tag进行搜索
+        # search by tag
         blogs_tag = Blog.objects.filter(tag__icontains=word)
-        # 用content进行搜索
+        # search by content
         blogs_content = Blog.objects.filter(content__icontains=word)
-        # 将三个个queryset合并，并添加到blogs中
+        # put all the blogs together
         blogs = blogs | blogs_title | blogs_tag | blogs_content
 
     context_dict = {"blogs": blogs}
@@ -195,39 +196,33 @@ def search_results(request):
 
 
 def profile_settings(request):
-    current_page = "profile_settings"
-    context_dict = {"current_page": current_page}
-    return render(request, "blog/profile_settings.html", context_dict)
+    return render(request, "blog/profile_settings.html")
 
 
 def profile_blogs(request):
-    # 返回本用户的所有blog
+    # return all the blogs of the current user
     blogs = Blog.objects.filter(author=request.user)
-    current_page = "profile_blogs"
-    context_dict = {"blogs": blogs,
-                    "current_page": current_page}
+    context_dict = {"blogs": blogs}
     return render(request, "blog/profile_blogs.html", context=context_dict)
 
 
 def profile_comments(request):
-    # 返回本用户所有的comment
+    # return all the comments of the current user
     comments = Comment.objects.filter(author=request.user)
-    current_page = "profile_comments"
-    context_dict = {"comments": comments,
-                    "current_page": current_page}
+    context_dict = {"comments": comments}
 
     return render(request, "blog/profile_comments.html", context=context_dict)
 
 
 def comment_delete(request, comment_id):
-    # 删除comment
+    # delete comment
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
     return redirect(reverse("blog:comment_delete"))
 
 
 def blog_delete(request, blog_id):
-    # 删除blog
+    # delete_blog
     blog = Blog.objects.get(id=blog_id)
     blog.delete()
     return redirect(reverse("blog:blog_delete"))
@@ -241,7 +236,7 @@ def blogs_edit(request, blog_id):
         if form.is_valid():
             blog_instance = form.save(commit=False)
 
-            # 判断背景图有没有更新
+            # check if the image is None
             if "image" in request.FILES:
                 blog_instance.image = request.FILES["image"]
 
@@ -263,7 +258,8 @@ def blogs_edit(request, blog_id):
 
 
 def manage_accounts(request):
-    # 获取所有的普通用户，不能是superuser，不能是staff, 不能是active=False
+
+    # get all the normal users, cannot be superuser, cannot be staff, cannot be active=False
     users = User.objects.filter(is_superuser=False, is_staff=False, is_active=True)
     current_page = 'manage_accounts'
 
@@ -273,7 +269,7 @@ def manage_accounts(request):
 
 
 def manage_blogs(request):
-    # 获取所有的blogs
+    # get all the blogs
     blogs = Blog.objects.all()
     current_page = 'manage_blogs'
     context_dict = {"blogs": blogs,
@@ -283,7 +279,7 @@ def manage_blogs(request):
 
 
 def manage_comments(request):
-    # 获取所有的comments
+    # get all the comments
     comments = Comment.objects.all()
     current_page = 'manage_comments'
     context_dict = {"comments": comments,
@@ -291,15 +287,20 @@ def manage_comments(request):
 
     return render(request, 'blog/manage_all_comments.html', context=context_dict)
 
+def blog_delete_manage(request, blog_id):
+    # delete_blog
+    blog = Blog.objects.get(id=blog_id)
+    blog.delete()
+    return redirect(reverse('blog:mange_all_blogs'))
 
 @login_required
-def subscribe(request, blog_title_slug):
+def subscribe(request, blog_title_slug):    
     user = request.user.userProfile
     blog = Blog.objects.get(slug=blog_title_slug)
     author = blog.author.userProfile
-    # 添加订阅
+    # add a new subscribe
     subscribe = Subscribe(user=user, author=author)
-    subscribe.save()
+    subscribe.save()    
     comments = blog.comments.all().order_by("-date_posted")
     comment_form = CommentForm()
     return render(
@@ -308,13 +309,12 @@ def subscribe(request, blog_title_slug):
         {"blog": blog, "comment_form": comment_form, "comments": comments, "subscribed": True},
     )
 
-
 @login_required
-def unsubscribe(request, blog_title_slug):
+def unsubscribe(request, blog_title_slug):    
     user = request.user.userProfile
     blog = Blog.objects.get(slug=blog_title_slug)
     author = blog.author.userProfile
-    # 取消订阅
+    # unsubscribe
     Subscribe.objects.filter(user=user, author=author).delete()
     comments = blog.comments.all().order_by("-date_posted")
     comment_form = CommentForm()

@@ -16,7 +16,7 @@
                             <div class="col-md-9 article-content">
                                 <article class="article--big">
                                     <div class="article__image"
-                                         style="background-image: url('{{ blog.image.url }}')"></div>
+                                         style="background-image: url({{ blog.image.url }})"></div>
                                     <div class="article__metadata">
                                         <div>
                                             <span>Published on: {{ blog.date }}</span>
@@ -61,7 +61,7 @@
                                                 <div>
                                                     <p class="comment-author">{{ comment.author }} says:</p>
                                                     <p>{{ comment.content }}</p>
-                                                    <p class="comment-date">Commented on {{ comment.date_posted }}</p>
+                                                    <p class="comment-date">{{ comment.date_posted }}</p>
                                                 </div>
                                             </div>
                                         {% endfor %}
@@ -76,11 +76,11 @@
                                                     data: $(this).serialize(),
                                                     dataType: 'json',
                                                     success: function (response) {
-                                                        ('#comments').prepend(
+                                                        $('#comments').prepend(
                                                             '<div>' +
                                                             '<p class="comment-author">' + response.author + ' says:</p>' +
                                                             '<p>' + response.content + '</p>' +
-                                                            '<p class="comment-date">Commented on: ' + response.date_posted + '</p>' +
+                                                            '<p class="comment-date">' + response.date_posted + '</p>' +
                                                             '</div>'
                                                         );
                                                         $('#commentForm')[0].reset();

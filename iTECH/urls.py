@@ -28,6 +28,5 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('authentication/', include('authentication.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-# 这样就可以直接在浏览器中访问media中的资源了，默认是static，所以static中的资源也可以直接访问。
 
 

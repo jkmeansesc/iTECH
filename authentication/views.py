@@ -17,7 +17,7 @@ def register(request):
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
         if user_form.is_valid() and profile_form.is_valid():
-            # 密码长度不能小于6
+            # Check the password length
             if len(user_form.cleaned_data['password']) < 6:
                 error_message += "Password length must be greater than 6."
                 return render(request, 'authentication/register.html',
@@ -52,7 +52,7 @@ def user_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # 判断用户名和密码是否正确，并判断用户是否处于激活状态
+        # Check the username and password
         user = authenticate(username=username, password=password)
         
         if user:
@@ -65,7 +65,6 @@ def user_login(request):
     else:
         return render(request, 'authentication/login.html', {'error_message': error_message})
 
-
 @login_required
 def user_logout(request):
     logout(request)
@@ -73,32 +72,32 @@ def user_logout(request):
 
 
 def set_username(request):
-    # 得到post请求中的username
+    # get the username from the post request
     username = request.POST.get('username')
-    # 得到当前用户
+    # get the current user
     user = request.user
-    # 将当前用户的username设置为post请求中的username
+    # set the username of the current user to the username from the post request
     user.username = username
-    # 保存当前用户
+    # save the current user
     user.save()
-    # 返回到设置用户名页面
+    # redirect to the profile settings page
     return redirect(reverse('blog:profile_settings'))
 
 
 def set_email(request):
-    # 得到post请求中的email
+    # get the email from the post request
     email = request.POST.get('email')
-    # 得到当前用户
+    # get the current user
     user = request.user
-    # 将当前用户的email设置为post请求中的email
+    # set the email of the current user to the email from the post request
     user.email = email
-    # 保存当前用户
+    # save the current user
     user.save()
     return redirect(reverse('blog:profile_settings'))
 
 
 def set_avatar(request):
-    # 判断是否传了image
+    # check if the image is None
     if request.FILES.get("image") is None:
         return redirect(reverse('blog:profile_settings'))
     
@@ -111,7 +110,7 @@ def set_avatar(request):
 
 
 def set_password(request):
-    # 得到post请求中的password
+    # get the password and password1 from the post request
     password = request.POST.get('password')
     password1 = request.POST.get('password1')
     if password != password1:
@@ -120,11 +119,11 @@ def set_password(request):
         # return redirect(reverse('blog:profile_settings'), {'error_message': 'The two passwords are not the same'})
     else:
         if len(password) >= 6:
-            # 得到当前用户
+            # get the current user
             user = request.user
-            # 将当前用户的password设置为post请求中的password
+            # set the password of the current user to the password from the post request
             user.set_password(password)
-            # 保存当前用户
+            # save the current user
             user.save()
             return redirect(reverse('authentication:login'))
 
@@ -133,7 +132,7 @@ def set_password(request):
 
 
 def block_user(request, user_id):
-    # 得到post请求中的password
+    # get the user with the user_id
     user = User.objects.get(id=user_id)
     user.is_active = False
     user.save()
@@ -148,9 +147,6 @@ def password_reset(request):
             userProfile = user.userProfile
             userProfile.generate_token()
             subject = "Reset your password"
-
-            # 将token设置成参数
-
 
             message = "Please click the link below to reset your password: http://127.0.0.1:8000/authentication/password_reset_confirm/" + userProfile.token
             from_email = "2079459973@qq.com"
@@ -177,7 +173,7 @@ def password_reset_confirm(request, token):
                     user = userProfile.user
                     user.set_password(new_password1)
                     user.save()
-                    # 设置token为空
+                    # set the token to None
                     userProfile.token = None
                     userProfile.save()
     
