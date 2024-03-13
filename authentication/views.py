@@ -148,7 +148,7 @@ def password_reset(request):
             userProfile.generate_token()
             subject = "Reset your password"
 
-            message = "Please click the link below to reset your password: http://127.0.0.1:8000/authentication/password_reset_confirm/" + userProfile.token
+            message = "Please click the link below to reset your password: https://zhengkangwu.pythonanywhere.com/authentication/password_reset_confirm/" + userProfile.token
             from_email = "2079459973@qq.com"
             recipient_list = [email, ]
             send_mails(subject, message, from_email, recipient_list)
