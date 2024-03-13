@@ -139,11 +139,11 @@ MEDIA_URL = "/media/"
 CKEDITOR_UPLOAD_PATH = "content_images/"
 
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.qq.com"
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "2079459973@qq.com"
-EMAIL_HOST_PASSWORD = "jvuquucasbmqeefc"
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "smtp.qq.com"
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = "2079459973@qq.com"
+# EMAIL_HOST_PASSWORD = "jvuquucasbmqeefc"
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.mail.pythonanywhere.com'
@@ -151,6 +151,15 @@ EMAIL_HOST_PASSWORD = "jvuquucasbmqeefc"
 # EMAIL_USE_TLS = True
 # EMAIL_HOST_USER = 'ZhengkangWu'
 # EMAIL_HOST_PASSWORD = 'Wuzhengkang2023'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'zhengkangwu666@gmail.com'
+EMAIL_HOST_PASSWORD = 'aebo fwqm wkvp skex'
+
+
 
 
 # 用户没有登录时跳转的页面
