@@ -176,6 +176,7 @@ def password_reset_confirm(request, token):
                     # set the token to None
                     userProfile.token = None
                     userProfile.save()
+                    
     
                     return redirect(reverse('authentication:login'))
                 else:

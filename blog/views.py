@@ -67,7 +67,7 @@ def publish(request):
                 user = subscriber.user.user
                 recipient_list.append(user.email)
             subject = "Blog update"
-            message = blog_instance.author.username + " has updated the blog. Please check it out."
+            message = blog_instance.author.username + " has upload a new blog " + blog_instance.title + ". Please check it out."
             from_email = "2079459973@qq.com"
 
             send_mails(subject=subject, from_email=from_email, recipient_list=recipient_list, message=message)
