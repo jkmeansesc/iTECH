@@ -12,7 +12,6 @@ class UserProfile(models.Model):
 
     picture = models.ImageField(upload_to='profile_images', blank=True, default='images/default.jpg')
 
-    
     token = models.CharField(max_length=100, null=True, blank=True)
     token_created_at = models.DateTimeField(null=True, blank=True)
 

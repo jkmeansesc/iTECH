@@ -10,7 +10,7 @@
             </a>
             <div class="article__content">
                 <div class="article__description">
-                    <a href="{{ blog.url }}" title="{{ blog.title }}">
+                    <a href="{% url 'blog:blog_detail' blog.slug %}" title="{{ blog.title }}">
                         {% if blog.title|length > 25 %}
                             <h3>{{ blog.title|first_non_empty_character|slice:":25" }}...</h3>
                         {% else %}
@@ -20,7 +20,8 @@
                     <p>{{ blog.content|first_non_empty_character }}</p>
                 </div>
                 <div class="article__footer">
-                    <a class="btn-more" href="{{ blog.url }}" title="View comments">
+
+                    <a class="btn-more" href="{% url 'blog:blog_detail' blog.slug %}" title="View comments">
                         <span>{{ blog.comments.count }}</span>
                     </a>
                     <div class="tags">{{ blog.tag }}</div>
