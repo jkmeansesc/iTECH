@@ -199,6 +199,7 @@ def profile_settings(request):
     return render(request, "blog/profile_settings.html", context={"current_page": "profile_settings"})
 
 
+
 def profile_blogs(request):
     # return all the blogs of the current user
     blogs = Blog.objects.filter(author=request.user)
